@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+
+	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/scrollmagic.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jsrender.js' %}"></script>
+
+	<base target="_blank">
+
+	<script>
+		var controller = new ScrollMagic.Controller();
+
+		$.views.settings.delimiters("[%", "%]");
+
+		var app_env = {
+			query:null,
+			data:null,
+		};
+	</script>
+</head>
+<body>
+	<div>
+		<div class="slider_ico nav_toggle">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<nav id="nav">
+		
+		<div class="app_name">
+			<span>Tweet Summary</span>
+		</div>
+		
+	</nav>
+	<aside class="slider_nav">
+		<div class="empty">
+			<div class="nav_toggle">
+				<span>X</span>
+			</div>
+		</div>
+		<div>
+			<ul>
+				<li>Home</li>
+				<li>Nav 1</li>
+				<li>Nav 2</li>
+			</ul>
+		</div>
+	</aside>
+
+
+	{% block body%}
+	{% endblock %}
+
+	<script type="text/javascript">
+		
+		$(function(){
+			$('.analysis_cont').hide();
+		});
+	</script>
+
+	<script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+
+</body>
+</html>

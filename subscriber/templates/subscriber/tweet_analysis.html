@@ -1,0 +1,65 @@
+{% extends 'subscriber/base.html' %}
+
+
+{% block body%}
+
+<section>
+	<div class="result_panel">
+		<div class="result_cont">
+			<ul>
+				<li>There has been
+					<span class="increase bold">{{increase_perc}}</span> increase in the tweets related to
+					<span class="query bold">{{query}}</span>
+				</li>
+				<li>In the past one week, there have been
+					<span class="total_tweets bold">{{total_tweets}}</span> tweets,
+					<span class="total_mentions bold">{{total_mentions}}</span> mentions,
+					<span class="total_retweets bold">{{total_retweets}}</span> retweets,
+					primarily related to <span class="query bold">{{query}}</span>
+				</li>
+				<li>
+					Overall conversation continues to be contained to twitter(
+					<span class="total_mentions bold">{{total_mentions}}</span> of the total social mentions,
+					<span class="total_favorite bold">{{total_favorite}}</span> total likes), and
+					is driven by retweets of <span class="noticeable_user bold">{{noticeable_user}}</span>
+				</li>
+				<li>
+					<span class="most_active_verified_tweet_user_name bold">{{most_active_verified_tweet_user_name}}</span> tweet has got more attention and has received
+					<span class="most_active_verified_tweet_retweets bold">{{most_active_verified_tweet_retweets}}</span> retweets and
+					<span class="most_active_verified_tweet_favorite bold">{{most_active_verified_tweet_favorite}}</span> likes.
+					<ul>
+						<li>The tweet was: <span class="most_active_verified_tweet bold">{{most_active_verified_tweet}}</span></li>
+						<li>Notable mentions made in tweet were:
+							<span class="most_active_verified_tweet_mentions bold">{{most_active_verified_tweet_mentions}}</span>
+						</li>
+					</ul>
+				</li>
+				<li>
+					Other tweets which were most active was made by
+					<ul>
+						<li>
+							<span class="noticeable_user_tweet_user_name_1 bold">{{noticeable_user_tweet_user_name_1}}</span>,
+							total <span class="noticeable_user_tweet_total_1 bold">{{noticeable_user_tweet_total_1}}</span> tweets posted,
+							<span class="noticeable_user_tweet_total_retweets_1 bold">{{noticeable_user_tweet_total_retweets_1}}</span> retweets,
+							<span class="noticeable_user_tweet_total_favorite_1 bold">{{noticeable_user_tweet_total_favorite_1}}</span> likes,
+							Noticeable mentions were <span class="noticeable_user_tweet_mentions_1 bold">{{noticeable_user_tweet_mentions_1}}</span>
+						</li>
+						<li>
+							<span class="noticeable_user_tweet_user_name_2 bold">{{noticeable_user_tweet_user_name_2}}</span>,
+							total <span class="noticeable_user_tweet_total_2 bold">{{noticeable_user_tweet_total_2}}</span> tweets posted,
+							<span class="noticeable_user_tweet_total_retweets_2 bold">{{noticeable_user_tweet_total_retweets_2}}</span> retweets,
+							<span class="noticeable_user_tweet_total_favorite_2 bold">{{noticeable_user_tweet_total_favorite_2}}</span> likes,
+							Noticeable mentions were <span class="noticeable_user_tweet_mentions_2 bold">{{noticeable_user_tweet_mentions_2}}</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>
+<br>
+<br>
+To Unsubscribe please click <a href="{{unsubscribe_link}}">here</a>
+
+
+{% endblock %}

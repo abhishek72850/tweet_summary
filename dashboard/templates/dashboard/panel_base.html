@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'panel.css' %}">
+
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/scrollmagic.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jsrender.js' %}"></script>
+
+    <base target="_blank">
+
+    <script>
+		var controller = new ScrollMagic.Controller();
+
+		$.views.settings.delimiters("[%", "%]");
+
+		var app_env = {
+			query:null,
+			data:null,
+		};
+	</script>
+</head>
+<body>
+
+
+    {% block body%}
+    {% endblock %}
+
+    <script type="text/javascript">
+
+            $(function(){
+                $('.analysis_cont').hide();
+            });
+        </script>
+
+    <script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+
+</body>
+</html>
