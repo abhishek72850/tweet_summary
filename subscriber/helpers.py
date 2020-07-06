@@ -179,7 +179,7 @@ def confirm_subscription(email, subscription_id):
 
 
 def unsubscribe(email, subscription_id):
-    result_set = SubscribeModel.objects.filter(id=subscription_id, email_verified=True, status='VERIFIED')
+    result_set = SubscribeModel.objects.filter(id=subscription_id)
 
     if len(result_set) > 0:
         success = SubscribeModel.objects.filter(id=subscription_id).update(
