@@ -151,14 +151,14 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_BEAT_SCHEDULE = {
-    # 'send-tweet-analysis-everyday': {
-    #     'task': 'subscriber.tasks.daily_service',
-    #     'schedule': crontab(day_of_week="1-7", hour=20, minute=0),
-    # },
     'send-tweet-analysis-everyday': {
         'task': 'subscriber.tasks.daily_service',
-        'schedule': 60.0,
+        'schedule': crontab(day_of_week="1-7", hour=20, minute=0),
     },
+    # 'send-tweet-analysis-everyday': {
+    #     'task': 'subscriber.tasks.daily_service',
+    #     'schedule': 60.0,
+    # },
 }
 
 LANGUAGE_CODE = 'en-us'
