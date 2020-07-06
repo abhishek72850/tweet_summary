@@ -73,12 +73,12 @@ class UpsertSubscription(APIView):
             else:
                 if status_msg == 'NOT_REGISTERED':
                     return Response({
-                        'status': status.HTTP_400_BAD_REQUEST,
+                        'status': status.HTTP_200_OK,
                         'data': 'Email not registered or not verified!!'
                     })
                 elif status_msg == 'QUOTA_EXHAUSTED':
                     return Response({
-                        'status': status.HTTP_400_BAD_REQUEST,
+                        'status': status.HTTP_200_OK,
                         'data': 'You have reached your ACTIVE subscriptions quota!!'
                     })
 
