@@ -9,3 +9,7 @@ def dashboard(request):
 
 def choice_panel(request):
     return render(request, 'dashboard/panel.html')
+
+
+def choice_portal(request):
+    return render(request, 'dashboard/portal.html')

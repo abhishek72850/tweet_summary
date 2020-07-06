@@ -19,7 +19,6 @@ from celery.schedules import crontab
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -37,7 +36,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-ALLOWED_HOSTS = ['tweet-summary.herokuapp.com']
+ALLOWED_HOSTS = ['tweet-summary.herokuapp.com', 'ai.newssumarization.com']
 
 
 # Application definition
@@ -58,12 +57,12 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.csrf.CsrfViewMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -81,6 +80,8 @@ CACHES = {
 CORS_ORIGIN_WHITELIST = [
     'https://tweet-summary.herokuapp.com',
     'http://tweet-summary.herokuapp.com',
+    'http://localhost:8000',
+    'http://ai.newssumarization.com'
 ]
 
 TEMPLATES = [
@@ -170,16 +171,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'dashboard/static'),
-    os.path.join(BASE_DIR,'subscriber/static')
+    os.path.join(BASE_DIR, 'dashboard/static'),
+    os.path.join(BASE_DIR, 'subscriber/static')
 ]

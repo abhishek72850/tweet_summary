@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portal</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'portal.css' %}">
+
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/scrollmagic.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/particles.js' %}"></script>
+
+    <base target="_blank">
+
+    <script>
+		var controller = new ScrollMagic.Controller();
+	</script>
+</head>
+<body>
+<div id="particles-js"></div>
+
+<section class="portal_container">
+    <div>
+        <div class="sub_portal portal_service_container">
+            <div class="portal_service">
+                <span class="service_name">Register</span>
+                <form method="post" action="#" class="display-after" id="register_form">
+                    <div>
+                        <input type="email" name="subscriber_email" placeholder="Email">
+                    </div>
+                    <div>
+                        <input type="text" name="subscriber_password" placeholder="Password">
+                    </div>
+                    <div>
+                        <div>Plans</div>
+                        <div>
+                            <div>
+                                <span>Basic</span>
+                                <span>Get 10 topic searches</span>
+                                <input type="radio" name="subscriber_plan" value="1">
+                            </div>
+                            <div>
+                                <span>Standard</span>
+                                <span>Get 25 topic searches</span>
+                                <input type="radio" name="subscriber_plan" value="2">
+                            </div>
+                            <div>
+                                <span>Premium</span>
+                                <span>Get 50 topic searches</span>
+                                <input type="radio" name="subscriber_plan" value="3">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+            <div class="portal_service">
+                <span>Subscribe</span>
+                <form method="post" action="#" class="display-after" id="subscription_form">
+                    <div>
+                        <input type="email" name="subscriber_email" placeholder="Email">
+                    </div>
+                    <div>
+                        <input type="password" name="subscriber_password" placeholder="Password">
+                    </div>
+                    <div>
+                        <input type="text" name="subscriber_topic" placeholder="Search Topic">
+                    </div>
+                    <div>
+                        <label>From</label>
+                        <input type="date" name="subscription_start_date">
+                        <label>To</label>
+                        <input type="date" name="subscription_end_date">
+                    </div>
+                    <div>
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+            <div class="portal_service">
+                <span>View Details</span>
+                <form method="post" action="#" class="display-after" id="view_and_update_form">
+                    <div>
+                        <input type="email" name="subscriber_email" placeholder="Email">
+                    </div>
+                    <div>
+                        <input type="password" name="subscriber_password" placeholder="Password">
+                    </div>
+                    <div>
+                        <button type="submit">View</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="sub_portal dashboard_container">
+            <div>
+                <a href="./dashboard">Quick Analysis</a>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="analysis_cont">
+    <div class="analysis_loader">
+        <img src="/static/images/ripple.gif">
+    </div>
+</div>
+<div class="profile_view_edit_light_box">
+    <div class="sub_edit_cont close_cont">
+        <span class="close_light_box">X</span>
+    </div>
+    <form action="#" method="POST" class="update_form sub_edit_cont">
+        <div class="sub_form_cont">
+            <span>Email:</span>
+            <span class="profile_email">Value</span>
+            <input type="hidden" name="subscriber_email" class="profile_email">
+        </div>
+        <div class="sub_form_cont">
+            <span>Password:</span>
+            <span class="profile_password">Value</span>
+            <input type="hidden" name="subscriber_password" class="profile_password">
+        </div>
+        <div class="sub_form_cont">
+            <div>Plan Subscribed:</div>
+            <div>
+                <div class="subscriber_plan_basic subscriber_plan">
+                    <span>Basic</span>
+                    <span>Get 10 topic searches</span>
+                    <input type="radio" name="subscriber_plan" value="1">
+                </div>
+                <div class="subscriber_plan_standard subscriber_plan">
+                    <span>Standard</span>
+                    <span>Get 25 topic searches</span>
+                    <input type="radio" name="subscriber_plan" value="2">
+                </div>
+                <div class="subscriber_plan_premium subscriber_plan">
+                    <span>Premium</span>
+                    <span>Get 50 topic searches</span>
+                    <input type="radio" name="subscriber_plan" value="3">
+                </div>
+            </div>
+        </div>
+        <div class="sub_form_cont subscriptions_cont">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Search Topic</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Status</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody class="profile_subscriptions">
+<!--                    &lt;!&ndash;<tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>Corona</td>-->
+<!--                        <td>12/12/2020</td>-->
+<!--                        <td>14/12/2020</td>-->
+<!--                        <td>ACTIVE</td>-->
+<!--                        <td>-->
+<!--                            <input type="checkbox" name="subscription_id" value="">-->
+<!--                        </td>-->
+<!--                    </tr>&ndash;&gt;-->
+                </tbody>
+            </table>
+        </div>
+        <div class="sub_form_cont">
+            <button type="submit">Update</button>
+            <button type="button" class="close_light_box">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+		$(function(){
+		    $('.display-after').hide();
+		    particlesJS.load('particles-js', '../../static/js/particlesjs-config.json', function() {
+              console.log('callback - particles.js config loaded');
+            });
+			$('.analysis_cont').hide();
+		});
+	</script>
+
+<script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+
+</body>
+</html>

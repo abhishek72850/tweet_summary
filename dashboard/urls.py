@@ -3,6 +3,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.dashboard),
-    path('panel', views.choice_panel)
+    path('dashboard', views.dashboard),
+    path('panel', views.choice_panel),
+    path('portal', views.choice_portal)
 ]

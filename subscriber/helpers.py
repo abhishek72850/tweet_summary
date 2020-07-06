@@ -9,7 +9,7 @@ from django.template.loader import get_template
 from django.utils.html import strip_tags
 
 from api_manager.helpers import TwitterHelper
-from subscriber.models import SubscribeModel
+from subscriber.models import SubscribeModel, UserModel, SubscriptionPlanModel
 from tweet_summary.settings import SECRET_KEY, SITE_EMAIL
 
 
@@ -19,14 +19,15 @@ def random_string(string_length=20):
     return ''.join(random.choice(letters) for i in range(string_length))
 
 
-def generate_token(email, subscriber_id, expire=7):
+def generate_token(email, expire=7, **kwargs):
     exp_datetime = datetime.now() + timedelta(days=expire)
 
     payload = {
-        'subscriber_id': subscriber_id,
         'email': email,
         'exp': int(exp_datetime.strftime('%s'))
     }
+
+    payload.update(kwargs)
 
     return jwt.encode(payload=payload, key=SECRET_KEY).decode('utf-8')
 
@@ -42,38 +43,132 @@ def decode_token(token):
         return False, None
 
 
-def add_subscriber(email, topic, start_date, end_date):
-    result_set = SubscribeModel.objects.filter(email=email, topic=topic)
+def get_user_details(email, password):
+    return UserModel.objects.filter(email=email, password=password)
 
-    if len(result_set) > 0:
-        success = SubscribeModel.objects.filter(email=email, topic=topic).update(
-            subscription_from=start_date,
-            subscription_to=end_date
+
+def register_or_verify_subscriber(email, password, plan_id):
+    result = get_user_details(email, password)
+
+    print('*********', len(result))
+
+    if len(result) == 0:
+        user = UserModel()
+        user.email = email
+        user.password = password
+        try:
+            user.plan_subscribed = SubscriptionPlanModel.objects.get(id=plan_id)
+        except SubscriptionPlanModel.DoesNotExist as err:
+            return None
+
+        user.save()
+
+        return user
+
+    return result[0]
+
+
+def add_subscription(email, password, topic, start_date, end_date):
+    user_set = get_user_details(email, password)
+    if len(user_set) > 0:
+        if user_set[0].email_verified:
+            result_set = SubscribeModel.objects.filter(user=user_set[0], topic=topic)
+
+            quota = user_set[0].plan_subscribed.topic_quota
+            count = SubscribeModel.objects.filter(user=user_set[0], subscription_status='ACTIVE').count()
+
+            if count >= quota:
+                return None, 'QUOTA_EXHAUSTED'
+
+            if len(result_set) > 0:
+                success = SubscribeModel.objects.filter(user=user_set[0], topic=topic).update(
+                    subscription_from=start_date,
+                    subscription_to=end_date
+                )
+
+                if success == 1:
+                    return result_set[0], 'UPDATED'
+                else:
+                    return None, 'ERROR'
+            else:
+                subscriber = SubscribeModel()
+                subscriber.user = user_set[0]
+                subscriber.topic = topic
+                subscriber.subscription_from = start_date
+                subscriber.subscription_to = end_date
+
+                subscriber.save()
+
+                return subscriber, 'CREATED'
+
+    return None, 'NOT_REGISTERED'
+
+
+def get_subscription_and_profile_details(email, password):
+    full_details = {}
+    user_set = get_user_details(email, password)
+    print(user_set)
+    if len(user_set) > 0:
+        subscriptions = SubscribeModel.objects.filter(user=user_set[0])
+        full_details = {
+            'user': user_set[0].toJSON(),
+            'plan': user_set[0].plan_subscribed.toJSON(),
+            'subscriptions': [subscription.toJSON() for subscription in subscriptions]
+        }
+
+    return full_details
+
+
+def remove_subscription(email, password, subscription_id):
+    user_set = get_user_details(email, password)
+
+    if len(user_set) > 0:
+        SubscribeModel.objects.filter(user=user_set[0], id=subscription_id).delete()
+    else:
+        return False
+
+    return True
+
+
+def update_subscription_details(email, password, subscription_id, topic, subscription_from, subscription_to):
+    user_set = get_user_details(email, password)
+
+    if len(user_set) > 0:
+        success = SubscribeModel.objects.filter(user=user_set[0], id=subscription_id).update(
+            topic=topic,
+            subscription_from=subscription_from,
+            subscription_to=subscription_to
         )
 
         if success == 1:
-            return result_set[0], 'UPDATED'
+            return True
         else:
-            return None, 'ERROR'
-    else:
-        subscriber = SubscribeModel()
-        subscriber.email = email
-        subscriber.topic = topic
-        subscriber.subscription_from = start_date
-        subscriber.subscription_to = end_date
+            return False
 
-        subscriber.save()
-
-        return subscriber, 'CREATED'
+    return False
 
 
-def confirm_email_verification(email, subscriber_id):
-    result_set = SubscribeModel.objects.filter(email=email, id=subscriber_id)
+def confirm_email_verification(email, user_id):
+    result_set = UserModel.objects.filter(email=email, id=user_id)
 
     if len(result_set) > 0:
-        success = SubscribeModel.objects.filter(email=email, id=subscriber_id).update(
+        success = UserModel.objects.filter(email=email, id=user_id).update(
             email_verified=True,
             status='VERIFIED',
+            # subscription_status='ACTIVE'
+        )
+
+        if success == 1:
+            return True
+
+    return False
+
+
+def confirm_subscription(email, subscription_id):
+    result_set = SubscribeModel.objects.filter(id=subscription_id)
+
+    if len(result_set) > 0:
+        success = SubscribeModel.objects.filter(id=subscription_id).update(
             subscription_status='ACTIVE'
         )
 
@@ -83,11 +178,11 @@ def confirm_email_verification(email, subscriber_id):
     return False
 
 
-def unsubscribe(email, subscriber_id):
-    result_set = SubscribeModel.objects.filter(email=email, id=subscriber_id, email_verified=True, status='VERIFIED')
+def unsubscribe(email, subscription_id):
+    result_set = SubscribeModel.objects.filter(id=subscription_id, email_verified=True, status='VERIFIED')
 
     if len(result_set) > 0:
-        success = SubscribeModel.objects.filter(email=email, id=subscriber_id).update(
+        success = SubscribeModel.objects.filter(id=subscription_id).update(
             subscription_status='SUSPENDED'
         )
 
@@ -103,14 +198,26 @@ def send_sub_email(data):
     return True
 
 
-def send_subscription_email(subscriber, subscription_confirmation_url):
+def send_email_verification_link(subscriber, email_verification_url):
+    data = dict()
+    data["confirmation_url"] = email_verification_url
+    data["subject"] = "Please Confirm The Email"
+    data["email"] = subscriber.email
+    template = get_template("subscriber/email_verify.html")
+    data["html_text"] = template.render(data)
+    data["plain_text"] = strip_tags(data["html_text"])
+    return send_sub_email(data)
+
+
+def send_subscription_verification_link(subscriber, subscription_confirmation_url):
     data = dict()
     data["confirmation_url"] = subscription_confirmation_url
     data["subject"] = "Please Confirm The Subscription"
-    data["email"] = subscriber.email
+    data["email"] = subscriber.user.email
+    data["topic"] = subscriber.topic
     data["start_date"] = subscriber.subscription_from
     data["end_date"] = subscriber.subscription_to
-    template = get_template("subscriber/email_verify.html")
+    template = get_template("subscriber/subscription_verify.html")
     data["html_text"] = template.render(data)
     data["plain_text"] = strip_tags(data["html_text"])
     return send_sub_email(data)
@@ -197,13 +304,13 @@ def prepare_twitter_analysis(topic):
 
 def send_analysis(subscriber, analysis):
     current_date = datetime.now()
-    token = generate_token(subscriber.email, subscriber.id, expire=1)
+    token = generate_token(subscriber.user.email, expire=1, subscription_id=subscriber.id)
     analysis['unsubscribe_link'] = 'https://tweet-summary.herokuapp.com/subscriber/unsubscribe?verification_code={}'.format(token)
     template = get_template("subscriber/tweet_analysis.html")
 
     mail_data = {
         'subject' : '{} Tweet analysis on {}'.format(current_date.date(), subscriber.topic),
-        'email' : subscriber.email,
+        'email' : subscriber.user.email,
         'html_text': template.render(analysis),
     }
 

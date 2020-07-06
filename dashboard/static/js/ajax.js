@@ -1,4 +1,9 @@
-var requestAjax=function(options, dataset, call_type){
+var hide_loaders = function(){
+    $('#loader').hide();
+    $('.analysis_cont').hide();
+}
+
+var requestAjax=function(options, dataset, call_type, callback){
 
 	var object = {
 		url:"https://tweet-summary.herokuapp.com/api/fetch/summary/",
@@ -13,7 +18,18 @@ var requestAjax=function(options, dataset, call_type){
 	xhr = $.ajax(object).done(function(data){
 		console.log(data);
 
-		if(call_type=='Search'){
+		if(call_type=='register' || call_type=='subscription' || call_type=='view' || call_type=='update'){
+            if(data['status'] == 200){
+                if(call_type=='view'){
+                    $('.analysis_loader').hide();
+                }
+                else{
+                    hide_loaders();
+                }
+                callback(data['data']);
+            }
+		}
+		else if(call_type=='Search'){
             $('.result_cont').show()
             $('.result_nav_panel').css({'visibility':'visible'})
 
@@ -109,8 +125,7 @@ var requestAjax=function(options, dataset, call_type){
                 mention_list = Array.from(mention_list);
                 $('.stats_24_most_active_tweet_mentions').text(mention_list.join(", "));
             }
-            $('#loader').hide();
-            $('.analysis_loader').hide();
+            hide_loaders()
         }
         else{
             $('.analysis_cont').hide();
@@ -126,8 +141,4 @@ var requestAjax=function(options, dataset, call_type){
 
 		$('#loader').hide();
 	});
-}
-
-var loadContent = function(data){
-
 }
