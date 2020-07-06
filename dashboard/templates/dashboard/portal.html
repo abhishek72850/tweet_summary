@@ -25,10 +25,10 @@
                 <span class="service_name">Register</span>
                 <form method="post" action="#" class="display-after" id="register_form">
                     <div>
-                        <input type="email" name="subscriber_email" placeholder="Email">
+                        <input type="email" name="subscriber_email" placeholder="Email" required>
                     </div>
                     <div>
-                        <input type="text" name="subscriber_password" placeholder="Password">
+                        <input type="text" name="subscriber_password" placeholder="Password" required>
                     </div>
                     <div>
                         <div>Plans</div>
@@ -36,7 +36,7 @@
                             <div>
                                 <span>Basic</span>
                                 <span>Get 10 topic searches</span>
-                                <input type="radio" name="subscriber_plan" value="1">
+                                <input type="radio" name="subscriber_plan" value="1" checked="checked">
                             </div>
                             <div>
                                 <span>Standard</span>
@@ -59,19 +59,19 @@
                 <span>Subscribe</span>
                 <form method="post" action="#" class="display-after" id="subscription_form">
                     <div>
-                        <input type="email" name="subscriber_email" placeholder="Email">
+                        <input type="email" name="subscriber_email" placeholder="Email" required>
                     </div>
                     <div>
-                        <input type="password" name="subscriber_password" placeholder="Password">
+                        <input type="password" name="subscriber_password" placeholder="Password" required>
                     </div>
                     <div>
-                        <input type="text" name="subscriber_topic" placeholder="Search Topic">
+                        <input type="text" name="subscriber_topic" placeholder="Search Topic" required>
                     </div>
                     <div>
                         <label>From</label>
-                        <input type="date" name="subscription_start_date">
+                        <input type="date" name="subscription_start_date" required>
                         <label>To</label>
-                        <input type="date" name="subscription_end_date">
+                        <input type="date" name="subscription_end_date" required>
                     </div>
                     <div>
                         <button type="submit">Subscribe</button>
@@ -82,10 +82,10 @@
                 <span>View Details</span>
                 <form method="post" action="#" class="display-after" id="view_and_update_form">
                     <div>
-                        <input type="email" name="subscriber_email" placeholder="Email">
+                        <input type="email" name="subscriber_email" placeholder="Email" required>
                     </div>
                     <div>
-                        <input type="password" name="subscriber_password" placeholder="Password">
+                        <input type="password" name="subscriber_password" placeholder="Password" required>
                     </div>
                     <div>
                         <button type="submit">View</button>
