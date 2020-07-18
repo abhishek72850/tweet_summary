@@ -62,9 +62,15 @@ class TwitterHelper:
 
         date_sort = dict(sorted(date_count.items(), key=lambda k: k[0], reverse=True))
         count_lst = list(date_sort.values())
-        increase = (sum(count_lst[:-1]) % count_lst[-1]) * 100
+        total_tweets_before_current = sum(count_lst[:-1])
 
-        return increase
+        # if total_tweets_before_current == 0:
+        #     return count_lst[-1] * 100
+        return count_lst[-2] - count_lst[-1]
+
+        # increase = (count_lst[-1] / sum(count_lst[:-1])) * 100
+
+        # return increase
 
     def stats_for_24_hour(self):
         now_datetime = datetime.now(timezone.utc)

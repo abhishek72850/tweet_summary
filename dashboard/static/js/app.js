@@ -31,6 +31,8 @@ $(function(){
 		app_env.query = this.search.value;
 		requestAjax({
 					data:{
+					    'email':this.user_email.value,
+					    'password': this.user_password.value,
 						'query':this.search.value,
 					}
 				},this.dataset, 'Search'

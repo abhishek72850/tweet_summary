@@ -39,7 +39,14 @@ var requestAjax=function(options, dataset, call_type, callback){
                 data = data['data'];
 
                 $('.query').text(data['query']);
-                $('.increase').text(data['increase_in_tweets']);
+
+                if(data['increase_in_tweets'] > 0){
+                    inc_or_dec = data['increase_in_tweets'] + ' increase'
+                }
+                else{
+                    inc_or_dec = (data['increase_in_tweets'] * -1) + ' decrease'
+                }
+                $('.increase').text(inc_or_dec);
 
                 $('.total_tweets').text(data['total_tweets']);
                 $('.total_mentions').text(data['total_mentions'].length);
@@ -53,7 +60,14 @@ var requestAjax=function(options, dataset, call_type, callback){
                 }
 
                 mention_list = Array.from(mention_list);
-                $('.noticeable_user').text(mention_list.slice(0,5).join(", "));
+
+                if(mention_list.length > 0){
+                    $('.noticeable_user').text(mention_list.slice(0,5).join(", "));
+                }
+                else{
+                    $('.noticeable_user').text('None');
+                }
+
 
                 $('.most_active_verified_tweet_user_name').text(data['most_active_verified_tweet']['user']['name']);
                 $('.most_active_verified_tweet_retweets').text(data['most_active_verified_tweet']['retweet_count']);
@@ -66,7 +80,26 @@ var requestAjax=function(options, dataset, call_type, callback){
                     mention_list.add(value['name']);
                 }
                 mention_list = Array.from(mention_list);
-                $('.most_active_verified_tweet_mentions').text(mention_list.join(", "));
+
+                if(mention_list.length > 0){
+                    $('.most_active_verified_tweet_mentions').text(mention_list.join(", "));
+                }
+                else{
+                    $('.most_active_verified_tweet_mentions').text('None');
+                }
+
+                if(data['noticeable_user_tweet'].length > 0){
+                    if(data['noticeable_user_tweet'][0]['tweet_content'].length == 0){
+                        $('.active_user_1').hide()
+                    }
+
+                    if(data['noticeable_user_tweet'].length == 1){
+                        $('.active_user_2').hide()
+                    }
+                }
+                else{
+                    $('.active_users').hide()
+                }
 
                 $('.noticeable_user_tweet_user_name_1').text(data['noticeable_user_tweet'][0]['user_name']);
                 $('.noticeable_user_tweet_total_1').text(data['noticeable_user_tweet'][0]['tweet_content'].length);
@@ -79,7 +112,13 @@ var requestAjax=function(options, dataset, call_type, callback){
                     mention_list.add(value['name']);
                 }
                 mention_list = Array.from(mention_list);
-                $('.noticeable_user_tweet_mentions_1').text(mention_list.join(", "));
+
+                if(mention_list.length > 0){
+                    $('.noticeable_user_tweet_mentions_1').text(mention_list.join(", "));
+                }
+                else{
+                    $('.noticeable_user_tweet_mentions_1').text('None');
+                }
 
                 $('.noticeable_user_tweet_user_name_2').text(data['noticeable_user_tweet'][1]['user_name']);
                 $('.noticeable_user_tweet_total_2').text(data['noticeable_user_tweet'][1]['tweet_content'].length);
@@ -92,7 +131,13 @@ var requestAjax=function(options, dataset, call_type, callback){
                     mention_list.add(value['name']);
                 }
                 mention_list = Array.from(mention_list);
-                $('.noticeable_user_tweet_mentions_2').text(mention_list.join(", "));
+
+                if(mention_list.length > 0){
+                    $('.noticeable_user_tweet_mentions_2').text(mention_list.join(", "));
+                }
+                else{
+                    $('.noticeable_user_tweet_mentions_2').text('None');
+                }
 
 
                 //24 hour stats
@@ -108,7 +153,13 @@ var requestAjax=function(options, dataset, call_type, callback){
                     mention_list.add(value['name']);
                 }
                 mention_list = Array.from(mention_list);
-                $('.stats_24_noticeable_mentions').text(mention_list.join(", "));
+
+                if(mention_list.length > 0){
+                    $('.stats_24_noticeable_mentions').text(mention_list.join(", "));
+                }
+                else{
+                    $('.stats_24_noticeable_mentions').text('None');
+                }
 
                 $('.stats_24_noticeable_retweets').text(data_24['verified_total_retweets']);
                 $('.stats_24_noticeable_favorite').text(data_24['verified_total_favorite']);
@@ -123,7 +174,13 @@ var requestAjax=function(options, dataset, call_type, callback){
                     mention_list.add(value['name']);
                 }
                 mention_list = Array.from(mention_list);
-                $('.stats_24_most_active_tweet_mentions').text(mention_list.join(", "));
+
+                if(mention_list.length > 0){
+                    $('.stats_24_most_active_tweet_mentions').text(mention_list.join(", "));
+                }
+                else{
+                    $('.stats_24_most_active_tweet_mentions').text('None');
+                }
             }
             hide_loaders()
         }
@@ -132,6 +189,7 @@ var requestAjax=function(options, dataset, call_type, callback){
             $('.analysis_loader').hide();
             alert(data['data'])
         }
+        $('.data_timestamp').text(Date());
 
 	}).fail(function( jqXHR, textStatus, errorThrown ) {
 		console.log(jqXHR);

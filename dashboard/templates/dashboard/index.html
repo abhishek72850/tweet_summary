@@ -8,6 +8,10 @@
 		<div class="search_form">
 			<form id="search_form">
 				<div>
+					<input type="email" name="user_email" placeholder="Enter registered email" required>
+					<input type="password" name="user_password" placeholder="Enter password" required>
+				</div>
+				<div>
 					<input type="text" name="search" required>
 					<button type="submit">
 						<span id="search_text">Search</span>
@@ -20,12 +24,15 @@
 			<div>
 				<span>Summarizing using <span class="total_tweets"></span> tweets</span>
 			</div>
+			<div>
+				<span>Data extracted on <span class="data_timestamp"></span></span>
+			</div>
 		</div>
 	</div>
 	<div class="result_panel">
 		<div class="result_cont">
 			<ul>
-				<li>There has been <span class="increase bold"></span> increase in the tweets related to <span class="query bold"></span></li>
+				<li>There has been <span class="increase bold"></span> in the tweets from yesterday related to <span class="query bold"></span></li>
 				<li>In the past one week, there have been
 					<span class="total_tweets bold"></span> tweets,
 					<span class="total_mentions bold"></span> mentions,
@@ -33,8 +40,8 @@
 					primarily related to <span class="query bold"></span>
 				</li>
 				<li>
-					Overall conversation continues to be contained to twitter(
-					<span class="total_mentions bold"></span> of the total social mentions,
+					Overall conversation continues to be included in twitter(
+					<span class="total_mentions bold"></span> social mentions, and
 					<span class="total_favorite bold"></span> total likes), and
 					is driven by retweets of <span class="noticeable_user bold"></span>
 				</li>
@@ -49,17 +56,17 @@
 						</li>
 					</ul>
 				</li>
-				<li>
+				<li class="active_users">
 					Other tweets which were most active was made by
 					<ul>
-						<li>
+						<li class="active_user_1">
 							<span class="noticeable_user_tweet_user_name_1 bold"></span>,
 							total <span class="noticeable_user_tweet_total_1 bold"></span> tweets posted,
 							<span class="noticeable_user_tweet_total_retweets_1 bold"></span> retweets,
 							<span class="noticeable_user_tweet_total_favorite_1 bold"></span> likes,
 							Noticeable mentions were <span class="noticeable_user_tweet_mentions_1 bold"></span>
 						</li>
-						<li>
+						<li class="active_user_2">
 							<span class="noticeable_user_tweet_user_name_2 bold"></span>,
 							total <span class="noticeable_user_tweet_total_2 bold"></span> tweets posted,
 							<span class="noticeable_user_tweet_total_retweets_2 bold"></span> retweets,

@@ -13,6 +13,8 @@ class SubscriptionPlanModel(models.Model, GeneralObject):
     id = models.AutoField(primary_key=True, null=False, blank=True)
     plan_name = models.CharField(max_length=100, null=False)
     topic_quota = models.IntegerField(null=False)
+    subscription_period_max_days = models.IntegerField(null=False)
+    quick_analysis_quota = models.IntegerField(null=False)
     created_at = models.DateTimeField(null=False, blank=True, auto_now_add=True)
 
     class Meta:
@@ -28,6 +30,7 @@ class UserModel(models.Model, GeneralObject):
     email_verified = models.BooleanField(default=False)
     status = models.CharField(max_length=64, null=False, blank=True, default='PENDING_VERIFICATION')
     plan_subscribed = models.ForeignKey(SubscriptionPlanModel, on_delete=models.DO_NOTHING)
+    quick_analysis_counter = models.IntegerField(null=False, default=0)
 
     class Meta:
         app_label = "subscriber"

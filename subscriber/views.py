@@ -49,38 +49,49 @@ class UpsertSubscription(APIView):
                 return Response({'status': status.HTTP_400_BAD_REQUEST,
                                  'data': 'Subscription start date cannot be greater than end date'})
 
-            subscription, status_msg = add_subscription(request.POST['subscriber_email'],
-                                                        request.POST['subscriber_password'],
-                                                        request.POST['subscriber_topic'],
-                                                        start_date, end_date)
+            user_set = get_user_details(request.POST['subscriber_email'], request.POST['subscriber_password'])
 
-            if isinstance(subscription, SubscribeModel):
-                if subscription.subscription_status == 'IDLE':
-                    token = generate_token(email=subscription.user.email, subscription_id=subscription.id)
-                    confirmation_url = 'https://tweet-summary.herokuapp.com/subscriber/confirm_subscription?verification_code={}'.format(
-                        token)
-                    send_subscription_verification_link(subscription, confirmation_url)
-                if status_msg == 'CREATED':
+            if len(user_set) > 0:
+                if (end_date - start_date).days > user_set[0].plan_subscribed.subscription_period_max_days:
                     return Response({
-                        'status': status.HTTP_200_OK,
-                        'data': 'Subscription created, please check email to verify'
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'data': 'Subscription period exceeded plan allowed days!!'
                     })
-                elif status_msg == 'UPDATED':
-                    return Response({
-                        'status': status.HTTP_200_OK,
-                        'data': 'Subscription updated'
-                    })
+                subscription, status_msg = add_subscription(user_set[0], request.POST['subscriber_topic'],
+                                                            start_date, end_date)
+
+                if isinstance(subscription, SubscribeModel):
+                    if subscription.subscription_status == 'IDLE':
+                        token = generate_token(email=subscription.user.email, subscription_id=subscription.id)
+                        confirmation_url = 'https://tweet-summary.herokuapp.com/subscriber/confirm_subscription?verification_code={}'.format(
+                            token)
+                        send_subscription_verification_link(subscription, confirmation_url)
+                    if status_msg == 'CREATED':
+                        return Response({
+                            'status': status.HTTP_200_OK,
+                            'data': 'Subscription created, please check email to verify'
+                        })
+                    elif status_msg == 'UPDATED':
+                        return Response({
+                            'status': status.HTTP_200_OK,
+                            'data': 'Subscription updated'
+                        })
+                else:
+                    if status_msg == 'NOT_VERIFIED':
+                        return Response({
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'data': 'Email is not verified!!'
+                        })
+                    if status_msg == 'QUOTA_EXHAUSTED':
+                        return Response({
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'data': 'You have reached your ACTIVE subscriptions quota!!'
+                        })
             else:
-                if status_msg == 'NOT_REGISTERED':
-                    return Response({
-                        'status': status.HTTP_200_OK,
-                        'data': 'Email not registered or not verified!!'
-                    })
-                elif status_msg == 'QUOTA_EXHAUSTED':
-                    return Response({
-                        'status': status.HTTP_200_OK,
-                        'data': 'You have reached your ACTIVE subscriptions quota!!'
-                    })
+                return Response({
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'data': 'Email not registered or password is incorrect!!'
+                })
 
         return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Something went wrong!!'})
 

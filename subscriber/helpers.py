@@ -68,40 +68,38 @@ def register_or_verify_subscriber(email, password, plan_id):
     return result[0]
 
 
-def add_subscription(email, password, topic, start_date, end_date):
-    user_set = get_user_details(email, password)
-    if len(user_set) > 0:
-        if user_set[0].email_verified:
-            result_set = SubscribeModel.objects.filter(user=user_set[0], topic=topic)
+def add_subscription(user, topic, start_date, end_date):
+    if user.email_verified:
+        result_set = SubscribeModel.objects.filter(user=user, topic=topic)
 
-            quota = user_set[0].plan_subscribed.topic_quota
-            count = SubscribeModel.objects.filter(user=user_set[0], subscription_status='ACTIVE').count()
+        quota = user.plan_subscribed.topic_quota
+        count = SubscribeModel.objects.filter(user=user, subscription_status='ACTIVE').count()
 
-            if count >= quota:
-                return None, 'QUOTA_EXHAUSTED'
+        if count >= quota:
+            return None, 'QUOTA_EXHAUSTED'
 
-            if len(result_set) > 0:
-                success = SubscribeModel.objects.filter(user=user_set[0], topic=topic).update(
-                    subscription_from=start_date,
-                    subscription_to=end_date
-                )
+        if len(result_set) > 0:
+            success = SubscribeModel.objects.filter(user=user, topic=topic).update(
+                subscription_from=start_date,
+                subscription_to=end_date
+            )
 
-                if success == 1:
-                    return result_set[0], 'UPDATED'
-                else:
-                    return None, 'ERROR'
+            if success == 1:
+                return result_set[0], 'UPDATED'
             else:
-                subscriber = SubscribeModel()
-                subscriber.user = user_set[0]
-                subscriber.topic = topic
-                subscriber.subscription_from = start_date
-                subscriber.subscription_to = end_date
+                return None, 'ERROR'
+        else:
+            subscriber = SubscribeModel()
+            subscriber.user = user
+            subscriber.topic = topic
+            subscriber.subscription_from = start_date
+            subscriber.subscription_to = end_date
 
-                subscriber.save()
+            subscriber.save()
 
-                return subscriber, 'CREATED'
+            return subscriber, 'CREATED'
 
-    return None, 'NOT_REGISTERED'
+    return None, 'NOT_VERIFIED'
 
 
 def get_subscription_and_profile_details(email, password):
@@ -238,6 +236,11 @@ def prepare_twitter_analysis(topic):
             'total_retweets': data['total_retweets'],
             'total_favorite': data['total_favorite']
         }
+
+        if data['increase_in_tweets'] < 0:
+            analysis_data['increase_or_decrease'] = '{} decrease'.format(str(data['increase_in_tweets']*(-1)))
+        else:
+            analysis_data['increase_or_decrease'] = '{} increase'.format(str(data['increase_in_tweets']))
 
         mention_list = set()
         for value in data['noticeable_user']:
