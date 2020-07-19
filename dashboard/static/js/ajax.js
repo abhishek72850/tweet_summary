@@ -30,13 +30,13 @@ var requestAjax=function(options, dataset, call_type, callback){
             }
 		}
 		else if(call_type=='Search'){
-            $('.result_cont').show()
-            $('.result_nav_panel').css({'visibility':'visible'})
 
             if(data['status'] != 200){
                 alert(data['message']);
             }
             else if(data['status'] == 200){
+                $('.result_cont').show()
+                $('.result_nav_panel').css({'visibility':'visible'})
 
                 app_env.data = data['data'];
                 data = data['data'];
