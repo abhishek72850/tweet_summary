@@ -22,17 +22,33 @@ section{
 .search_form>form{
 	
 }
+.search_form>form>div{
+	margin: 0.5em 0;
+}
+.search_form>form>div>input{
+	font-size: 0.9em;
+	height: 100%;
+	width: 100%;
+	border: none;
+	padding: 0 1em;
+}
 .search_form>form>div:first-child{
+  display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 3em;
+}
+.search_form>form>div:first-child>input{
+	width: 49%;
+	border: 1px solid #000;
+}
+.search_form>form>div:last-child{
 	position: relative;
 	border: 1px solid #000;
 	box-shadow: 0 2px 3px rgba(0,0,0,0.5);
 	height: 3em;
 }
-.search_form>form>div>input{
-	height: 100%;
-	width: 100%;
-	border: none;
-}
+
 .search_form>form>div>button{
 	position: absolute;
 	border:none;
