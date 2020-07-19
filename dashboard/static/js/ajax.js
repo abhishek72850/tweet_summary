@@ -33,7 +33,10 @@ var requestAjax=function(options, dataset, call_type, callback){
             $('.result_cont').show()
             $('.result_nav_panel').css({'visibility':'visible'})
 
-            if(data['status'] == 200){
+            if(data['status'] != 200){
+                alert(data['message']);
+            }
+            else if(data['status'] == 200){
 
                 app_env.data = data['data'];
                 data = data['data'];
@@ -181,6 +184,8 @@ var requestAjax=function(options, dataset, call_type, callback){
                 else{
                     $('.stats_24_most_active_tweet_mentions').text('None');
                 }
+
+                $('.data_timestamp').text(Date());
             }
             hide_loaders()
         }
@@ -189,7 +194,6 @@ var requestAjax=function(options, dataset, call_type, callback){
             $('.analysis_loader').hide();
             alert(data['data'])
         }
-        $('.data_timestamp').text(Date());
 
 	}).fail(function( jqXHR, textStatus, errorThrown ) {
 		console.log(jqXHR);
