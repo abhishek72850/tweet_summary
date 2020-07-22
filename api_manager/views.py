@@ -29,7 +29,7 @@ class SummaryAnalysis(APIView):
                 tweet = helpers.TwitterHelper(request.GET['query'])
                 data = tweet.fetch_analysis()
 
-                success = UserModel.objects.get(id=user_set[0].id).update(
+                success = UserModel.objects.filter(id=user_set[0].id).update(
                     quick_analysis_counter=user_set[0].quick_analysis_counter + 1
                 )
 
