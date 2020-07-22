@@ -9,17 +9,8 @@ def BuildResponse(data):
 		}
 	else:
 		response = {
-			'status': data['code'],
+			'status': data['status'],
 			'data': data['message']
 		}
 
 	return response
-
-
-def IsSocialRequest(query):
-	lst = ['facebook','twitter','instagram','youtube','linkdin','glassdoor','quora']
-
-	if lower(query) in lst:
-		return True
-	else:
-		return False

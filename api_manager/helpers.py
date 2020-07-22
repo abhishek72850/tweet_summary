@@ -241,21 +241,28 @@ class TwitterHelper:
         self.fetch_result(max_range=1)
         total_retweets, total_favorite = self.retweets_favorite_count()
 
-        response = {
-            "success": True,
-            "data": {
-                "query": self.query,
-                "total_tweets": len(self.result),
-                "total_retweets": total_retweets,
-                "total_favorite": total_favorite,
-                "total_mentions": self.total_user_mentioned(verified=False),
-                "increase_in_tweets": self.increase_in_tweets(),
-                "total_verified_mentions": self.total_user_mentioned(verified=True),
-                "most_active_verified_tweet": self.most_retweeted_verified_tweet(),
-                "noticeable_user": self.most_tweeted_verified_account(),
-                "noticeable_user_tweet": self.most_tweets_by_verified_user(),
-                "24_hour_stats": self.stats_for_24_hour()
+        if len(self.result) > 0:
+            response = {
+                "success": True,
+                "data": {
+                    "query": self.query,
+                    "total_tweets": len(self.result),
+                    "total_retweets": total_retweets,
+                    "total_favorite": total_favorite,
+                    "total_mentions": self.total_user_mentioned(verified=False),
+                    "increase_in_tweets": self.increase_in_tweets(),
+                    "total_verified_mentions": self.total_user_mentioned(verified=True),
+                    "most_active_verified_tweet": self.most_retweeted_verified_tweet(),
+                    "noticeable_user": self.most_tweeted_verified_account(),
+                    "noticeable_user_tweet": self.most_tweets_by_verified_user(),
+                    "24_hour_stats": self.stats_for_24_hour()
+                }
             }
-        }
+        else:
+            response = {
+                "success": False,
+                "status": 404,
+                "message": "No tweets found!!"
+            }
 
         return response
