@@ -36,12 +36,12 @@ class SummaryAnalysis(APIView):
                         )
 
                         if success == 1:
+                            response = utils.BuildResponse(data)
+                        else:
                             response = {
                                 'status': status.HTTP_404_NOT_FOUND,
                                 'message': 'Something went wrong, Code: CNSU1'
                             }
-                        else:
-                            response = utils.BuildResponse(data)
                     else:
                         response = {
                             'status': status.HTTP_400_BAD_REQUEST,
@@ -55,7 +55,7 @@ class SummaryAnalysis(APIView):
             else:
                 response = {
                     'status': status.HTTP_401_UNAUTHORIZED,
-                    'message': 'Email or password does not exist'
+                    'message': 'Email does not exist or password is incorrect'
                 }
         else:
             response = {
