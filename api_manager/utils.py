@@ -10,7 +10,7 @@ def BuildResponse(data):
 	else:
 		response = {
 			'status': data['status'],
-			'data': data['message']
+			'message': data['message']
 		}
 
 	return response
