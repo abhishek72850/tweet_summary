@@ -171,12 +171,19 @@ class TwitterHelper:
 
         for tweet in self.result:
             if tweet['user']['verified']:
-                tweet_obj = tweet
-                break
+                if len(tweet_obj) == 0:
+                    tweet_obj = tweet
+                elif tweet['retweet_count'] > tweet_obj['retweet_count']:
+                    tweet_obj = tweet
 
-        for tweet in self.result:
-            if tweet['retweet_count'] > tweet_obj['retweet_count'] and tweet['user']['verified']:
-                tweet_obj = tweet
+        # for tweet in self.result:
+        #     if tweet['user']['verified']:
+        #         tweet_obj = tweet
+        #         break
+        #
+        # for tweet in self.result:
+        #     if tweet['retweet_count'] > tweet_obj['retweet_count'] and tweet['user']['verified']:
+        #         tweet_obj = tweet
 
         return tweet_obj
 
