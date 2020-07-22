@@ -66,7 +66,10 @@ class TwitterHelper:
 
         # if total_tweets_before_current == 0:
         #     return count_lst[-1] * 100
-        return count_lst[-2] - count_lst[-1]
+        if len(count_lst) > 1:
+            return count_lst[-2] - count_lst[-1]
+        else:
+            return count_lst[-1]
 
         # increase = (count_lst[-1] / sum(count_lst[:-1])) * 100
 
