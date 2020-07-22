@@ -125,9 +125,10 @@ class TwitterHelper:
 
         return response
 
-
     def retweets_favorite_count(self):
         date_stats = {}
+        retweet_count = 0
+        favorite_count = 0
         for tweet in self.result:
             date_obj = datetime.strptime(tweet['created_at'], "%a %b %d %H:%M:%S %z %Y")
             date_str = date_obj.date().strftime("%Y-%m-%d")
@@ -141,9 +142,10 @@ class TwitterHelper:
             date_stats[date_str]["retweet_count"] += tweet["retweet_count"]
             date_stats[date_str]["favorite_count"] += tweet["favorite_count"]
 
-        df = pd.DataFrame(date_stats)
-        retweet_count = df.loc['retweet_count'].sum()
-        favorite_count = df.loc['favorite_count'].sum()
+        if len(date_stats) > 0:
+            df = pd.DataFrame(date_stats)
+            retweet_count = df.loc['retweet_count'].sum()
+            favorite_count = df.loc['favorite_count'].sum()
 
         return retweet_count, favorite_count
 
