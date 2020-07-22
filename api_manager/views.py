@@ -26,20 +26,32 @@ class SummaryAnalysis(APIView):
             user_set = get_user_details(request.GET['email'], request.GET['password'])
 
             if len(user_set) > 0:
-                tweet = helpers.TwitterHelper(request.GET['query'])
-                data = tweet.fetch_analysis()
+                if user_set[0].email_verified:
+                    if user_set[0].quick_analysis_counter < user_set[0].plan_subscribed.quick_analysis_quota:
+                        tweet = helpers.TwitterHelper(request.GET['query'])
+                        data = tweet.fetch_analysis()
 
-                success = UserModel.objects.filter(id=user_set[0].id).update(
-                    quick_analysis_counter=user_set[0].quick_analysis_counter + 1
-                )
+                        success = UserModel.objects.filter(id=user_set[0].id).update(
+                            quick_analysis_counter=user_set[0].quick_analysis_counter + 1
+                        )
 
-                if success == 1:
-                    response = {
-                        'status': status.HTTP_404_NOT_FOUND,
-                        'message': 'Something went wrong, Code: CNSU1'
-                    }
+                        if success == 1:
+                            response = {
+                                'status': status.HTTP_404_NOT_FOUND,
+                                'message': 'Something went wrong, Code: CNSU1'
+                            }
+                        else:
+                            response = utils.BuildResponse(data)
+                    else:
+                        response = {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': 'You have exhausted your quick analysis quota'
+                        }
                 else:
-                    response = utils.BuildResponse(data)
+                    response = {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': 'Email is not verified'
+                    }
             else:
                 response = {
                     'status': status.HTTP_401_UNAUTHORIZED,

@@ -30,13 +30,13 @@ var requestAjax=function(options, dataset, call_type, callback){
             }
 		}
 		else if(call_type=='Search'){
-
+		    console.log(data['status']);
             if(data['status'] != 200){
                 alert(data['message']);
             }
             else if(data['status'] == 200){
-                $('.result_cont').show()
-                $('.result_nav_panel').css({'visibility':'visible'})
+                $('.result_cont').show();
+                $('.result_nav_panel').css({'visibility':'visible'});
 
                 app_env.data = data['data'];
                 data = data['data'];
@@ -44,10 +44,10 @@ var requestAjax=function(options, dataset, call_type, callback){
                 $('.query').text(data['query']);
 
                 if(data['increase_in_tweets'] > 0){
-                    inc_or_dec = data['increase_in_tweets'] + ' increase'
+                    inc_or_dec = data['increase_in_tweets'] + ' increase';
                 }
                 else{
-                    inc_or_dec = (data['increase_in_tweets'] * -1) + ' decrease'
+                    inc_or_dec = (data['increase_in_tweets'] * -1) + ' decrease';
                 }
                 $('.increase').text(inc_or_dec);
 
@@ -187,7 +187,7 @@ var requestAjax=function(options, dataset, call_type, callback){
 
                 $('.data_timestamp').text(Date());
             }
-            hide_loaders()
+            hide_loaders();
         }
         else{
             $('.analysis_cont').hide();
