@@ -3,6 +3,21 @@ var hide_loaders = function(){
     $('.analysis_cont').hide();
 }
 
+function createTextLinks_(text) {
+
+  return (text || "").replace(
+    /([^\S]|^)(((https?\:\/\/)|(www\.))(\S+))/gi,
+    function(match, space, url){
+      var hyperlink = url;
+      if (!hyperlink.match('^https?:\/\/')) {
+        hyperlink = 'http://' + hyperlink;
+      }
+      return space + '<a href="' + hyperlink + '">' + url + '</a>';
+    }
+  );
+};
+
+
 var requestAjax=function(options, dataset, call_type, callback){
 
 	var object = {
@@ -76,7 +91,7 @@ var requestAjax=function(options, dataset, call_type, callback){
                 $('.most_active_verified_tweet_user_name').text(data['most_active_verified_tweet']['user']['name']);
                 $('.most_active_verified_tweet_retweets').text(data['most_active_verified_tweet']['retweet_count']);
                 $('.most_active_verified_tweet_favorite').text(data['most_active_verified_tweet']['favorite_count']);
-                $('.most_active_verified_tweet').html(data['most_active_verified_tweet']['text']);
+                $('.most_active_verified_tweet').html(createTextLinks_(data['most_active_verified_tweet']['text']));
 
                 mention_list = new Set();
 
