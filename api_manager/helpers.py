@@ -169,11 +169,7 @@ class TwitterHelper:
         return mentioned_tweets
 
     def most_retweeted_verified_tweet(self):
-        tweet_obj = {
-            'user': {
-                'id': 0
-            }
-        }
+        tweet_obj = {}
 
         for tweet in self.result:
             if tweet['user']['verified']:
@@ -182,6 +178,12 @@ class TwitterHelper:
                 elif tweet['retweet_count'] > tweet_obj['retweet_count']:
                     tweet_obj = tweet
 
+        if len(tweet_obj) == 0:
+            tweet_obj = {
+                'user': {
+                    'id': 0
+                }
+            }
         # for tweet in self.result:
         #     if tweet['user']['verified']:
         #         tweet_obj = tweet
