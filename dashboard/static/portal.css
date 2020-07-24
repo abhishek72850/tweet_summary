@@ -52,7 +52,7 @@ body{
 }
 
 .display-after{
-    position: absolute;
+  position: absolute;
 	top: 0;
 	width: 100%;
 	height: 100%;
@@ -62,7 +62,8 @@ body{
 	align-items: center;
 }
 .display-after>div{
-	width: 50%;
+	text-align: center;
+	width: 60%;
 	margin: 0.5em 0;
 }
 .display-after>div>input{
@@ -72,7 +73,7 @@ body{
 	border: 1px solid #ccc;
 	padding: 0.2em 1em;
 	border-radius: 1em;
-	width: 100%;
+	width: 60%;
 	height: 3em;
 }
 .portal_service:first-child>.display-after>div:nth-child(3){
@@ -90,15 +91,17 @@ body{
 .portal_service:first-child>.display-after>div:nth-child(3)>div:nth-child(2)>div{
 	text-align: center;
 	font-size: 0.8em;
-  height: 8em;
-  width: 30%;
+  height: auto;
+  width: 50%;
 	padding: 0.5em;
 	background-color: #222;
 	border: 1px solid #ccc;
+	margin: 0 0.1em;
 }
 .portal_service:first-child>.display-after>div:nth-child(3)>div:nth-child(2)>div>span{
   display: inline-block;
 	width: 100%;
+	margin-bottom: 0.5em;
 }
 .portal_service:first-child>.display-after>div:nth-child(3)>div:nth-child(2)>div>span:nth-child(1){
 	font-size: 1.5em;
@@ -188,20 +191,20 @@ body{
 .sub_form_cont{
 	margin: 0.5em 0;
 }
-.sub_form_cont:nth-child(3){
+.sub_form_cont:nth-child(4){
 
 }
-.sub_form_cont:nth-child(3)>div:nth-child(2){
+.sub_form_cont:nth-child(4)>div:nth-child(2){
 	display: flex;
 	justify-content: space-between;
 }
-.sub_form_cont:nth-child(3)>div:nth-child(2)>div{
+.sub_form_cont:nth-child(4)>div:nth-child(2)>div{
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
-	align-items: center;
+	justify-content: space-between;
+	align-items:center;
 	padding: 0.5em;
-	height: 8em;
+	height: 13em;
 	width: 25%;
 	background-color: #eee;
 	box-shadow: 0 0 3px rgba(0,0,0,0.5);
@@ -209,34 +212,34 @@ body{
 .selected_plan{
 	border: 2px solid #000;
 }
-.sub_form_cont:nth-child(3)>div:nth-child(2)>div>span:first-child{
+.sub_form_cont:nth-child(4)>div:nth-child(2)>div>span:first-child{
 	font-size: 1.2em;
 }
-.sub_form_cont:nth-child(3)>div:nth-child(2)>div>span{
+.sub_form_cont:nth-child(4)>div:nth-child(2)>div>span{
 	text-align: center;
 }
-.sub_form_cont:nth-child(4){
+.sub_form_cont:nth-child(5){
 	margin: 2em 0 1em 0;
 }
-.sub_form_cont:nth-child(4)>table{
+.sub_form_cont:nth-child(5)>table{
 	width: 100%;
 	border: 1px solid #aaa;
 	border-collapse: collapse;
 }
-.sub_form_cont:nth-child(4)>table>thead{
+.sub_form_cont:nth-child(5)>table>thead{
 
 }
-.sub_form_cont:nth-child(4)>table>thead>tr{
+.sub_form_cont:nth-child(5)>table>thead>tr{
 	background-color: #eee;
 	height: 2.5em;
 }
-.sub_form_cont:nth-child(4)>table>thead>tr>th{
+.sub_form_cont:nth-child(5)>table>thead>tr>th{
 
 }
-.sub_form_cont:nth-child(4)>table>tbody>tr{
+.sub_form_cont:nth-child(5)>table>tbody>tr{
 	height: 2.5em;
 }
-.sub_form_cont:nth-child(4)>table>tbody>tr>td{
+.sub_form_cont:nth-child(5)>table>tbody>tr>td{
 	font-size: 0.9em;
 	text-align: center;
 }

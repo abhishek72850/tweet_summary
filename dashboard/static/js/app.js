@@ -134,7 +134,7 @@ $(function(){
         $('.profile_password').text(user.fields.password);
         $('.profile_password').attr('value',user.fields.password);
 
-        $('.quick_analysis_counter').text(user.fields.quick_analysis_quota - user.fields.quick_analysis_counter);
+        $('.quick_analysis_counter').text(parseInt(plan.fields.quick_analysis_quota) - parseInt(user.fields.quick_analysis_counter));
 
         var plan_class_name = '.subscriber_plan_' + plan.fields.plan_name.toLowerCase();
 
