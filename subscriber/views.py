@@ -55,7 +55,7 @@ class UpsertSubscription(APIView):
                 if (end_date - start_date).days > user_set[0].plan_subscribed.subscription_period_max_days:
                     return Response({
                         'status': status.HTTP_400_BAD_REQUEST,
-                        'data': 'Subscription period exceeded plan allowed days!!'
+                        'data': 'Subscription period exceeded select plan {} days limit!!'.format(user_set[0].plan_subscribed.subscription_period_max_days)
                     })
                 subscription, status_msg = add_subscription(user_set[0], request.POST['subscriber_topic'],
                                                             start_date, end_date)

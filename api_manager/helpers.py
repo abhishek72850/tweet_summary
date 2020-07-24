@@ -169,7 +169,11 @@ class TwitterHelper:
         return mentioned_tweets
 
     def most_retweeted_verified_tweet(self):
-        tweet_obj = {}
+        tweet_obj = {
+            'user': {
+                'id': 0
+            }
+        }
 
         for tweet in self.result:
             if tweet['user']['verified']:
@@ -192,8 +196,8 @@ class TwitterHelper:
     def verified_account_tweets(self):
         verified_account = []
         for tweet in self.result:
-            if tweet['user']['verified']:
-                verified_account.append((tweet['user']['id'],tweet['user']['name']))
+            if tweet['user']['verified'] and tweet['user']['id'] != self.most_retweeted_verified_tweet()['user']['id']:
+                verified_account.append((tweet['user']['id'], tweet['user']['name']))
 
         return verified_account
 
