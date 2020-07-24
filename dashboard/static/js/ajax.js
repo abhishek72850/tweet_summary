@@ -19,14 +19,15 @@ var requestAjax=function(options, dataset, call_type, callback){
 		console.log(data);
 
 		if(call_type=='register' || call_type=='subscription' || call_type=='view' || call_type=='update'){
+		    hide_loaders();
             if(data['status'] == 200){
                 if(call_type=='view'){
                     $('.analysis_loader').hide();
                 }
-                else{
-                    hide_loaders();
-                }
                 callback(data['data']);
+            }
+            else{
+                alert(data['data']);
             }
 		}
 		else if(call_type=='Search'){
