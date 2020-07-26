@@ -78,6 +78,7 @@ class TwitterHelper:
     def stats_for_24_hour(self):
         now_datetime = datetime.now(timezone.utc)
 
+        todays_tweets = []
         result_24_hour = []
         mentions_24_hour = []
         retweets_24_hour = 0
@@ -97,6 +98,7 @@ class TwitterHelper:
         for tweet in self.result:
             date_obj = datetime.strptime(tweet['created_at'], "%a %b %d %H:%M:%S %z %Y")
             if (now_datetime - date_obj).days == 0:
+                todays_tweets.append(tweet)
                 result_24_hour.append(tweet)
                 mentions_24_hour.extend(tweet['entities']['user_mentions'])
                 retweets_24_hour += tweet['retweet_count']
@@ -112,6 +114,7 @@ class TwitterHelper:
                         tweet_obj = tweet
 
         response = {
+            'tweet_list': todays_tweets,
             'total_tweets':len(result_24_hour),
             'mentions': mentions_24_hour,
             'total_retweets': retweets_24_hour,

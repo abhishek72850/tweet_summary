@@ -9,8 +9,12 @@ from django.template.loader import get_template
 from django.utils.html import strip_tags
 
 from api_manager.helpers import TwitterHelper
+from api_manager.watson import Watson
 from subscriber.models import SubscribeModel, UserModel, SubscriptionPlanModel
 from tweet_summary.settings import SECRET_KEY, SITE_EMAIL
+
+
+watson = Watson()
 
 
 def random_string(string_length=20):
@@ -225,6 +229,23 @@ def prepare_twitter_analysis(topic):
     tweet = TwitterHelper(topic)
     data = tweet.fetch_analysis()
 
+    positive_tweet = 0
+    neutral_tweet = 0
+    negative_tweet = 0
+
+    todays_tweets = tweet.stats_for_24_hour()['tweet_list']
+
+    for tweet_obj in todays_tweets:
+        keywords = watson.extractKeywords(tweet_obj['text'])
+        sentiment = watson.extractSentiment(tweet_obj['text'], keywords)
+
+        if sentiment['sentiment']['document']['label'] == 'positive':
+            positive_tweet += 1
+        elif sentiment['sentiment']['document']['label'] == 'negative':
+            negative_tweet += 1
+        elif sentiment['sentiment']['document']['label'] == 'neutral':
+            neutral_tweet += 1
+
     if data['success']:
         print('Preparing....')
         data = data['data']
@@ -234,7 +255,11 @@ def prepare_twitter_analysis(topic):
             'total_tweets': data['total_tweets'],
             'total_mentions': len(data['total_mentions']),
             'total_retweets': data['total_retweets'],
-            'total_favorite': data['total_favorite']
+            'total_favorite': data['total_favorite'],
+            'total_todays_tweet': len(todays_tweets),
+            'total_positive_tweets': positive_tweet,
+            'total_negative_tweets': negative_tweet,
+            'total_neutral_tweets': neutral_tweet
         }
 
         if data['increase_in_tweets'] < 0:
