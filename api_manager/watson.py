@@ -52,6 +52,8 @@ class Watson:
                 else:
                     keywords = [keywords]
             else:
+                print(type(keywords))
+                print(keywords.keys())
                 keywords = [word['text'] for word in keywords['keywords'] if(word['relevance']>0.50)]
 
             response = self.natural_language_understanding.analyze(
