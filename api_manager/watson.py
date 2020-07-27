@@ -22,7 +22,7 @@ class Watson:
 
         self.tone_analyzer.set_service_url('https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/84e3997e-8019-4bb8-b387-176e0861c0c5')
 
-        self.natural_language_understanding.set_service_url('https://gateway-lon.watsonplatform.net/natural-language-understanding/api')
+        self.natural_language_understanding.set_service_url('https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/452262a6-1d21-4dac-a637-bbb96192a69f')
 
     def extractKeywords(self, text):
 
