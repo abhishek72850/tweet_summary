@@ -37,8 +37,7 @@ class Watson:
                 )
             ).get_result()
 
-            print(response)
-
+            # print(response)
         except ApiException as ex:
             return {'message':ex.message, 'status':ex.code, 'success':False}
 
@@ -52,8 +51,8 @@ class Watson:
                 else:
                     keywords = [keywords]
             else:
-                print(type(keywords))
-                print(keywords.keys())
+                # print(type(keywords))
+                # print(keywords.keys())
                 keywords = [word['text'] for word in keywords['keywords'] if(word['relevance']>0.50)]
 
             response = self.natural_language_understanding.analyze(
@@ -65,7 +64,7 @@ class Watson:
                     )
                 )
             ).get_result()
-            print(response)
+            # print(response)
         except ApiException as ex:
             return {'message':ex.message, 'status':ex.code, 'success':False}
 
