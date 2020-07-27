@@ -237,8 +237,8 @@ def prepare_twitter_analysis(topic):
 
     for tweet_obj in todays_tweets:
         keywords = watson.extractKeywords(tweet_obj['text'])
-        sentiment = watson.extractSentiment(tweet_obj['text'], keywords['data'])
-
+        sentiment = watson.extractSentiment(tweet_obj['text'], keywords['data'])['data']
+        # print(sentiment)
         if sentiment['sentiment']['document']['label'] == 'positive':
             positive_tweet += 1
         elif sentiment['sentiment']['document']['label'] == 'negative':
