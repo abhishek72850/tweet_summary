@@ -37,6 +37,8 @@ class Watson:
                 )
             ).get_result()
 
+            print(response)
+
         except ApiException as ex:
             return {'message':ex.message, 'status':ex.code, 'success':False}
 
@@ -61,7 +63,7 @@ class Watson:
                     )
                 )
             ).get_result()
-
+            print(response)
         except ApiException as ex:
             return {'message':ex.message, 'status':ex.code, 'success':False}
 
