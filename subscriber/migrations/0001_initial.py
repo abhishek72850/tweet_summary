@@ -28,6 +28,13 @@ def populate_subscription_plan(apps, schema_editor):
         subscription_period_max_days='30',
         quick_analysis_quota='250',
     )
+    SubscriptionPlanModel.objects.get_or_create(
+        id=4,
+        plan_name='TEST',
+        topic_quota='0',
+        subscription_period_max_days='0',
+        quick_analysis_quota='50',
+    )
 
 
 class Migration(migrations.Migration):

@@ -1,0 +1,30 @@
+{% extends 'app_support/base.html' %}
+
+{% block dependency%}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app_support/dashboard.css' %}">
+{% endblock %}
+
+{% block body%}
+
+{% include 'app_support/header.html' %}
+<section>
+    <div class="feature_card_cont">
+        <div class="sub_card">
+            <a href="{% url 'manage_users' %}">
+                <span>Manage Users</span>
+            </a>
+        </div>
+        <div class="sub_card">
+            <a href="{% url 'manage_subscriptions' %}">
+                <span>Manage Subscriptions</span>
+            </a>
+        </div>
+        <div class="sub_card">
+            <a href="{% url 'assign_test_plan' %}">
+                <span>Assign Test Plan</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

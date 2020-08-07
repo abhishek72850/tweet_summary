@@ -1,0 +1,54 @@
+{% extends 'app_support/base.html' %}
+
+{% block dependency%}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app_support/update_user.css' %}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'app_support/header.html' %}
+<section>
+    <div class="update_user_form_cont">
+        <form action="#" method="POST" id="update_user_form">
+            <div>
+                <lable>Registered Email</lable>
+                <input type="email" id="user_email" disabled>
+            </div>
+            <div>
+                <label>Registered on</label>
+                <input type="text" id="registered_on" disabled>
+            </div>
+            <div>
+                <label>Plan Subscribed</label>
+                <input type="text" id="plan_subscribed" disabled>
+            </div>
+            <div>
+                <label>Quick Analysis Quota</label>
+                <input type="text" id="quick_analysis_quota" disabled>
+            </div>
+            <div>
+                <label>Total Topic Subscribed</label>
+                <input type="text" id="total_subscription" disabled>
+            </div>
+            <div>
+                <label>Email Verified</label>
+                <input type="text" id="email_verified" disabled>
+            </div>
+            <div>
+                <label>Account Status</label>
+                <select name="account_status" id="account_status">
+                    <option value="PENDING_VERIFICATION">PENDING_VERIFICATION</option>
+                    <option value="VERIFIED">VERIFIED</option>
+                    <option value="SUSPENDED">SUSPENDED</option>
+                </select>
+            </div>
+            <div>
+                <button type="button" onclick="window.location.back()">Go Back</button>
+                <button type="submit">Update</button>
+                <button type="button" id="send_user_verification">Send Verification Link</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

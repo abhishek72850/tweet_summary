@@ -1,0 +1,37 @@
+{% extends 'app_support/base.html' %}
+
+{% block dependency%}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app_support/assign_test_plan.css' %}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'app_support/header.html' %}
+<section>
+    <div>
+        <h2>Assign Test Plan</h2>
+    </div>
+    <div>
+        <h3>Plan Details</h3>
+        <span>Quick Analysis quota: 50</span>
+    </div>
+    <div>
+        <form id="test_plan_assign_form" action="#" method="post">
+            <div>
+                <input type="email" name="test_user_email" placeholder="Enter email">
+            </div>
+            <div>
+                <input type="password" name="test_user_password" placeholder="Enter password">
+            </div>
+            <div>
+                <input type="password" name="test_user_cnf_password" placeholder="Retype password">
+            </div>
+            <div>
+                <button type="submit">Assign</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+

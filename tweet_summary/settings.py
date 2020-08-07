@@ -36,14 +36,16 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-ALLOWED_HOSTS = ['tweet-summary.herokuapp.com', 'ai.newssumarization.com']
+ALLOWED_HOSTS = ['tweet-summary.herokuapp.com', 'tweet-summary.socialmediapulsemonitor.com', 'tweet-summary.thesocialmediapulse.com', 'ai.newssumarization.com', '*']
 
+LOGIN_REDIRECT_URL = '/support/login'
 
 # Application definition
 
 INSTALLED_APPS = [
     'api_manager.apps.ApiManagerConfig',
     'dashboard.apps.DashboardConfig',
+    'app_support.apps.AppSupportConfig',
     'subscriber',
     'django_celery_beat',
     'rest_framework',
@@ -80,6 +82,8 @@ CACHES = {
 CORS_ORIGIN_WHITELIST = [
     'https://tweet-summary.herokuapp.com',
     'http://tweet-summary.herokuapp.com',
+    'http://tweet-summary.socialmediapulsemonitor.com',
+    'http://tweet-summary.thesocialmediapulse.com',
     'http://localhost:8000',
     'http://ai.newssumarization.com'
 ]
@@ -180,7 +184,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dashboard/static'),
-    os.path.join(BASE_DIR, 'subscriber/static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'dashboard/static'),
+#     os.path.join(BASE_DIR, 'subscriber/static'),
+#     os.path.join(BASE_DIR, 'app_support/static')
+# ]

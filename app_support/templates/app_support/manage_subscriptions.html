@@ -1,0 +1,37 @@
+{% extends 'app_support/base.html' %}
+
+{% block dependency%}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'app_support/manage_subscriptions.css' %}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'app_support/header.html' %}
+<section>
+    <div class="sub_sec search_form_cont">
+        <form id="search_subscriptions_form" action="#" method="get">
+            <div>
+                <input type="text" name="search_by_email" placeholder="Enter email or leave it blank to show all">
+            </div>
+            <div>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="sub_sec user_detail_list_cont">
+        <div class="user_list">
+            <div class="user_row user_row_head">
+                <span>SNo.</span>
+                <span>Registered Email</span>
+                <span>Topic</span>
+                <span>Created on</span>
+                <span>From</span>
+                <span>To</span>
+                <span>Subscription Status</span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

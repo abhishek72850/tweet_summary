@@ -47,14 +47,44 @@ def decode_token(token):
         return False, None
 
 
+def get_user_by_id(user_id):
+    return UserModel.objects.filter(id=user_id)
+
+
+def get_all_users():
+    return UserModel.objects.all()
+
+
+def get_subscription_by_id(subscription_id):
+    return SubscribeModel.objects.filter(id=subscription_id)
+
+
+def get_all_subscriptions():
+    return SubscribeModel.objects.all()
+
+
 def get_user_details(email, password):
     return UserModel.objects.filter(email=email, password=password)
 
 
+def update_user_status(user_id, status):
+    success = UserModel.objects.filter(id=user_id).update(
+        status=status
+    )
+
+    return success
+
+
+def update_subscription_status(subscription_id, status):
+    success = SubscribeModel.objects.filter(id=subscription_id).update(
+        subscription_status=status
+    )
+
+    return success
+
+
 def register_or_verify_subscriber(email, password, plan_id):
     result = get_user_details(email, password)
-
-    print('*********', len(result))
 
     if len(result) == 0:
         user = UserModel()

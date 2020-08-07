@@ -3,11 +3,11 @@
 <head>
     <title>Portal</title>
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'portal.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/portal.css' %}">
 
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/scrollmagic.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/particles.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/scrollmagic.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/particles.js' %}"></script>
 
     <base target="_blank">
 
@@ -193,15 +193,15 @@
 
 		$(function(){
 		    $('.display-after').hide();
-		    particlesJS.load('particles-js', '../../static/js/particlesjs-config.json', function() {
+		    particlesJS.load('particles-js', '../../static/dashboard/js/particlesjs-config.json', function() {
               console.log('callback - particles.js config loaded');
             });
 			$('.analysis_cont').hide();
 		});
 	</script>
 
-<script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/app.js' %}"></script>
 
 </body>
 </html>

@@ -1,0 +1,56 @@
+{% extends 'app_support/base.html' %}
+
+{% block dependency%}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app_support/update_subscription.css' %}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'app_support/header.html' %}
+
+<section>
+    <div class="update_subscription_form_cont">
+        <form action="#" method="POST" id="update_subscription_form">
+            <div>
+                <lable>Registered Email</lable>
+                <input type="email" id="user_email" disabled>
+            </div>
+            <div>
+                <label>Plan Subscribed</label>
+                <input type="text" id="plan_subscribed" disabled>
+            </div>
+            <div>
+                <label>Topic</label>
+                <input type="text" id="subscription_topic" disabled>
+            </div>
+            <div>
+                <label>Created on</label>
+                <input type="text" id="subscription_created_on" disabled>
+            </div>
+            <div>
+                <label>From</label>
+                <input type="text" id="subscription_from" disabled>
+            </div>
+            <div>
+                <label>To</label>
+                <input type="text" id="subscription_to" disabled>
+            </div>
+            <div>
+                <label>Subscription Status</label>
+                <select name="subscription_status" id="subscription_status">
+                    <option value="IDLE">IDLE</option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="SUSPENDED">SUSPENDED</option>
+                </select>
+            </div>
+            <div>
+                <button type="button" onclick="window.location.back()">Go Back</button>
+                <button type="submit">Update</button>
+                <button type="button" id="send_subscription_verification">Send Verification Link</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

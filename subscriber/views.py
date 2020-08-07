@@ -16,7 +16,6 @@ class RegisterUser(APIView):
         if 'subscriber_email' in request.POST.keys() and 'subscriber_password' in request.POST.keys():
             user = register_or_verify_subscriber(request.POST['subscriber_email'], request.POST['subscriber_password'],
                                                  request.POST['subscriber_plan'])
-            print(user)
             if user is not None:
                 if not user.email_verified:
                     token = generate_token(email=user.email, user_id=user.id)

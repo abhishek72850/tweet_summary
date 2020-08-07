@@ -31,7 +31,7 @@ body{
 }
 .portal_service_container{
 	position: relative;
-	background-image: url('../../static/images/bg1.png');
+	background-image: url('../../static/dashboard/images/bg1.png');
 	background-repeat: no-repeat;
 	display:flex;
 	justify-content:space-evenly;
