@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+    {% block title%}
+    {% endblock %}
+
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'app_support/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'app_support/logout.css' %}">

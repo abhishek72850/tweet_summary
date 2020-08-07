@@ -1,6 +1,10 @@
 {% extends 'app_support/base.html' %}
 
-{% block dependency%}
+{% block title %}
+    <title>Login Panel</title>
+{% endblock %}
+
+{% block dependency %}
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'app_support/login.css' %}">
 {% endblock %}
