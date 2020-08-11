@@ -93,5 +93,20 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model, subscriber.models.GeneralObject),
         ),
+        migrations.CreateModel(
+            name='PlanChangeRequestModel',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('status', models.CharField(blank=True, default='REQUESTED', max_length=64)),
+                ('new_plan', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='new_plan', to='subscriber.SubscriptionPlanModel')),
+                ('old_plan', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='old_plan', to='subscriber.SubscriptionPlanModel')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='subscriber.UserModel')),
+            ],
+            options={
+                'db_table': 'tweet_plan_change_request',
+            },
+            bases=(models.Model, subscriber.models.GeneralObject),
+        ),
         migrations.RunPython(populate_subscription_plan),
     ]

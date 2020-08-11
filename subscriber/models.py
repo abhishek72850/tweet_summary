@@ -58,8 +58,8 @@ class PlanChangeRequestModel(models.Model, GeneralObject):
     id = models.AutoField(primary_key=True, null=False, blank=True)
     user = models.ForeignKey(UserModel, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(null=False, blank=True, auto_now_add=True)
-    old_plan = models.ForeignKey(SubscriptionPlanModel, on_delete=models.DO_NOTHING)
-    new_plan = models.ForeignKey(SubscriptionPlanModel, on_delete=models.DO_NOTHING)
+    old_plan = models.ForeignKey(SubscriptionPlanModel, on_delete=models.DO_NOTHING, related_name='old_plan')
+    new_plan = models.ForeignKey(SubscriptionPlanModel, on_delete=models.DO_NOTHING, related_name='new_plan')
     status = models.CharField(max_length=64, null=False, blank=True, default='REQUESTED')
 
     class Meta:
