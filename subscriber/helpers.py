@@ -10,7 +10,7 @@ from django.utils.html import strip_tags
 
 from api_manager.helpers import TwitterHelper
 from api_manager.watson import Watson
-from subscriber.models import SubscribeModel, UserModel, SubscriptionPlanModel
+from subscriber.models import SubscribeModel, UserModel, SubscriptionPlanModel, PlanChangeRequestModel
 from tweet_summary.settings import SECRET_KEY, SITE_EMAIL
 
 
@@ -67,6 +67,14 @@ def get_user_details(email, password):
     return UserModel.objects.filter(email=email, password=password)
 
 
+def get_plan_by_id(plan_id):
+    return SubscriptionPlanModel.objects.filter(id=plan_id)
+
+
+def add_plan_request(user, plan_id):
+    return None
+
+
 def update_user_status(user_id, status):
     success = UserModel.objects.filter(id=user_id).update(
         status=status
@@ -78,6 +86,14 @@ def update_user_status(user_id, status):
 def update_subscription_status(subscription_id, status):
     success = SubscribeModel.objects.filter(id=subscription_id).update(
         subscription_status=status
+    )
+
+    return success
+
+
+def update_user_plan(user, plan):
+    success = UserModel.objects.filter(id=user.id).update(
+        plan_subscribed=plan
     )
 
     return success
@@ -139,7 +155,7 @@ def add_subscription(user, topic, start_date, end_date):
 def get_subscription_and_profile_details(email, password):
     full_details = {}
     user_set = get_user_details(email, password)
-    print(user_set)
+
     if len(user_set) > 0:
         subscriptions = SubscribeModel.objects.filter(user=user_set[0])
         full_details = {

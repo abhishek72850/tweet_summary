@@ -8,6 +8,11 @@ import pytz
 
 
 @shared_task
+def ready():
+    print('Ready...')
+
+
+@shared_task
 def daily_service():
     utc = pytz.UTC
     result_set = SubscribeModel.objects.all()

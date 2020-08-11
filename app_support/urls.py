@@ -11,6 +11,7 @@ urlpatterns = [
     path('update_user', views.UpdateUserView, name='update_user'),
     path('update_subscription', views.UpdateSubscriptionView, name='update_subscription'),
     path('assign_test_plan', views.AssignTestPlanView, name='assign_test_plan'),
+    path('plan_request_change', views.PlanChangeRequestView, name='plan_request_change'),
     path('assign', views.RegisterTestUser.as_view()),
     path('all_users', views.GetAllUsers.as_view()),
     path('all_subscriptions', views.GetAllSubscriptions.as_view()),

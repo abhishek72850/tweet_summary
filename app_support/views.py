@@ -84,6 +84,14 @@ def AssignTestPlanView(request):
     return render(request, 'app_support/assign_test_plan.html', {"details": details})
 
 
+def PlanChangeRequestView(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+        # username = request.session['username']
+    details = User.objects.filter(username=request.user.username)
+    return render(request, 'app_support/plan_change_request.html', {"details": details})
+
+
 class RegisterTestUser(APIView):
     def post(self, request, format=None):
         if not request.user.is_authenticated:

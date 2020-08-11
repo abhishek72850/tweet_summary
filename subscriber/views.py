@@ -8,7 +8,7 @@ from subscriber.models import SubscribeModel
 from .helpers import decode_token, generate_token, add_subscription, send_email_verification_link, \
     send_subscription_verification_link, confirm_email_verification, confirm_subscription, unsubscribe, \
     register_or_verify_subscriber, \
-    get_subscription_and_profile_details, remove_subscription, update_subscription_details, get_user_details
+    get_subscription_and_profile_details, remove_subscription, update_subscription_details, get_user_details, get_plan_by_id, update_user_plan, add_plan_request
 
 
 class RegisterUser(APIView):
@@ -17,15 +17,15 @@ class RegisterUser(APIView):
             user = register_or_verify_subscriber(request.POST['subscriber_email'], request.POST['subscriber_password'],
                                                  request.POST['subscriber_plan'])
             if user is not None:
-                if not user.email_verified:
-                    token = generate_token(email=user.email, user_id=user.id)
-                    email_verification_url = 'https://tweet-summary.herokuapp.com/subscriber/confirm_email?verification_code={}'.format(
-                        token)
-                    send_email_verification_link(user, email_verification_url)
+                # if not user.email_verified:
+                #     token = generate_token(email=user.email, user_id=user.id)
+                #     email_verification_url = 'https://tweet-summary.herokuapp.com/subscriber/confirm_email?verification_code={}'.format(
+                #         token)
+                #     send_email_verification_link(user, email_verification_url)
 
                 return Response({
                     'status': status.HTTP_200_OK,
-                    'data': 'User registered, please check email to verify'
+                    'data': 'User registered'
                 })
         return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Something went wrong!!'})
 
@@ -100,7 +100,6 @@ class ViewOrUpdateUserAllDetails(APIView):
         if 'subscriber_email' in request.GET.keys() and 'subscriber_password' in request.GET.keys():
             details = get_subscription_and_profile_details(request.GET['subscriber_email'],
                                                            request.GET['subscriber_password'])
-            print(details)
             if len(details) > 0:
                 return Response({
                     'status': status.HTTP_200_OK,
@@ -114,14 +113,29 @@ class ViewOrUpdateUserAllDetails(APIView):
             user_set = get_user_details(request.POST['subscriber_email'], request.POST['subscriber_password'])
 
             if len(user_set) > 0:
-                for id in request.POST.getlist('subscription_ids[]'):
-                    if not remove_subscription(request.POST['subscriber_email'], request.POST['subscriber_password'],
-                                               id):
-                        break
+                if 'subscriber_plan' in request.POST.keys():
+                    if user_set[0].plan_subscribed.id != request.POST['subscriber_plan']:
+                        plan = get_plan_by_id(request.POST['subscriber_plan'])
 
-                if user_set[0].plan_subscribed.id != int(request.POST['subscriber_plan']):
-                    return Response(
-                        {'status': status.HTTP_400_BAD_REQUEST, 'data': 'Plan updation service will come soon'})
+                        if len(plan) > 0:
+                            add_plan_request(user_set[0], request.POST['subscriber_plan'])
+                            # if user_set[0].plan_subscribed.id < plan[0].id:
+                            #     if update_user_plan(user_set[0], plan[0]) != 1:
+                            #         return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Unable to update plan'})
+                            # else:
+                            #     return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'To lower the plan please remove all the subscribed topics'})
+                        else:
+                            return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Invalid plan!!'})
+
+                if 'subscription_ids[]' in request.POST.keys():
+                    for id in request.POST.getlist('subscription_ids[]'):
+                        if not remove_subscription(request.POST['subscriber_email'], request.POST['subscriber_password'],
+                                                   id):
+                            break
+
+                    if user_set[0].plan_subscribed.id != int(request.POST['subscriber_plan']):
+                        return Response(
+                            {'status': status.HTTP_400_BAD_REQUEST, 'data': 'Plan updation service will come soon'})
 
                 return Response({
                     'status': status.HTTP_200_OK,

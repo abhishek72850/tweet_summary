@@ -1,0 +1,9 @@
+section{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 1em;
+	background-color: #eee;
+  height: calc(100% - 7em);
+	width: 100%;
+}

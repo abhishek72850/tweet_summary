@@ -52,3 +52,16 @@ class SubscribeModel(models.Model, GeneralObject):
 
     def __str__(self):
         return self.topic
+
+
+class PlanChangeRequestModel(models.Model, GeneralObject):
+    id = models.AutoField(primary_key=True, null=False, blank=True)
+    user = models.ForeignKey(UserModel, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(null=False, blank=True, auto_now_add=True)
+    old_plan = models.ForeignKey(SubscriptionPlanModel, on_delete=models.DO_NOTHING)
+    new_plan = models.ForeignKey(SubscriptionPlanModel, on_delete=models.DO_NOTHING)
+    status = models.CharField(max_length=64, null=False, blank=True, default='REQUESTED')
+
+    class Meta:
+        app_label = "subscriber"
+        db_table = "tweet_plan_change_request"

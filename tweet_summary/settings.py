@@ -155,6 +155,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_BEAT_SCHEDULE = {
+    'send-ready-call': {
+        'task': 'subscriber.tasks.ready',
+        'schedule': 60.0,
+    },
     'send-tweet-analysis-everyday': {
         'task': 'subscriber.tasks.daily_service',
         'schedule': crontab(day_of_week="0-6", hour=20, minute=0),

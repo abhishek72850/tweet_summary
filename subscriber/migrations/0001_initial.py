@@ -33,7 +33,7 @@ def populate_subscription_plan(apps, schema_editor):
         plan_name='TEST',
         topic_quota='0',
         subscription_period_max_days='0',
-        quick_analysis_quota='50',
+        quick_analysis_quota='5',
     )
 
 

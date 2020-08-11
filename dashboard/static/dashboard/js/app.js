@@ -52,7 +52,7 @@ $(function(){
 
 	    requestAjax({
 //	            url: 'http://localhost:8000/subscriber/add',
-	            url:"https://tweet-summary.herokuapp.com/subscriber/add",
+	            url: window.location.origin + "/subscriber/add",
 	            type: 'POST',
                 data:{
                     'subscriber_email':this.subscriber_email.value,
@@ -76,7 +76,7 @@ $(function(){
 
         requestAjax({
 //                url: 'http://localhost:8000/subscriber/register',
-                url:"https://tweet-summary.herokuapp.com/subscriber/register",
+                url: window.location.origin + "/subscriber/register",
                 type: 'POST',
                 data:{
                     'subscriber_email':this.subscriber_email.value,
@@ -106,7 +106,7 @@ $(function(){
 
         requestAjax({
 //                url: 'http://localhost:8000/subscriber/add',
-                url:"https://tweet-summary.herokuapp.com/subscriber/add",
+                url: window.location.origin + "/subscriber/add",
                 type: 'POST',
                 data:{
                     'subscriber_email':this.subscriber_email.value,
@@ -133,6 +133,8 @@ $(function(){
 
         $('.profile_password').text(user.fields.password);
         $('.profile_password').attr('value',user.fields.password);
+
+        $('.account_status').attr('value',user.fields.status);
 
         $('.quick_analysis_counter').text(parseInt(plan.fields.quick_analysis_quota) - parseInt(user.fields.quick_analysis_counter));
 
@@ -183,7 +185,7 @@ $(function(){
 
         requestAjax({
 //                url: 'http://localhost:8000/subscriber/view_or_update',
-                url:"https://tweet-summary.herokuapp.com/subscriber/view_or_update",
+                url: window.location.origin + "/subscriber/view_or_update",
                 type: 'GET',
                 data:{
                     'subscriber_email':this.subscriber_email.value,
@@ -232,7 +234,7 @@ $(function(){
 
         requestAjax({
 //                url: 'http://localhost:8000/subscriber/view_or_update',
-                url:"https://tweet-summary.herokuapp.com/subscriber/view_or_update",
+                url: window.location.origin + "/subscriber/view_or_update",
                 type: 'POST',
                 data: post_data
             },
