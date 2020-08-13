@@ -6,9 +6,12 @@ from subscriber.helpers import unsubscribe, prepare_twitter_analysis, send_analy
 
 import pytz
 
+import requests
+
 
 @shared_task
 def ready():
+    requests.get(url="https://tweet-summary.herokuapp.com/app/portal")
     print('Ready...')
 
 

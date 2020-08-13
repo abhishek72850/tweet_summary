@@ -11,7 +11,7 @@ import json
 from subscriber.models import SubscribeModel
 
 from subscriber.helpers import register_or_verify_subscriber, generate_token, send_email_verification_link, \
-    get_user_details, get_all_users, get_all_subscriptions, get_user_by_id, get_subscription_by_id, update_user_status, update_subscription_status, send_subscription_verification_link
+    get_user_details, get_all_users, get_all_subscriptions, get_user_by_id, get_subscription_by_id, update_user_status, update_subscription_status, send_subscription_verification_link, get_all_plan_change_requests, get_plan_request_by_id, update_plan_request_status, update_user_plan, send_plan_change_confirmation
 
 from fuzzywuzzy import fuzz
 
@@ -283,3 +283,62 @@ class SendSubscriptionVerificationLink(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Subscription not found!!'})
 
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Invalid parameters!!'})
+
+
+class GetAllPlanChangeRequests(APIView):
+    def get(self, request, format=None):
+        if not request.user.is_authenticated:
+            return Response(data={'data': 'Authentication Failed'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        request_list = []
+
+        if request.GET.get('search_by_email', False) != '':
+            for plan_request in get_all_plan_change_requests():
+                if fuzz.ratio(request.GET['search_by_email'], plan_request.user.email) > 20:
+                    request_list.append([plan_request.user.toJSON(), plan_request.toJSON()])
+        else:
+            for plan_request in get_all_plan_change_requests():
+                request_list.append([plan_request.user.toJSON(), plan_request.toJSON()])
+
+        return Response(data={'data': request_list}, status=status.HTTP_200_OK)
+
+
+class AcceptPlanChangeRequest(APIView):
+    def post(self, request, format=None):
+        if not request.user.is_authenticated:
+            return Response(data={'data': 'Authentication Failed'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if 'plan_request_id' in request.POST.keys():
+            plan_request = get_plan_request_by_id(request.POST['plan_request_id'])
+
+            if len(plan_request) > 0:
+                if update_plan_request_status(plan_request[0].id, 'ACCEPTED') == 1:
+                    if update_user_plan(plan_request[0].user, plan_request[0].new_plan) == 1:
+                        send_plan_change_confirmation(plan_request)
+                        return Response(data={'data': 'Plan changed successfully'}, status=status.HTTP_200_OK)
+
+                return Response(data={'data': 'Unable to change plan'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(data={'data': 'Plan is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(data={'data': 'Invalid parameters'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeclinePlanChangeRequest(APIView):
+    def post(self, request, format=None):
+        if not request.user.is_authenticated:
+            return Response(data={'data': 'Authentication Failed'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if 'plan_request_id' in request.POST.keys():
+            plan_request = get_plan_request_by_id(request.POST['plan_request_id'])
+
+            if len(plan_request) > 0:
+                if update_plan_request_status(plan_request[0].id, 'DECLINED') == 1:
+                    return Response(data={'data': 'Plan changed request declined'}, status=status.HTTP_200_OK)
+
+                return Response(data={'data': 'Unable to decline, something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(data={'data': 'Plan is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(data={'data': 'Invalid parameters'}, status=status.HTTP_400_BAD_REQUEST)
+

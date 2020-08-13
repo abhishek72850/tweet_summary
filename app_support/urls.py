@@ -21,4 +21,7 @@ urlpatterns = [
     path('update_subscription_status', views.UpdateSubscription.as_view()),
     path('send_user_verification', views.SendUserVerificationLink.as_view()),
     path('send_subscription_verification', views.SendSubscriptionVerificationLink.as_view()),
+    path('get_all_requests', views.GetAllPlanChangeRequests.as_view()),
+    path('accept_requests', views.GetAllPlanChangeRequests.as_view()),
+    path('decline_requests', views.GetAllPlanChangeRequests.as_view()),
 ]

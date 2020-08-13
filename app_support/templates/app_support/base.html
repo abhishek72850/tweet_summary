@@ -35,7 +35,7 @@
 <script type="text/javascript">
     $(function(){
         $('.loader_cont').hide();
-        $('.timestamp').text(Date());
+        setInterval(function(){ $('.timestamp').text(Date()); }, 1000);
     });
 </script>
 

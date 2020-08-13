@@ -67,12 +67,32 @@ def get_user_details(email, password):
     return UserModel.objects.filter(email=email, password=password)
 
 
+def get_plan_request_by_id(request_id):
+    return PlanChangeRequestModel.objects.filter(id=request_id)
+
+
+def get_all_plan_change_requests():
+    return PlanChangeRequestModel.objects.all()
+
+
 def get_plan_by_id(plan_id):
     return SubscriptionPlanModel.objects.filter(id=plan_id)
 
 
-def add_plan_request(user, plan_id):
-    return None
+def add_plan_request(user, plan):
+    request_set = PlanChangeRequestModel.objects.filter(user=user, status='REQUESTED')
+
+    for plan_request in request_set:
+        PlanChangeRequestModel.objects.filter(id=plan_request.id).update(
+            status='CANCELLED'
+        )
+
+    plan_request = PlanChangeRequestModel()
+    plan_request.user = user
+    plan_request.old_plan = user.plan_subscribed
+    plan_request.new_plan = plan
+    plan_request.save()
+    return plan_request
 
 
 def update_user_status(user_id, status):
@@ -86,6 +106,14 @@ def update_user_status(user_id, status):
 def update_subscription_status(subscription_id, status):
     success = SubscribeModel.objects.filter(id=subscription_id).update(
         subscription_status=status
+    )
+
+    return success
+
+
+def update_plan_request_status(plan_id, status):
+    success = PlanChangeRequestModel.objects.filter(id=plan_id).update(
+        status=status
     )
 
     return success
@@ -269,6 +297,16 @@ def send_subscription_verification_link(subscriber, subscription_confirmation_ur
     data["html_text"] = template.render(data)
     data["plain_text"] = strip_tags(data["html_text"])
     return send_sub_email(data)
+
+
+def send_plan_change_confirmation(plan_request):
+    data = dict()
+    data["subject"] = "Plan Changed Confirmation"
+    data["email"] = plan_request.user.email
+    data["old_plan"] = plan_request.old_plan.plan_name
+    data["new_plan"] = plan_request.new_plan.plan_name
+
+    return None
 
 
 def prepare_twitter_analysis(topic):

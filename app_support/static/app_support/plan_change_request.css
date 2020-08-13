@@ -7,3 +7,86 @@ section{
   height: calc(100% - 7em);
 	width: 100%;
 }
+.sub_sec{
+	background-color: #fff;
+	margin: 1em 0;
+	padding: 1em;
+	border: 1px solid #ccc;
+	width: 70%;
+}
+.search_form_cont{
+	display: flex;
+	justify-content: center;
+}
+#search_plan_requests_form{
+	display: flex;
+	width:80%;
+}
+#search_plan_requests_form>div{
+
+}
+#search_plan_requests_form>div:first-child{
+	width: 80%;
+}
+#search_plan_requests_form>div:last-child{
+	width: 20%;
+}
+#search_plan_requests_form>div>input{
+	height: 4em;
+	width: 100%;
+}
+#search_plan_requests_form>div>button{
+	border: 1px solid #555;
+	height: 4em;
+	width: 100%;
+}
+.plan_request_detail_list_cont{
+    width: 90%;
+}
+.plan_requests_list{
+
+}
+.plan_request_row_head{
+	background-color: #eee;
+}
+.plan_request_row{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 3em;
+	border-bottom: 1px solid #ccc;
+}
+.plan_request_row>span{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	height: 100%;
+	text-align: center;
+}
+.plan_request_row>span>button{
+	border: 1px solid #ccc;
+	height: 2.5em;
+	width: 90%;
+	color: #fff;
+	background-color: #55f;
+}
+.plan_request_row>span:nth-child(1){
+	border-right: 1px solid #ccc;
+	width: 10%;
+}
+.plan_request_row>span:nth-child(2){
+	width: 30%;
+}
+.plan_request_row>span:nth-child(3){
+	width: 20%;
+}
+.plan_request_row>span:nth-child(4){
+	width: 10%;
+}
+.plan_request_row>span:nth-child(5){
+	width: 20%;
+}
+.plan_request_row>span:nth-child(6){
+	width: 10%;
+}

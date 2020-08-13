@@ -13,6 +13,47 @@
 
 {% include 'app_support/header.html' %}
 <section>
+    <div class="sub_sec search_form_cont">
+        <form id="search_plan_requests_form" action="#" method="get">
+            <div>
+                <input type="text" name="search_by_email" placeholder="Enter email or leave it blank to show all">
+            </div>
+            <div>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="sub_sec plan_request_detail_list_cont">
+        <div class="plan_requests_list">
+            <div class="plan_request_row plan_request_row_head">
+                <span>SNo.</span>
+                <span>Registered Email</span>
+                <span>Registered on</span>
+                <span>Current Plan</span>
+                <span>Requested Plan</span>
+                <span></span>
+            </div>
+            <div class="plan_request_row">
+                <span>1</span>
+                <span>abhishekk728@yahoo.com</span>
+                <span>12-01-2020 12:10:23</span>
+                <span>BASIC</span>
+                <span>STANDARD</span>
+                <span>
+                    <button>Accept</button>
+                    <button>Decline</button>
+                </span>
+            </div>
+            <div class="plan_request_row">
+                <span>2</span>
+                <span>abhishekk728@yahoo.com</span>
+                <span>12-01-2020 12:10:23</span>
+                <span>BASIC</span>
+                <span>STANDARD</span>
+                <span>Cancelled</span>
+            </div>
+        </div>
+    </div>
 </section>
 
 {% endblock %}

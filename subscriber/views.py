@@ -118,7 +118,7 @@ class ViewOrUpdateUserAllDetails(APIView):
                         plan = get_plan_by_id(request.POST['subscriber_plan'])
 
                         if len(plan) > 0:
-                            add_plan_request(user_set[0], request.POST['subscriber_plan'])
+                            add_plan_request(user_set[0], plan)
                             # if user_set[0].plan_subscribed.id < plan[0].id:
                             #     if update_user_plan(user_set[0], plan[0]) != 1:
                             #         return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Unable to update plan'})

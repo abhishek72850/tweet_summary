@@ -114,7 +114,7 @@ DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
+    # },
     'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('DATABASE'),
@@ -148,8 +148,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # CELERY STUFF
-CELERY_BROKER_URL = os.environ['REDIS_URL']  # 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = os.environ['REDIS_URL']  # 'redis://localhost:6379'
+CELERY_BROKER_URL = os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -184,12 +186,12 @@ MEDIA_URL = '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'dashboard/static'),
-#     os.path.join(BASE_DIR, 'subscriber/static'),
-#     os.path.join(BASE_DIR, 'app_support/static')
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'dashboard/static'),
+    os.path.join(BASE_DIR, 'subscriber/static'),
+    os.path.join(BASE_DIR, 'app_support/static')
+]
