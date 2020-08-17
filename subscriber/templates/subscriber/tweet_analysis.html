@@ -29,6 +29,7 @@
 					<span class="total_favorite bold">{{total_favorite}}</span> total likes), and
 					is driven by retweets of <span class="noticeable_user bold">{{noticeable_user}}</span>
 				</li>
+				{% if most_active_verified_tweet_user_name == '' %}
 				<li>
 					<span class="most_active_verified_tweet_user_name bold">{{most_active_verified_tweet_user_name}}</span> tweet has got more attention and has received
 					<span class="most_active_verified_tweet_retweets bold">{{most_active_verified_tweet_retweets}}</span> retweets and
@@ -59,6 +60,7 @@
 						</li>
 					</ul>
 				</li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>
