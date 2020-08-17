@@ -377,7 +377,7 @@ def prepare_twitter_analysis(topic):
         mention_list = list(mention_list)
         analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])
 
-        analysis_data['most_active_verified_tweet_user_name'] = data['most_active_verified_tweet']['user']['name']
+        analysis_data['most_active_verified_tweet_user_name'] = data['most_active_verified_tweet']['user'].get('name', '')
         analysis_data['most_active_verified_tweet_retweets'] = data['most_active_verified_tweet']['retweet_count']
         analysis_data['most_active_verified_tweet_favorite'] = data['most_active_verified_tweet']['favorite_count']
         analysis_data['most_active_verified_tweet'] = data['most_active_verified_tweet']['text']
