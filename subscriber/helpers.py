@@ -72,7 +72,7 @@ def get_plan_request_by_id(request_id):
 
 
 def get_all_plan_change_requests():
-    return PlanChangeRequestModel.objects.all()
+    return PlanChangeRequestModel.objects.all().order_by('-created_at')
 
 
 def get_plan_by_id(plan_id):
@@ -305,8 +305,21 @@ def send_plan_change_confirmation(plan_request):
     data["email"] = plan_request.user.email
     data["old_plan"] = plan_request.old_plan.plan_name
     data["new_plan"] = plan_request.new_plan.plan_name
+    template = get_template("subscriber/plan_changed.html")
+    data["html_text"] = template.render(data)
+    data["plain_text"] = strip_tags(data["html_text"])
+    return send_sub_email(data)
 
-    return None
+
+def send_plan_renew_confirmation(user):
+    data = dict()
+    data["subject"] = "Plan Renewal Confirmation"
+    data["email"] = user.email
+    data["plan_name"] = user.plan_subscribed.plan_name
+    template = get_template("subscriber/plan_renewed.html")
+    data["html_text"] = template.render(data)
+    data["plain_text"] = strip_tags(data["html_text"])
+    return send_sub_email(data)
 
 
 def prepare_twitter_analysis(topic):
@@ -321,14 +334,20 @@ def prepare_twitter_analysis(topic):
 
     for tweet_obj in todays_tweets:
         keywords = watson.extractKeywords(tweet_obj['text'])
-        sentiment = watson.extractSentiment(tweet_obj['text'], keywords['data'])['data']
-        # print(sentiment)
-        if sentiment['sentiment']['document']['label'] == 'positive':
-            positive_tweet += 1
-        elif sentiment['sentiment']['document']['label'] == 'negative':
-            negative_tweet += 1
-        elif sentiment['sentiment']['document']['label'] == 'neutral':
-            neutral_tweet += 1
+        if keywords['success']:
+            sentiment = watson.extractSentiment(tweet_obj['text'], keywords['data'])
+            if sentiment['success']:
+                sentiment = sentiment['data']
+                if sentiment['sentiment']['document']['label'] == 'positive':
+                    positive_tweet += 1
+                elif sentiment['sentiment']['document']['label'] == 'negative':
+                    negative_tweet += 1
+                elif sentiment['sentiment']['document']['label'] == 'neutral':
+                    neutral_tweet += 1
+            else:
+                print(tweet_obj['text'], keywords)
+        else:
+            print(tweet_obj['text'])
 
     if data['success']:
         print('Preparing....')
@@ -421,8 +440,8 @@ def send_analysis(subscriber, analysis):
     template = get_template("subscriber/tweet_analysis.html")
 
     mail_data = {
-        'subject' : '{} Tweet analysis on {}'.format(current_date.date(), subscriber.topic),
-        'email' : subscriber.user.email,
+        'subject': '{} Tweet analysis on {}'.format(current_date.date(), subscriber.topic),
+        'email': subscriber.user.email,
         'html_text': template.render(analysis),
     }
 
