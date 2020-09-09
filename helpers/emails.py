@@ -21,10 +21,10 @@ def send_email(data):
     try:
         sg = SendGridAPIClient(SENDGRID_API_KEY)
         response = sg.send(message)
-        print(response.status_code)
     except Exception as e:
-        print(traceback.format_exc())
+        traceback.print_exc()
         return False
+    print(response.status_code)
     return True
 
 

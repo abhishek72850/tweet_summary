@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.core.serializers import serialize
 from rest_framework import status
@@ -8,11 +7,10 @@ from rest_framework.views import APIView
 
 import json
 
-from app_perf.models import Admins, Subscribers
-
-from subscriber.models import SubscribeModel
+from app_perf.models import Admins, Subscribers, SubscriptionModel
 
 from helpers.auths import generate_token
+from helpers.utils import request_contain_keys, get_host_origin
 from helpers.emails import send_email_verification_link, send_subscription_verification_link, \
     send_plan_change_confirmation
 from helpers.db import register_or_verify_subscriber, get_user_details, get_all_users, get_all_subscriptions, \
@@ -112,7 +110,8 @@ class RegisterTestUser(APIView):
     def post(self, request, format=None):
         if not request.user.is_authenticated:
             return Response(data={'data': 'Authentication Failed'}, status=status.HTTP_401_UNAUTHORIZED)
-        if 'test_user_email' in request.POST.keys() and 'test_user_password' in request.POST.keys() and 'test_user_cnf_password' in request.POST.keys():
+
+        if request_contain_keys(request.POST, ['test_user_password', 'test_user_cnf_password', 'test_user_email']):
             if request.POST['test_user_password'].strip() != request.POST['test_user_cnf_password'].strip():
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Password Authentication failed!!'})
             result = get_user_details(request.POST['test_user_email'], request.POST['test_user_password'])
@@ -123,7 +122,8 @@ class RegisterTestUser(APIView):
                                                      '4')
                 if not user.email_verified:
                     token = generate_token(email=user.email, user_id=user.id)
-                    email_verification_url = 'https://tweet-summary.herokuapp.com/subscriber/confirm_email?verification_code={}'.format(
+                    email_verification_url = '{}/api/confirm_email?verification_code={}'.format(
+                        get_host_origin(request),
                         token)
                     send_email_verification_link(user, email_verification_url)
 
@@ -146,10 +146,10 @@ class GetAllUsers(APIView):
         if request.GET.get('search_by_email', False) != '':
             for user in get_all_users():
                 if fuzz.ratio(request.GET['search_by_email'], user.email) > 20:
-                    user_list.append(user)
-            user_list = serialize('json', user_list)
+                    user_list.append(user.toJSON())
+            # user_list = serialize('json', user_list)
         else:
-            user_list = serialize('json', get_all_users())
+            user_list = list(map(lambda user: user.toJSON(), get_all_users()))
 
         return Response(data={'data': user_list}, status=status.HTTP_200_OK)
 
@@ -163,11 +163,11 @@ class GetUser(APIView):
             user_set = get_user_by_id(request.GET['user_id'])
 
             if len(user_set) > 0:
-                total_subscriptions = len(SubscribeModel.objects.filter(user=user_set[0]))
+                total_subscriptions = len(SubscriptionModel.objects.filter(user=user_set[0]))
                 return Response(data={
                     'data': {
                         'user': user_set[0].toJSON(),
-                        'plan': user_set[0].plan_subscribed.toJSON(),
+                        'plan': user_set[0].plan_subscribed.toJSON() if user_set[0].plan_subscribed else None,
                         'subscriptions': total_subscriptions
                     }
                 }, status=status.HTTP_200_OK)
@@ -264,8 +264,8 @@ class SendUserVerificationLink(APIView):
 
             if len(user_set) > 0:
                 token = generate_token(email=user_set[0].email, user_id=user_set[0].id)
-                email_verification_url = 'https://tweet-summary.herokuapp.com/subscriber/confirm_email?verification_code={}'.format(
-                    token)
+                email_verification_url = '{}/api/confirm_email?verification_code={}'.format(get_host_origin(request),
+                                                                                            token)
                 send_email_verification_link(user_set[0], email_verification_url)
 
                 return Response(
@@ -289,8 +289,8 @@ class SendSubscriptionVerificationLink(APIView):
             if len(subscription_set) > 0:
                 if subscription_set[0].user.email_verified:
                     token = generate_token(email=subscription_set[0].user.email, subscription_id=subscription_set[0].id)
-                    confirmation_url = 'https://tweet-summary.herokuapp.com/subscriber/confirm_subscription?verification_code={}'.format(
-                        token)
+                    confirmation_url = '/api/confirm_subscription?verification_code={}'.format(get_host_origin(request),
+                                                                                               token)
                     send_subscription_verification_link(subscription_set[0], confirmation_url)
 
                     return Response(
@@ -366,14 +366,15 @@ class AcceptPlanChangeRequest(APIView):
                     else:
                         update_plan = True
                 else:
-                    return Response(data={'data': 'Something went wrong, code: CNSU3'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    return Response(data={'data': 'Something went wrong, code: CNSU3'},
+                                    status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 if update_plan:
                     if update_user_plan(plan_request[0].user, plan_request[0].new_plan) == 1:
                         send_plan_change_confirmation(plan_request[0])
                         return Response(data={'data': 'Plan changed successfully'}, status=status.HTTP_200_OK)
                     else:
-                        return Response(data={'data': 'Something went wrong, code: CNSU2'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+                        return Response(data={'data': 'Something went wrong, code: CNSU2'},
+                                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
                 return Response(data={'data': 'Unable to change plan'}, status=status.HTTP_400_BAD_REQUEST)
             else:

@@ -14,7 +14,7 @@ import requests
 
 @shared_task
 def ready():
-    requests.get(url="https://tweet-summary.herokuapp.com/app/portal")
+    requests.get(url="https://tweet-summary.herokuapp.com/app")
     print('Ready...')
 
 

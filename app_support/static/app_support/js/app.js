@@ -22,16 +22,25 @@ $(function(){
                 }
             },
             function(data){
-                var user = JSON.parse(data['user'])[0];
-                var plan = JSON.parse(data['plan'])[0];
+                var user = JSON.parse(data['user']);
 
-                $('#user_email').attr('value', user.fields.email);
-                $('#registered_on').attr('value', getFormattedDatetime(user.fields.created_at));
-                $('#plan_subscribed').attr('value', plan.fields.plan_name);
-                $('#quick_analysis_quota').attr('value', user.fields.quick_analysis_counter);
+                if(data['plan'] == null){
+                    var plan = {}
+                    $('#plan_subscribed').attr('value', plan.plan_status);
+                }
+                else{
+                    var plan = JSON.parse(data['plan']);
+                    $('#plan_subscribed').attr('value', plan.plan_name);
+                }
+
+
+                $('#user_email').attr('value', user.email);
+                $('#registered_on').attr('value', getFormattedDatetime(user.created_at));
+
+                $('#quick_analysis_quota').attr('value', user.quick_analysis_counter);
                 $('#total_subscription').attr('value', data['subscriptions']);
-                $('#email_verified').attr('value', user.fields.email_verified);
-                $('#account_status').val(user.fields.status);
+                $('#email_verified').attr('value', user.email_verified);
+                $('#account_status').val(user.status);
             }
         );
     }
@@ -323,11 +332,12 @@ $(function(){
             },
             function(data){
 //                console.log(JSON.parse(data));
-                user_list = JSON.parse(data);
+                user_list = data;
 
                 $('.user_row_element').remove();
 
                 for(user_index in user_list){
+                    var user = JSON.parse(user_list[user_index]);
 
                     var user_row = $('<div></div>',{
                         'class':'user_row  user_row_element'
@@ -336,19 +346,19 @@ $(function(){
                         'text': parseInt(user_index) + 1
                     });
                     var email = $('<span></span>',{
-                        'text': user_list[user_index]['fields']['email']
+                        'text': user['email']
                     });
                     var registered_on = $('<span></span>',{
-                        'text': getFormattedDatetime(user_list[user_index]['fields']['created_at'])
+                        'text': getFormattedDatetime(user['created_at'])
                     });
                     var email_verified = $('<span></span>',{
-                        'text': user_list[user_index]['fields']['email_verified']
+                        'text': user['email_verified']
                     });
                     var status = $('<span></span>',{
-                        'text': user_list[user_index]['fields']['status']
+                        'text': user['status']
                     });
                     var manage = $('<span></span>',{
-                        'html': '<button class="manage_user_button" data-id="'+ user_list[user_index]['pk'] +'">Manage</button>'
+                        'html': '<button class="manage_user_button" data-id="'+ user['id'] +'">Manage</button>'
                     });
 
                     user_row.append(sno);
