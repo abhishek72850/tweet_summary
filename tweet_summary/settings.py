@@ -184,7 +184,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'manage-plan': {
         'task': 'api_manager.tasks.plan_update_service',
-        'schedule': crontab(day_of_week="0-6", hour=24, minute=0),
+        'schedule': crontab(day_of_week="0-6", hour=0, minute=0),
     }
     # 'send-tweet-analysis-everyday': {
     #     'task': 'subscriber.tasks.daily_service',
