@@ -1,0 +1,64 @@
+.loaderContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding:0;
+    margin:0;
+    background-color:rgba(0,0,0, 0.7);
+}
+.loader{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.bar{
+    width:6px;
+    height:60px;
+    background-color:white;
+    display:inline-block;
+    transform-origin:bottom center;
+    animation:loading 1600ms ease-in-out infinite;
+}
+
+.bar1{
+    animation-delay:100ms;
+}
+.bar2{
+    animation-delay:200ms;
+}
+.bar3{
+    animation-delay:300ms;
+}
+.bar4{
+    animation-delay:400ms;
+}
+.bar5{
+    animation-delay:500ms;
+}
+.bar6{
+    animation-delay:600ms;
+}
+.bar7{
+    animation-delay:700ms;
+}
+.bar8{
+    animation-delay:800ms;
+}
+
+@keyframes loading{
+    0%{
+        transform: scaleY(0.1);
+        background:#fff;
+    }
+    50%{
+        transform: scaleY(1);
+        background:rgb(86, 111, 255);
+        }
+    100%{
+        transform: scaleY(0.1);
+        background:transparent;
+    }
+}

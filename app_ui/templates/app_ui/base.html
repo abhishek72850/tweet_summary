@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title%}
+    {% endblock %}
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/baseStyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/loaderStyle.css' %}">
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/successStyle.css' %}">-->
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/warningStyle.css' %}">-->
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/errorStyle.css' %}">-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/dialogStyle.css' %}">
+
+    {% block headDependency%}
+    {% endblock %}
+
+    <script type="text/javascript" src="{% static 'app_ui/js/jquery.js' %}"></script>
+
+    <script>
+		var app_env = {
+		    csrf_token: '{{ csrf_token }}',
+		    msg: new URL(window.location.href).searchParams.get('msg'),
+		    verification_code: new URL(window.location.href).searchParams.get('verification_code')
+		};
+	</script>
+</head>
+<body>
+    {% include 'app_ui/header.html' %}
+
+    {% block body%}
+    {% endblock %}
+
+    {% include 'app_ui/dialog/loader.html' %}
+    {% include 'app_ui/dialog/successTemplate.html' %}
+    {% include 'app_ui/dialog/warningTemplate.html' %}
+    {% include 'app_ui/dialog/errorTemplate.html' %}
+
+<script type="text/javascript" src="{% static 'app_ui/js/ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'app_ui/js/app.js' %}"></script>
+
+{% block tailDependency%}
+{% endblock %}
+
+</body>
+</html>

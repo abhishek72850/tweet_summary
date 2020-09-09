@@ -35,15 +35,30 @@ section{
 	text-align: center;
 }
 .update_user_form_cont>form>div:last-child{
-	margin-top: 2em;
+	display: flex;
+	flex-direction: column;
 }
-.update_user_form_cont>form>div>button{
+.update_user_form_cont>form>div:last-child>div{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+		margin: 0.5em 0;
+}
+.update_user_form_cont>form>div:last-child>div>button{
 	font-size: 0.9em;
 	border: 1px solid #ccc;
 	height: 3em;
-	width: 25%;
+	width: 40%;
 }
-.update_user_form_cont>form>div>button:nth-child(2){
+.update_user_form_cont>form>div:last-child>div:first-child>button:nth-child(2){
 	color: #fff;
 	background-color: #55f;
+}
+.update_user_form_cont>form>div:last-child>div:last-child>button:nth-child(1){
+	color: #fff;
+	background-color: #0a0;
+}
+.update_user_form_cont>form>div:last-child>div:last-child>button:nth-child(2){
+	color: #fff;
+	background-color: #fa0;
 }

@@ -1,0 +1,80 @@
+{% extends 'app_ui/base.html' %}
+
+{% block title %}
+<title>Social Media Pulse Monitor</title>
+{% endblock %}
+
+{% block headDependency%}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/plansStyle.css' %}">
+{% endblock %}
+
+{% block body%}
+<div class="icons">
+    {% load staticfiles %}
+    <a href="{% url 'home' %}"> <img src="{% static 'app_ui/images/home1.png' %}" alt="logout" class="logoutIcon"></a>
+    <a href="{% url 'home_logout'%}"> <img src="{% static 'app_ui/images/logout1.png' %}" alt="logout" class="logoutIcon"></a>
+  </div>
+<div class="blackBox">
+    <div class="heading">
+        <h2>Purchase/Renew/Change Plan</h2>
+    </div>
+    <form id="planAssignForm" action="#" method="POST">
+        <div class="form">
+            <div class="basic">
+                    <div>
+                        <label for="basicRadioButton">Basic</label>
+                        <input type="radio" name="plan_id" value="1" id="basicRadioButton" checked>
+                    </div>
+                    <div>
+                        <p>Total Number of topics that can be subscribed EVERY DAY for daily email reports - 10</p> <br>
+                        <p>Total Number of topics that can be analyzed instantly during the subscription period	- 30</p> <br>
+                        <p>Subscription Period Validity	- 7 days</p>
+                    </div>
+            </div>
+            <div class="silver">
+                <div>
+                    <label for="silverRadioButton">Silver</label>
+                    <input type="radio" name="plan_id" value="2" id="silverRadioButton">
+                </div>
+                <div>
+                    <p>Total Number of topics that can be subscribed EVERY DAY for daily email reports - 35</p> <br>
+                    <p>Total Number of topics that can be analyzed instantly during the subscription period	- 110</p> <br>
+                    <p>Subscription Period Validity	- 30 days</p>
+                </div>
+            </div>
+            <div class="gold">
+                <div>
+                    <label for="goldRadioButton">Gold</label>
+                    <input type="radio" name="plan_id" value="3" id="goldRadioButton">
+                </div>
+                <div>
+                    <p>Total Number of topics that can be subscribed EVERY DAY for daily email reports - 100</p> <br>
+                    <p>Total Number of topics that can be analyzed instantly during the subscription period	- 300</p> <br>
+                    <p>Subscription Period Validity	- 3 months</p>
+                </div>
+            </div>
+            <div class="platinum">
+                <div>
+                    <label for="platinumRadioButton">Platinum</label>
+                    <input type="radio" name="plan_id" value="4" id="platinumRadioButton">
+                </div>
+                <div>
+                    <p>Total Number of topics that can be subscribed EVERY DAY for daily email reports - 400</p> <br>
+                    <p>Total Number of topics that can be analyzed instantly during the subscription period	- 1000</p> <br>
+                    <p>Subscription Period Validity	- 1 year</p>
+                </div>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Submit">
+        </div>
+
+    </form>
+</div>
+{% endblock %}
+
+{% block tailDependency%}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'app_ui/js/plan_controller.js' %}"></script>
+{% endblock %}

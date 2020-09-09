@@ -1,0 +1,54 @@
+{% extends 'app_ui/base.html' %}
+
+{% block title %}
+<title>Social Media Pulse Monitor</title>
+{% endblock %}
+
+{% block headDependency%}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/loggedInStyle.css' %}">
+{% endblock %}
+
+{% block body%}
+
+{% load staticfiles %}
+<a href="{% url 'home_logout' %}"> <img src="{% static 'app_ui/images/logout1.png' %}" alt="logout" class="logoutIcon"></a>
+<div class="blackBox blackBoxLoggedIn">
+
+    <div class="buttonBox">
+        <div class="subscribeButton">
+            <a href="{% url 'subscribe' %}"><button type="button">Subscribe to Search Topics</button></a>
+        </div>
+        <div class="quickAnalysisButton">
+            <a href="{% url 'quick_analysis' %}"><button type="button">Quick Analysis</button></a>
+        </div>
+        <div class="plansButton">
+            <a href="{% url 'user_plans' %}" class="plansButton"><button type="button">Purchase/Renew/Change Plan</button></a>
+        </div>
+        <div class="viewDetailsButton">
+            <a href="{% url 'account_details' %}"><button type="button">View Details</button></a>
+        </div>
+
+    </div>
+    <div class="contentBox">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+        Duis ultrices dui at magna accumsan tincidunt.
+
+        Maecenas sit amet odio accumsan, vehicula ante a, viverra nisl.
+
+        Duis bibendum libero sit amet lacinia elementum.
+
+        Nullam id arcu fringilla, vehicula leo at, elementum diam.
+
+        Etiam sed magna eget neque rhoncus vehicula.
+
+        Proin dictum magna sit amet fermentum feugiat.
+    </div>
+</div>
+{% endblock %}
+
+{% block tailDependency%}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'app_ui/js/home_controller.js' %}"></script>
+{% endblock %}

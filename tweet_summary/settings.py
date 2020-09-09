@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import dj_database_url
+
+from django.http import HttpRequest
 from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,13 +30,17 @@ SECRET_KEY = '0j^cnixv3svemc5_83*dv^-09%-lra57pybco#b&(arnr_jbjg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SITE_EMAIL = 'alexkay72850@gmail.com'
-EMAIL_HOST_USER = 'alexkay72850@gmail.com'
-EMAIL_HOST_PASSWORD = 'alexkay728'
-EMAIL_HOST = 'smtp.gmail.com'
+SENDGRID_API_KEY = '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'
+
+SITE_EMAIL = 'pulse@socialmediapulsemonitor.com'
+EMAIL_HOST_USER = 'pulse@socialmediapulsemonitor.com'
+EMAIL_HOST_PASSWORD = 'pampa0123'
+EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+HEROKU_HOSTNAME = 'tweet-summary.herokuapp.com'
 
 ALLOWED_HOSTS = ['tweet-summary.herokuapp.com', 'tweet-summary.socialmediapulsemonitor.com', 'tweet-summary.thesocialmediapulse.com', 'ai.newssumarization.com', '*']
 
@@ -43,10 +49,10 @@ LOGIN_REDIRECT_URL = '/support/login'
 # Application definition
 
 INSTALLED_APPS = [
-    'api_manager.apps.ApiManagerConfig',
-    'dashboard.apps.DashboardConfig',
+    'app_ui.apps.AppUiConfig',
     'app_support.apps.AppSupportConfig',
-    'subscriber',
+    'app_perf',
+    'api_manager',
     'django_celery_beat',
     'rest_framework',
     'corsheaders',
@@ -69,6 +75,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTH_USER_MODEL = 'app_perf.Admins'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'app_perf.auths.CustomUserAuthentication'
+]
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'app_perf.serializers.SubscribersSerializer',
+}
 
 ROOT_URLCONF = 'tweet_summary.urls'
 
@@ -158,13 +175,17 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_BEAT_SCHEDULE = {
     'send-ready-call': {
-        'task': 'subscriber.tasks.ready',
+        'task': 'api_manager.tasks.ready',
         'schedule': 60.0,
     },
     'send-tweet-analysis-everyday': {
-        'task': 'subscriber.tasks.daily_service',
+        'task': 'api_manager.tasks.daily_service',
         'schedule': crontab(day_of_week="0-6", hour=20, minute=0),
     },
+    'manage-plan': {
+        'task': 'api_manager.tasks.plan_update_service',
+        'schedule': crontab(day_of_week="0-6", hour=24, minute=0),
+    }
     # 'send-tweet-analysis-everyday': {
     #     'task': 'subscriber.tasks.daily_service',
     #     'schedule': 60.0,
@@ -191,7 +212,8 @@ STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dashboard/static'),
-    os.path.join(BASE_DIR, 'subscriber/static'),
-    os.path.join(BASE_DIR, 'app_support/static')
+    # os.path.join(BASE_DIR, 'dashboard/static'),
+    # os.path.join(BASE_DIR, 'subscriber/static'),
+    os.path.join(BASE_DIR, 'app_support/static'),
+    os.path.join(BASE_DIR, 'app_ui/static'),
 ]

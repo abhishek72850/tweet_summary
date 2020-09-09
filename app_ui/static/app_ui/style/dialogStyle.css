@@ -1,0 +1,45 @@
+.dialogBox{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(50,50,50,0.7);
+}
+.imgBox{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-70%);
+    width: 40%;
+    height: 40%;
+    background-color:#000000;
+    border-radius:40px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+.imgBox h3{
+    color:white;
+    text-align:center;
+    font-size:150%;
+}
+.imgBox img{
+    width:15%;
+
+}
+
+.dialogBox input{
+    text-align:center;
+    background-color: rgba(96, 91, 232, 1);
+    border-radius: 10px;
+    color:white;
+    margin-top:20px;
+    padding:5px 10px;
+    border:2px solid rgba(96, 91, 232, 1);
+    width:20%;
+}
+.dialogBox input:hover{
+    cursor: pointer;
+}

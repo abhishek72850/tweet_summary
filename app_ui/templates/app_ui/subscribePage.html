@@ -1,0 +1,40 @@
+{% extends 'app_ui/base.html' %}
+
+{% block title %}
+<title>Social Media Pulse Monitor</title>
+{% endblock %}
+
+{% block headDependency%}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/subscribePageStyle.css' %}">
+{% endblock %}
+
+{% block body%}
+<div class="icons">
+    {% load staticfiles %}
+    <a href="{% url 'home' %}"> <img src="{% static 'app_ui/images/home1.png' %}" alt="logout" class="logoutIcon"></a>
+    <a href="{% url 'home_logout'%}"> <img src="{% static 'app_ui/images/logout1.png' %}" alt="logout" class="logoutIcon"></a>
+</div>
+<div class="blackBox">
+    <div class="heading">
+        <h2>Subscribe to Search Topics</h2>
+    </div>
+    <!-- <a href="#"> <img src="img/home.png" alt="home" class="homeIcon"></a>
+    <a href="#"> <img src="img/logout.png" alt="logout" class="logoutIcon"></a> -->
+    <div class="form">
+        <form id="subscribeForm" action="#" method="POST">
+            <input class="topic" type="text" name="search_topic" placeholder="Search Topic" required=""> <br>
+            <label for="dateStart">From</label>
+            <input class="date" type="date" name="subscribe_start_date" placeholder="dd/mm/yyyy" id="dateStart" required="">
+            <label for="dateEnd">To</label>
+            <input class="date" type="date" name="subscribe_end_date" placeholder="dd/mm/yyyy" id="dateEnd" required=""> <br>
+            <input class="subscribeButton" type="submit" value="Subscribe to Search Topic">
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block tailDependency%}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'app_ui/js/subscribe_controller.js' %}"></script>
+{% endblock %}

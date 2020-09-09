@@ -1,0 +1,40 @@
+{% extends 'app_support/base.html' %}
+
+{% block title %}
+<title>Upcoming User Plans</title>
+{% endblock %}
+
+{% block dependency%}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'app_support/upcoming_user_plans.css' %}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'app_support/header.html' %}
+<section>
+    <div class="sub_sec search_form_cont">
+        <form id="search_upcoming_user_plans_form" action="#" method="get">
+            <div>
+                <input type="text" name="search_by_email" placeholder="Enter email or leave it blank to show all">
+            </div>
+            <div>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="sub_sec upcoming_user_plans_detail_list_cont">
+        <div class="upcoming_user_plans_list">
+            <div class="upcoming_user_plans_row upcoming_user_plans_row_head">
+                <span>SNo.</span>
+                <span>Registered Email</span>
+                <span>Plan Name</span>
+                <span>Plan Starts From</span>
+                <span>Status</span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

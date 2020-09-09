@@ -1,0 +1,111 @@
+
+    /* page styling */
+.form label{
+    color:white;
+}
+.form{
+    position:absolute;
+    left:50%;
+    transform:translate(-50%,0);
+    width:50%;
+    margin-top:18vh;
+}
+.topic{
+    width:100%;
+    background: transparent;
+    border:2px solid rgba(96, 91, 232, 1);
+    margin-bottom:5%;
+    padding:15px;
+    border-radius:40px;
+    color:white;
+}
+.date{
+    background: transparent;
+    border:2px solid rgba(96, 91, 232, 1);
+    border-radius:40px;
+    width:40%;
+    padding:15px;
+    margin-bottom:5%;
+    color:white;
+}
+.subscribeButton{
+    width:100%;
+    border:none;
+    background-color:rgba(96, 91, 232, 1);
+    padding:15px;
+    border-radius:40px;
+    color:white;
+    /* box-shadow: -1px -1px 4px rgba(255,255,255,0.5),
+    -1px -1px 4px rgba(255,255,255,0.5),
+    inset 1px 1px 4px rgba(255,255,255,0.1),
+    1px 1px 4px rgba(0,0,0,0.15); */
+}
+/* .subscribeButton:hover{
+    box-shadow:
+    inset -1px -1px 4px rgba(255,255,255,0.5),
+    inset -1px -1px 4px rgba(255,255,255,0.5),
+    inset 1px 1px 4px rgba(255,255,255,0.1),
+    inset 1px 1px 4px rgba(0,0,0,0.15);
+}
+.subscribeButton:focus{
+    box-shadow:  2px 2px rgb(59, 54, 199);
+} */
+.subscribeButton:hover{
+    cursor: pointer;
+}
+.icons{
+    position:absolute;
+    right:12%;
+    top:80px;
+}
+.logoutIcon, .homeIcon{
+    margin:5px;
+}
+ form label{
+     color:white;
+ }
+ ::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+   color: white;
+  }
+
+  /* Responsive */
+
+  @media(min-width:768px) and (max-width:991px){
+      .date{
+          display:block;
+          width:100%;
+      }
+      .subscribeButton{
+          font-size:80%;
+      }
+      .form{
+          margin-top:15vh;
+      }
+  }
+  @media(max-width:767px){
+      
+    .date{
+        display:block;
+        width:100%;
+    }
+
+    .subscribeButton{
+        font-size:80%;
+    }
+    .form{
+        width:70%;
+        margin-top:15vh;
+    }
+    .heading{
+        font-size:85%;
+    }
+  }

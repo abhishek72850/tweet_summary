@@ -1,0 +1,53 @@
+{% extends 'app_ui/base.html' %}
+
+{% block title %}
+<title>Social Media Pulse Monitor</title>
+{% endblock %}
+
+{% block headDependency%}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/viewDetailsStyle.css' %}">
+{% endblock %}
+
+{% block body%}
+<div class="icons">
+    {% load staticfiles %}
+    <a href="{% url 'home' %}"> <img src="{% static 'app_ui/images/home1.png' %}" alt="logout" class="logoutIcon"></a>
+    <a href="{% url 'home_logout'%}"> <img src="{% static 'app_ui/images/logout1.png' %}" alt="logout" class="logoutIcon"></a>
+</div>
+<div class="blackBox">
+  <div class="heading">
+    <h2>View Details</h2>
+  </div>
+  <!-- <a href="#"> <img src="img/home.png" alt="home" class="homeIcon"></a>
+  <a href="#"> <img src="img/logout.png" alt="logout" class="logoutIcon"></a> -->
+    <div class="detailBox">
+        <p><span>Email: </span><span class="account_email">xyz@yahoo.com</span></p>
+        <p><span>Password: </span><span class="account_password">123pqr@</span> <span> &nbsp; &nbsp; <a href="{% url 'change_password' %}">Change Password </a></span></p>
+        <p><span>Quick Analysis Quota Left: </span><span class="account_quick_analysis_quota">15</span></p>
+        <p><span>Account Status: </span><span class="account_status">value</span></p>
+        <p><span>Plan Name: </span><span class="account_plan_name">name</span><span>&nbsp; &nbsp;  <a href="{% url 'user_plans' %}">Renew/Change Plan</a></span></p>
+        <p class="expiryDate">Plan Expiry Date: <span class="account_expiry">dd/mm/yyyy</span></p>
+    </div>
+    <div class="table">
+        <form id="removeSubscriptionsForm" action="#" method="POST">
+            <table class="account_subscriptions">
+                <tr>
+                    <th>S.no.</th>
+                    <th>Search Topic</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Status</th>
+                    <th>Remove</th>
+                </tr>
+            </table>
+            <input type="submit" id="remove_button" value="Remove">
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block tailDependency%}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'app_ui/js/account_controller.js' %}"></script>
+{% endblock %}

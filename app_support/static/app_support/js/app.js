@@ -87,6 +87,135 @@ $(function(){
         );
     });
 
+    $('#search_plan_requests_form').on('submit', function(e){
+        e.preventDefault();
+
+        var email = this.search_by_email.value;
+
+        requestAjax(
+            {
+                url: window.location.origin + "/support/get_all_requests",
+                type: "GET",
+                data:{
+                    'search_by_email':email
+                }
+            },
+            function(data){
+                request_list = data;
+
+                $('.plan_request_row_element').remove();
+
+                for(index in request_list){
+                    user = JSON.parse(request_list[index][0]);
+                    plan_request = JSON.parse(request_list[index][1]);
+
+                    if(request_list[index][2] === null){
+                        old_plan = {};
+                    }
+                    else{
+                        old_plan = JSON.parse(request_list[index][2]);
+                    }
+                    new_plan = JSON.parse(request_list[index][3]);
+
+                    var plan_request_row = $('<div></div>',{
+                        'class':'plan_request_row  plan_request_row_element'
+                    });
+                    var sno = $('<span></span>',{
+                        'text': parseInt(index) + 1
+                    });
+                    var email = $('<span></span>',{
+                        'text': user['email']
+                    });
+                    var registered_on = $('<span></span>',{
+                        'text': getFormattedDatetime(user['created_at'])
+                    });
+                    var old_plan = $('<span></span>',{
+                        'text': old_plan.plan_name
+                    });
+                    var new_plan = $('<span></span>',{
+                        'text': new_plan['plan_name']
+                    });
+
+                    if(plan_request['status'] === 'REQUESTED'){
+                        var manage = $('<span></span>',{
+                            'html': '<button class="accept_plan_change_request" data-request-id="'+ plan_request['id'] +'">Accept</button> <button class="decline_plan_change_request" data-request-id="'+ plan_request['id'] +'">Decline</button>'
+                        });
+                    }
+                    else{
+                        var manage = $('<span></span>',{
+                            'text': plan_request['status']
+                        });
+                    }
+
+                    plan_request_row.append(sno);
+                    plan_request_row.append(email);
+                    plan_request_row.append(registered_on);
+                    plan_request_row.append(old_plan);
+                    plan_request_row.append(new_plan);
+                    plan_request_row.append(manage);
+
+                    $('.plan_requests_list').append(plan_request_row);
+                }
+            }
+        );
+    });
+
+    $('#search_upcoming_user_plans_form').on('submit', function(e){
+        e.preventDefault();
+
+        var email = this.search_by_email.value;
+
+        requestAjax(
+            {
+                url: window.location.origin + "/support/get_all_upcoming_user_plans",
+                type: "GET",
+                data:{
+                    'search_by_email':email
+                }
+            },
+            function(data){
+                request_list = data;
+
+                $('.upcoming_user_plans_row_element').remove();
+
+                for(index in request_list){
+                    user = JSON.parse(request_list[index][0])[0];
+                    upcoming_plan = JSON.parse(request_list[index][1])[0];
+
+                    plan = JSON.parse(request_list[index][2])[0];
+
+                    var upcoming_user_plans_row = $('<div></div>',{
+                        'class':'upcoming_user_plans_row  upcoming_user_plans_row_element'
+                    });
+                    var sno = $('<span></span>',{
+                        'text': parseInt(index) + 1
+                    });
+                    var email = $('<span></span>',{
+                        'text': user['fields']['email']
+                    });
+                    var plan_name = $('<span></span>',{
+                        'text': plan['fields']['plan_name']
+                    });
+                    var plan_starts_from = $('<span></span>',{
+                        'text': getFormattedDatetime(upcoming_plan['fields']['plan_starts_from'])
+                    });
+                    var status = $('<span></span>',{
+                        'text': upcoming_plan['fields']['status']
+                    });
+
+                    upcoming_user_plans_row.append(sno);
+                    upcoming_user_plans_row.append(email);
+                    upcoming_user_plans_row.append(registered_on);
+                    upcoming_user_plans_row.append(old_plan);
+                    upcoming_user_plans_row.append(new_plan);
+                    upcoming_user_plans_row.append(manage);
+
+                    $('.upcoming_user_plans_list').append(upcoming_user_plans_row);
+                }
+            }
+        );
+    });
+
     $('#update_subscription_form').on('submit', function(e){
         e.preventDefault();
         var status = this.subscription_status.value;
@@ -110,6 +239,21 @@ $(function(){
         requestAjax(
             {
                 url: window.location.origin + "/support/send_user_verification",
+                type: "POST",
+                data:{
+                    "user_id": app_env.user_id,
+                }
+            },
+            function(data){
+                alert(data);
+            }
+        );
+    });
+
+    $('#renew_user_plan').on('click', function(){
+        requestAjax(
+            {
+                url: window.location.origin + "/support/renew_plan",
                 type: "POST",
                 data:{
                     "user_id": app_env.user_id,
@@ -178,7 +322,7 @@ $(function(){
                 }
             },
             function(data){
-                console.log(JSON.parse(data));
+//                console.log(JSON.parse(data));
                 user_list = JSON.parse(data);
 
                 $('.user_row_element').remove();
@@ -195,7 +339,7 @@ $(function(){
                         'text': user_list[user_index]['fields']['email']
                     });
                     var registered_on = $('<span></span>',{
-                        'text': user_list[user_index]['fields']['created_at']
+                        'text': getFormattedDatetime(user_list[user_index]['fields']['created_at'])
                     });
                     var email_verified = $('<span></span>',{
                         'text': user_list[user_index]['fields']['email_verified']
@@ -290,6 +434,40 @@ $(function(){
 
     $('body').delegate('.manage_subscription_button','click',function(){
         window.location.href = window.location.origin + '/support/update_subscription?id=' + this.dataset.id;
+    });
+
+    $('body').delegate('.accept_plan_change_request','click',function(){
+        var request_id = this.dataset.requestId;
+
+        requestAjax(
+            {
+                url: window.location.origin + "/support/accept_requests",
+                type: "POST",
+                data:{
+                    "plan_request_id": request_id
+                }
+            },
+            function(data){
+                alert(data);
+            }
+        );
+    });
+
+    $('body').delegate('.decline_plan_change_request','click',function(){
+        var request_id = this.dataset.requestId;
+
+        requestAjax(
+            {
+                url: window.location.origin + "/support/decline_requests",
+                type: "POST",
+                data:{
+                    "plan_request_id": request_id
+                }
+            },
+            function(data){
+                alert(data);
+            }
+        );
     });
 
 });

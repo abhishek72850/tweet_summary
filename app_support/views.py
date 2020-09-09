@@ -8,10 +8,18 @@ from rest_framework.views import APIView
 
 import json
 
+from app_perf.models import Admins, Subscribers
+
 from subscriber.models import SubscribeModel
 
-from subscriber.helpers import register_or_verify_subscriber, generate_token, send_email_verification_link, \
-    get_user_details, get_all_users, get_all_subscriptions, get_user_by_id, get_subscription_by_id, update_user_status, update_subscription_status, send_subscription_verification_link, get_all_plan_change_requests, get_plan_request_by_id, update_plan_request_status, update_user_plan, send_plan_change_confirmation
+from helpers.auths import generate_token
+from helpers.emails import send_email_verification_link, send_subscription_verification_link, \
+    send_plan_change_confirmation
+from helpers.db import register_or_verify_subscriber, get_user_details, get_all_users, get_all_subscriptions, \
+    get_user_by_id, get_subscription_by_id, update_user_status, \
+    update_subscription_status, get_all_plan_change_requests, \
+    get_plan_request_by_id, update_plan_request_status, update_user_plan, \
+    get_all_upcoming_user_plans, is_user_plan_expired, add_upcoming_plan
 
 from fuzzywuzzy import fuzz
 
@@ -24,7 +32,7 @@ def LoginView(request):
         username = request.POST['username']
         password = request.POST['password']
         print(username, password)
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=username, password=password)
         if user is not None:
             login(request, user)
             return redirect("dashboard")
@@ -40,7 +48,7 @@ def DashboardView(request):
     if not request.user.is_authenticated:
         return redirect('login')
         # username = request.session['username']
-    details = User.objects.filter(username=request.user.username)
+    details = Admins.objects.get(email=request.user.email)
     return render(request, 'app_support/dashboard.html', {"details": details})
 
 
@@ -48,7 +56,7 @@ def ManageUsersView(request):
     if not request.user.is_authenticated:
         return redirect('login')
         # username = request.session['username']
-    details = User.objects.filter(username=request.user.username)
+    details = Admins.objects.get(email=request.user.email)
     return render(request, 'app_support/manage_users.html', {"details": details})
 
 
@@ -56,7 +64,7 @@ def ManageSubscriptionsView(request):
     if not request.user.is_authenticated:
         return redirect('login')
         # username = request.session['username']
-    details = User.objects.filter(username=request.user.username)
+    details = Admins.objects.get(email=request.user.email)
     return render(request, 'app_support/manage_subscriptions.html', {"details": details})
 
 
@@ -64,7 +72,7 @@ def UpdateUserView(request):
     if not request.user.is_authenticated:
         return redirect('login')
         # username = request.session['username']
-    details = User.objects.filter(username=request.user.username)
+    details = Admins.objects.get(email=request.user.email)
     return render(request, 'app_support/update_user.html', {"details": details})
 
 
@@ -72,7 +80,7 @@ def UpdateSubscriptionView(request):
     if not request.user.is_authenticated:
         return redirect('login')
         # username = request.session['username']
-    details = User.objects.filter(username=request.user.username)
+    details = Admins.objects.get(email=request.user.email)
     return render(request, 'app_support/update_subscription.html', {"details": details})
 
 
@@ -80,7 +88,7 @@ def AssignTestPlanView(request):
     if not request.user.is_authenticated:
         return redirect('login')
         # username = request.session['username']
-    details = User.objects.filter(username=request.user.username)
+    details = Admins.objects.get(email=request.user.email)
     return render(request, 'app_support/assign_test_plan.html', {"details": details})
 
 
@@ -88,8 +96,16 @@ def PlanChangeRequestView(request):
     if not request.user.is_authenticated:
         return redirect('login')
         # username = request.session['username']
-    details = User.objects.filter(username=request.user.username)
+    details = Admins.objects.get(email=request.user.email)
     return render(request, 'app_support/plan_change_request.html', {"details": details})
+
+
+def UpcomingUserPlansView(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+        # username = request.session['username']
+    details = Admins.objects.get(email=request.user.email)
+    return render(request, 'app_support/upcoming_user_plans.html', {"details": details})
 
 
 class RegisterTestUser(APIView):
@@ -171,7 +187,8 @@ class UpdateUser(APIView):
                 if update_user_status(request.POST['user_id'], request.POST['status']) == 1:
                     return Response(status=status.HTTP_200_OK, data={'data': 'User status updated successfully!!'})
                 else:
-                    return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'User is not valid, unable to update status!!'})
+                    return Response(status=status.HTTP_400_BAD_REQUEST,
+                                    data={'data': 'User is not valid, unable to update status!!'})
 
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Invalid status input!!'})
 
@@ -186,9 +203,11 @@ class UpdateSubscription(APIView):
         if 'subscription_id' in request.POST.keys() and 'status' in request.POST.keys():
             if request.POST['status'] in ['IDLE', 'ACTIVE', 'SUSPENDED']:
                 if update_subscription_status(request.POST['subscription_id'], request.POST['status']) == 1:
-                    return Response(status=status.HTTP_200_OK, data={'data': 'Subscription status updated successfully!!'})
+                    return Response(status=status.HTTP_200_OK,
+                                    data={'data': 'Subscription status updated successfully!!'})
                 else:
-                    return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Subscription is not valid, unable to update status!!'})
+                    return Response(status=status.HTTP_400_BAD_REQUEST,
+                                    data={'data': 'Subscription is not valid, unable to update status!!'})
 
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Invalid status input!!'})
 
@@ -285,6 +304,26 @@ class SendSubscriptionVerificationLink(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Invalid parameters!!'})
 
 
+class GetAllUpcomingUserPlans(APIView):
+    def get(self, request, format=None):
+        if not request.user.is_authenticated:
+            return Response(data={'data': 'Authentication Failed'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        upcoming_plan_list = []
+
+        if request.GET.get('search_by_email', False) != '':
+            for upcoming_plan in get_all_upcoming_user_plans():
+                if fuzz.ratio(request.GET['search_by_email'], upcoming_plan.user.email) > 20:
+                    upcoming_plan_list.append(
+                        [upcoming_plan.user.toJSON(), upcoming_plan.toJSON(), upcoming_plan.plan.toJSON()])
+        else:
+            for upcoming_plan in get_all_upcoming_user_plans():
+                upcoming_plan_list.append(
+                    [upcoming_plan.user.toJSON(), upcoming_plan.toJSON(), upcoming_plan.plan.toJSON()])
+
+        return Response(data={'data': upcoming_plan_list}, status=status.HTTP_200_OK)
+
+
 class GetAllPlanChangeRequests(APIView):
     def get(self, request, format=None):
         if not request.user.is_authenticated:
@@ -295,10 +334,15 @@ class GetAllPlanChangeRequests(APIView):
         if request.GET.get('search_by_email', False) != '':
             for plan_request in get_all_plan_change_requests():
                 if fuzz.ratio(request.GET['search_by_email'], plan_request.user.email) > 20:
-                    request_list.append([plan_request.user.toJSON(), plan_request.toJSON()])
+                    old_plan = plan_request.old_plan.toJSON() if plan_request.old_plan is not None else None
+                    request_list.append(
+                        [plan_request.user.toJSON(), plan_request.toJSON(), old_plan,
+                         plan_request.new_plan.toJSON()])
         else:
             for plan_request in get_all_plan_change_requests():
-                request_list.append([plan_request.user.toJSON(), plan_request.toJSON()])
+                old_plan = plan_request.old_plan.toJSON() if plan_request.old_plan is not None else None
+                request_list.append([plan_request.user.toJSON(), plan_request.toJSON(), old_plan,
+                                     plan_request.new_plan.toJSON()])
 
         return Response(data={'data': request_list}, status=status.HTTP_200_OK)
 
@@ -310,12 +354,26 @@ class AcceptPlanChangeRequest(APIView):
 
         if 'plan_request_id' in request.POST.keys():
             plan_request = get_plan_request_by_id(request.POST['plan_request_id'])
-
+            update_plan = False
             if len(plan_request) > 0:
                 if update_plan_request_status(plan_request[0].id, 'ACCEPTED') == 1:
+                    if plan_request[0].user.plan_subscribed is not None:
+                        if is_user_plan_expired(plan_request[0].user):
+                            update_plan = True
+                        else:
+                            add_upcoming_plan(plan_request[0].user, plan_request[0].new_plan)
+                            return Response(data={'data': 'Plan added to upcoming list'}, status=status.HTTP_200_OK)
+                    else:
+                        update_plan = True
+                else:
+                    return Response(data={'data': 'Something went wrong, code: CNSU3'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                if update_plan:
                     if update_user_plan(plan_request[0].user, plan_request[0].new_plan) == 1:
-                        send_plan_change_confirmation(plan_request)
+                        send_plan_change_confirmation(plan_request[0])
                         return Response(data={'data': 'Plan changed successfully'}, status=status.HTTP_200_OK)
+                    else:
+                        return Response(data={'data': 'Something went wrong, code: CNSU2'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
                 return Response(data={'data': 'Unable to change plan'}, status=status.HTTP_400_BAD_REQUEST)
             else:
@@ -336,9 +394,24 @@ class DeclinePlanChangeRequest(APIView):
                 if update_plan_request_status(plan_request[0].id, 'DECLINED') == 1:
                     return Response(data={'data': 'Plan changed request declined'}, status=status.HTTP_200_OK)
 
-                return Response(data={'data': 'Unable to decline, something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(data={'data': 'Unable to decline, something went wrong'},
+                                status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response(data={'data': 'Plan is invalid'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data={'data': 'Invalid parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class RenewUserPlan(APIView):
+    def post(self, request, format=None):
+        if not request.user.is_authenticated:
+            return Response(data={'data': 'Authentication Failed'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if 'user_id' in request.POST.keys():
+            user_set = get_user_by_id(request.POST['user_id'])
+
+            if len(user_set) > 0:
+                pass
+            else:
+                return Response(data={'data': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'data': 'Invalid parameters'}, status=status.HTTP_400_BAD_REQUEST)

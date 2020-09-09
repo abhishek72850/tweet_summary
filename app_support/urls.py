@@ -12,6 +12,7 @@ urlpatterns = [
     path('update_subscription', views.UpdateSubscriptionView, name='update_subscription'),
     path('assign_test_plan', views.AssignTestPlanView, name='assign_test_plan'),
     path('plan_request_change', views.PlanChangeRequestView, name='plan_request_change'),
+    path('upcoming_plan', views.UpcomingUserPlansView, name='upcoming_plan'),
     path('assign', views.RegisterTestUser.as_view()),
     path('all_users', views.GetAllUsers.as_view()),
     path('all_subscriptions', views.GetAllSubscriptions.as_view()),
@@ -22,6 +23,8 @@ urlpatterns = [
     path('send_user_verification', views.SendUserVerificationLink.as_view()),
     path('send_subscription_verification', views.SendSubscriptionVerificationLink.as_view()),
     path('get_all_requests', views.GetAllPlanChangeRequests.as_view()),
-    path('accept_requests', views.GetAllPlanChangeRequests.as_view()),
-    path('decline_requests', views.GetAllPlanChangeRequests.as_view()),
+    path('accept_requests', views.AcceptPlanChangeRequest.as_view()),
+    path('decline_requests', views.DeclinePlanChangeRequest.as_view()),
+    path('renew_plan', views.RenewUserPlan.as_view()),
+    path('get_all_upcoming_user_plans', views.GetAllUpcomingUserPlans.as_view()),
 ]

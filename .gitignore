@@ -1,5 +1,11 @@
 __pycache__/*
-venv
+venv/*
 *.pyc
 .idea
 db.sqlite3
+exp.py
+._.DS_Store
+dashboard/*
+subscriber
+staticfiles
+dashboard/templates/dashboard
