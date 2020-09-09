@@ -2,6 +2,7 @@ from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.utils.html import strip_tags
 
+import traceback
 from datetime import datetime, timedelta
 
 from helpers.auths import generate_token
@@ -22,7 +23,7 @@ def send_email(data):
         response = sg.send(message)
         print(response.status_code)
     except Exception as e:
-        print(e.message)
+        print(traceback.format_exc())
         return False
     return True
 
