@@ -30,7 +30,7 @@ SECRET_KEY = '0j^cnixv3svemc5_83*dv^-09%-lra57pybco#b&(arnr_jbjg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 
 SITE_EMAIL = 'pulse@socialmediapulsemonitor.com'
 EMAIL_HOST_USER = 'pulse@socialmediapulsemonitor.com'
