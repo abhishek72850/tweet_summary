@@ -18,13 +18,19 @@ $(function(){
                 data = data['data'];
                 $('.result').show();
 
+                $('.data_timestamp').text(Date());
+
                 $('.query').text(data['query']);
 
                 if(data['increase_in_tweets'] > 0){
                     inc_or_dec = data['increase_in_tweets'] + ' increase';
+                    $('.increase').removeClass('red');
+                    $('.increase').addClass('green');
                 }
                 else{
                     inc_or_dec = (data['increase_in_tweets'] * -1) + ' decrease';
+                    $('.increase').removeClass('green');
+                    $('.increase').addClass('red');
                 }
                 $('.increase').text(inc_or_dec);
 
@@ -161,8 +167,6 @@ $(function(){
                 else{
                     $('.stats_24_most_active_tweet_mentions').text('None');
                 }
-
-                $('.data_timestamp').text(Date());
             }
         );
     });

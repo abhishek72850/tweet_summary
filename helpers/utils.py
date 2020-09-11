@@ -1,3 +1,6 @@
+import pytz
+from datetime import datetime, timedelta
+
 from django.contrib.sites.shortcuts import get_current_site
 
 
@@ -19,3 +22,7 @@ def request_contain_keys(request_dict, keys):
         if key not in request_dict.keys():
             return False
     return True
+
+
+def get_utc_now():
+    return datetime.now(tz=pytz.UTC)

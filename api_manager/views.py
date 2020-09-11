@@ -10,7 +10,7 @@ from django.contrib.auth import login
 from helpers.auths import is_action_allowed, generate_token, decode_token
 from helpers.emails import send_email_verification_link, send_subscription_verification_link, send_password_reset_link
 from helpers.twitter import TwitterHelper
-from helpers.utils import request_contain_keys, get_host_origin
+from helpers.utils import request_contain_keys, get_host_origin, get_utc_now
 from helpers.db import get_account_details, get_plan_by_id, add_plan_request, update_quick_analysis_counter, \
     add_subscription, get_user_by_email, update_user_password, confirm_subscription, confirm_email_verification, \
     unsubscribe, remove_subscription
@@ -133,7 +133,7 @@ class AccountSubscribeTopic(APIView):
 
         if request_contain_keys(request.POST, ['subscribe_start_date', 'subscribe_end_date', 'search_topic']):
 
-            current_datetime = datetime.now()
+            current_datetime = get_utc_now()
 
             start_date = datetime.strptime(request.POST['subscribe_start_date'], '%Y-%m-%d')
             end_date = datetime.strptime(request.POST['subscribe_end_date'], '%Y-%m-%d')

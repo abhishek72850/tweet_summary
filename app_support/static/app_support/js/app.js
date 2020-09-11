@@ -55,17 +55,17 @@ $(function(){
                 }
             },
             function(data){
-                var user = JSON.parse(data['user'])[0];
-                var plan = JSON.parse(data['plan'])[0];
+                var user = JSON.parse(data['user']);
+                var plan = JSON.parse(data['plan']);
                 var subscription = JSON.parse(data['subscription'])[0];
 
-                $('#user_email').attr('value', user.fields.email);
-                $('#plan_subscribed').attr('value', plan.fields.plan_name);
-                $('#subscription_topic').attr('value', subscription.fields.topic);
-                $('#subscription_created_on').attr('value', getFormattedDatetime(subscription.fields.created_at));
-                $('#subscription_from').attr('value', getFormattedDatetime(subscription.fields.subscription_from));
-                $('#subscription_to').attr('value', getFormattedDatetime(subscription.fields.subscription_to));
-                $('#subscription_status').val(subscription.fields.subscription_status);
+                $('#user_email').attr('value', user.email);
+                $('#plan_subscribed').attr('value', plan.plan_name);
+                $('#subscription_topic').attr('value', subscription.topic);
+                $('#subscription_created_on').attr('value', getFormattedDatetime(subscription.created_at));
+                $('#subscription_from').attr('value', getFormattedDatetime(subscription.subscription_from));
+                $('#subscription_to').attr('value', getFormattedDatetime(subscription.subscription_to));
+                $('#subscription_status').val(subscription.subscription_status);
             }
         );
     }
@@ -188,10 +188,10 @@ $(function(){
                 $('.upcoming_user_plans_row_element').remove();
 
                 for(index in request_list){
-                    user = JSON.parse(request_list[index][0])[0];
-                    upcoming_plan = JSON.parse(request_list[index][1])[0];
+                    user = JSON.parse(request_list[index][0]);
+                    upcoming_plan = JSON.parse(request_list[index][1]);
 
-                    plan = JSON.parse(request_list[index][2])[0];
+                    plan = JSON.parse(request_list[index][2]);
 
                     var upcoming_user_plans_row = $('<div></div>',{
                         'class':'upcoming_user_plans_row  upcoming_user_plans_row_element'
@@ -200,16 +200,16 @@ $(function(){
                         'text': parseInt(index) + 1
                     });
                     var email = $('<span></span>',{
-                        'text': user['fields']['email']
+                        'text': user['email']
                     });
                     var plan_name = $('<span></span>',{
-                        'text': plan['fields']['plan_name']
+                        'text': plan['plan_name']
                     });
                     var plan_starts_from = $('<span></span>',{
-                        'text': getFormattedDatetime(upcoming_plan['fields']['plan_starts_from'])
+                        'text': getFormattedDatetime(upcoming_plan['plan_starts_from'])
                     });
                     var status = $('<span></span>',{
-                        'text': upcoming_plan['fields']['status']
+                        'text': upcoming_plan['status']
                     });
 
                     upcoming_user_plans_row.append(sno);
@@ -393,8 +393,8 @@ $(function(){
                 $('.user_row_element').remove();
 
                 for(index in subscription_list){
-                    user = JSON.parse(subscription_list[index][0])[0];
-                    subscription = JSON.parse(subscription_list[index][1])[0];
+                    user = JSON.parse(subscription_list[index][0]);
+                    subscription = JSON.parse(subscription_list[index][1]);
                     var user_row = $('<div></div>',{
                         'class':'user_row  user_row_element'
                     });
@@ -402,25 +402,25 @@ $(function(){
                         'text': parseInt(index) + 1
                     });
                     var email = $('<span></span>',{
-                        'text': user['fields']['email']
+                        'text': user['email']
                     });
                     var topic = $('<span></span>',{
-                        'text': subscription['fields']['topic']
+                        'text': subscription['topic']
                     });
                     var created_on = $('<span></span>',{
-                        'text': getFormattedDatetime(subscription['fields']['created_at'])
+                        'text': getFormattedDatetime(subscription['created_at'])
                     });
                     var from = $('<span></span>',{
-                        'text': getFormattedDatetime(subscription['fields']['subscription_from'])
+                        'text': getFormattedDatetime(subscription['subscription_from'])
                     });
                     var to = $('<span></span>',{
-                        'text': getFormattedDatetime(subscription['fields']['subscription_to'])
+                        'text': getFormattedDatetime(subscription['subscription_to'])
                     });
                     var status = $('<span></span>',{
-                        'text': subscription['fields']['subscription_status']
+                        'text': subscription['subscription_status']
                     });
                     var manage = $('<span></span>',{
-                        'html': '<button class="manage_subscription_button" data-id="'+ subscription['pk'] +'">Manage</button>'
+                        'html': '<button class="manage_subscription_button" data-id="'+ subscription['id'] +'">Manage</button>'
                     });
 
                     user_row.append(sno);

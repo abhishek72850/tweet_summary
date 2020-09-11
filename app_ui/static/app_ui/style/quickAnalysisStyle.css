@@ -71,8 +71,13 @@
   padding: 0.5em 1.5em;
 }
 .bold{
-  color: #f00;
 	font-weight: bold;
+}
+.green{
+  color: #0f0;
+}
+.red{
+  color: #f00; 
 }
 li{
 	margin: .5em 0;
