@@ -26,3 +26,11 @@ def request_contain_keys(request_dict, keys):
 
 def get_utc_now():
     return datetime.now(tz=pytz.UTC)
+
+
+def get_local_datetime(offset, datetime_obj=None):
+    if datetime_obj:
+        return datetime_obj + timedelta(minutes=offset)
+
+    return datetime.now(tz=pytz.UTC) + timedelta(minutes=offset)
+

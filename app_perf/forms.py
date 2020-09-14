@@ -29,4 +29,4 @@ class CustomUserRegisterForm(forms.ModelForm):
 
     class Meta:
         model = Subscribers
-        fields = ('email', 'password')
+        fields = ('email', 'password', 'timezone_offset')

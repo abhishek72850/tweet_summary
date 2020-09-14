@@ -100,3 +100,59 @@ section{
 .plan_request_row>span:nth-child(6)>button:last-child{
 	background-color: #f55;
 }
+
+.payment_detail_overlay_cont{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #00000055;
+}
+.payment_detail_overlay_cont>div{
+	background-color: #fff;
+	width: 40%;
+	height: 30%;
+	display: flex;
+  justify-content: center;
+	align-items: center;
+}
+.payment_detail_overlay_cont>div>form{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+}
+.payment_detail_overlay_cont>div>form>div{
+	margin: 0.5em 0;
+	width: 60%;
+}
+.payment_detail_overlay_cont>div>form>div>input{
+	font-size: 0.9em;
+	padding: 0 0.5em;
+	width: 100%;
+	height: 3em;
+}
+.payment_detail_overlay_cont>div>form>div>select{
+	font-size: 0.9em;
+  text-align: center;
+	height: 3em;
+	width: 100%;
+}
+.payment_detail_overlay_cont>div>form>div:last-child{
+	display: flex;
+	justify-content: space-between;
+}
+.payment_detail_overlay_cont>div>form>div>button{
+	font-size: 0.9em;
+	border: 1px solid #ccc;
+	height: 3em;
+	width: 40%;
+}
+.payment_detail_overlay_cont>div>form>div>button:last-child{
+	background-color: #55f;
+	color: #fff;
+}

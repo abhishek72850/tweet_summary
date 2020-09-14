@@ -4,7 +4,7 @@ section{
 	align-items: center;
 	padding: 1em;
 	background-color: #eee;
-  height: calc(100% - 7em);
+  height: auto;
 	width: 100%;
 }
 .update_subscription_form_cont{

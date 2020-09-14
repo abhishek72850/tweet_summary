@@ -1,15 +1,18 @@
 $(function(){
+    var getFutureDate = function(date_str, days){
+        return moment(date_str).utc().add({days:days}).format();
+    }
+
+    var getUTCDateTime = function(date_str){
+        data = new Date(date_str)  
+    }
+
+    var getLocalDatetime = function(date_str, offset){
+        return moment(date_str).utc().add({minutes:offset}).format();
+    }
+
     var getFormattedDatetime = function(date_str){
-        date = new Date(date_str);
-
-        month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1);
-        day = date.getDate() >= 10 ? date.getDate() : "0" + date.getDate();
-
-        hours = date.getHours() >= 10 ? date.getHours() : "0" + date.getHours();
-        seconds = date.getSeconds() >= 10 ? date.getSeconds() : "0" + date.getSeconds();
-        minutes = date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes()
-
-        return date.getFullYear() + "-" + month + "-" + day + " " +  hours + ":" + minutes + ":" + seconds;
+        return moment(date_str).utc().format('DD MMM YYYY hh:mm:ssA');
     }
 
     var loadUserDetails = function(){
@@ -26,16 +29,22 @@ $(function(){
 
                 if(data['plan'] == null){
                     var plan = {}
-                    $('#plan_subscribed').attr('value', plan.plan_status);
+                    $('#plan_subscribed').attr('value', '-');
+                    $('#plan_subscribed_on').attr('value', '-');
+                    $('#plan_status').attr('value', user.plan_status);
+                    $('#plan_expires_on').attr('value','-');
                 }
                 else{
                     var plan = JSON.parse(data['plan']);
                     $('#plan_subscribed').attr('value', plan.plan_name);
+                    $('#plan_subscribed_on').attr('value', getFormattedDatetime(getLocalDatetime(user.plan_subscribed_at, user['timezone_offset'])));
+                    $('#plan_status').attr('value', user.plan_status);
+                    $('#plan_expires_on').attr('value',getFormattedDatetime(getLocalDatetime(getFutureDate(user.plan_subscribed_at, parseInt(plan.plan_duration)), user['timezone_offset'])));
                 }
 
 
                 $('#user_email').attr('value', user.email);
-                $('#registered_on').attr('value', getFormattedDatetime(user.created_at));
+                $('#registered_on').attr('value', getFormattedDatetime(getLocalDatetime(user.created_at, user['timezone_offset'])));
 
                 $('#quick_analysis_quota').attr('value', user.quick_analysis_counter);
                 $('#total_subscription').attr('value', data['subscriptions']);
@@ -62,9 +71,9 @@ $(function(){
                 $('#user_email').attr('value', user.email);
                 $('#plan_subscribed').attr('value', plan.plan_name);
                 $('#subscription_topic').attr('value', subscription.topic);
-                $('#subscription_created_on').attr('value', getFormattedDatetime(subscription.created_at));
-                $('#subscription_from').attr('value', getFormattedDatetime(subscription.subscription_from));
-                $('#subscription_to').attr('value', getFormattedDatetime(subscription.subscription_to));
+                $('#subscription_created_on').attr('value', getFormattedDatetime(getLocalDatetime(subscription.created_at, user['timezone_offset'])));
+                $('#subscription_from').attr('value', getFormattedDatetime(getLocalDatetime(subscription.subscription_from, user['timezone_offset'])));
+                $('#subscription_to').attr('value', getFormattedDatetime(getLocalDatetime(subscription.subscription_to, user['timezone_offset'])));
                 $('#subscription_status').val(subscription.subscription_status);
             }
         );
@@ -136,7 +145,7 @@ $(function(){
                         'text': user['email']
                     });
                     var registered_on = $('<span></span>',{
-                        'text': getFormattedDatetime(user['created_at'])
+                        'text': getFormattedDatetime(getLocalDatetime(plan_request['created_at'], user['timezone_offset']))
                     });
                     var old_plan = $('<span></span>',{
                         'text': old_plan.plan_name
@@ -202,11 +211,14 @@ $(function(){
                     var email = $('<span></span>',{
                         'text': user['email']
                     });
+                    var created_on = $('<span></span>',{
+                        'text': getFormattedDatetime(getLocalDatetime(upcoming_plan['created_at'], user['timezone_offset']))
+                    });
                     var plan_name = $('<span></span>',{
                         'text': plan['plan_name']
                     });
                     var plan_starts_from = $('<span></span>',{
-                        'text': getFormattedDatetime(upcoming_plan['plan_starts_from'])
+                        'text': getFormattedDatetime(getLocalDatetime(upcoming_plan['plan_starts_from'], user['timezone_offset']))
                     });
                     var status = $('<span></span>',{
                         'text': upcoming_plan['status']
@@ -214,12 +226,75 @@ $(function(){
 
                     upcoming_user_plans_row.append(sno);
                     upcoming_user_plans_row.append(email);
-                    upcoming_user_plans_row.append(registered_on);
-                    upcoming_user_plans_row.append(old_plan);
-                    upcoming_user_plans_row.append(new_plan);
-                    upcoming_user_plans_row.append(manage);
+                    upcoming_user_plans_row.append(created_on);
+                    upcoming_user_plans_row.append(plan_name);
+                    upcoming_user_plans_row.append(plan_starts_from);
+                    upcoming_user_plans_row.append(status);
 
                     $('.upcoming_user_plans_list').append(upcoming_user_plans_row);
+                }
+            }
+        );
+    });
+
+
+    $('#search_user_plan_history_form').on('submit', function(e){
+        e.preventDefault();
+
+        var email = this.search_by_email.value;
+
+        requestAjax(
+            {
+                url: window.location.origin + "/support/get_all_plan_history",
+                type: "GET",
+                data:{
+                    'search_by_email':email
+                }
+            },
+            function(data){
+                request_list = data;
+
+                $('.user_plan_history_row_element').remove();
+
+                for(index in request_list){
+                    user = JSON.parse(request_list[index][0]);
+                    plan_history = JSON.parse(request_list[index][1]);
+                    plan = JSON.parse(request_list[index][2])
+
+                    var user_plan_history_row = $('<div></div>',{
+                        'class':'user_plan_history_row  user_plan_history_row_element'
+                    });
+                    var sno = $('<span></span>',{
+                        'text': parseInt(index) + 1
+                    });
+                    var email = $('<span></span>',{
+                        'text': user['email']
+                    });
+                    var plan_requested_on = $('<span></span>',{
+                        'text': getFormattedDatetime(getLocalDatetime(plan_history['created_at'], user['timezone_offset']))
+                    });
+                    var plan_name = $('<span></span>',{
+                        'text': plan['plan_name']
+                    });
+                    var plan_started_from = $('<span></span>',{
+                        'text': getFormattedDatetime(getLocalDatetime(plan_history['plan_started_from'], user['timezone_offset']))
+                    });
+                    var payment_id = $('<span></span>',{
+                        'text': plan_history['payment_id']
+                    });
+                    var payment_mode = $('<span></span>',{
+                        'text': plan_history['payment_mode']
+                    });
+
+                    user_plan_history_row.append(sno);
+                    user_plan_history_row.append(email);
+                    user_plan_history_row.append(plan_requested_on);
+                    user_plan_history_row.append(plan_name);
+                    user_plan_history_row.append(plan_started_from);
+                    user_plan_history_row.append(payment_id);
+                    user_plan_history_row.append(payment_mode);
+
+                    $('.user_plan_history_list').append(user_plan_history_row);
                 }
             }
         );
@@ -260,18 +335,31 @@ $(function(){
     });
 
     $('#renew_user_plan').on('click', function(){
-        requestAjax(
-            {
-                url: window.location.origin + "/support/renew_plan",
-                type: "POST",
-                data:{
-                    "user_id": app_env.user_id,
+        $('.payment_detail_overlay_cont').show();
+        
+        $('#renewPlanPaymentForm').on('submit', function(e){
+
+            e.preventDefault();
+
+            console.log(this.payment_id.value);
+            console.log(this.payment_mode.value);
+
+            requestAjax(
+                {
+                    url: window.location.origin + "/support/renew_plan",
+                    type: "POST",
+                    data:{
+                        "user_id": app_env.user_id,
+                        "payment_id":this.payment_id.value,
+                        "payment_mode":this.payment_mode.value
+                    }
+                },
+                function(data){
+                    alert(data);
+                    $('.payment_detail_overlay_cont').hide();
                 }
-            },
-            function(data){
-                alert(data);
-            }
-        );
+            );
+        });
     });
 
     $('#send_subscription_verification').on('click', function(){
@@ -293,8 +381,8 @@ $(function(){
         e.preventDefault();
 
         var email = this.test_user_email.value;
-        var password = this.test_user_password.value;
-        var cnf_password = this.test_user_cnf_password.value;
+        // var password = this.test_user_password.value;
+        // var cnf_password = this.test_user_cnf_password.value;
 
         if(password.trim() !== cnf_password.trim()){
             alert('Password does not matched!!');
@@ -305,9 +393,9 @@ $(function(){
                     url: window.location.origin + "/support/assign",
                     type: "POST",
                     data:{
-                        'test_user_email':email,
-                        'test_user_password':password,
-                        'test_user_cnf_password':cnf_password,
+                        'user_email':email,
+                        // 'test_user_password':password,
+                        // 'test_user_cnf_password':cnf_password,
                     }
                 },
                 function(data){
@@ -349,7 +437,7 @@ $(function(){
                         'text': user['email']
                     });
                     var registered_on = $('<span></span>',{
-                        'text': getFormattedDatetime(user['created_at'])
+                        'text': getFormattedDatetime(getLocalDatetime(user['created_at'], user['timezone_offset']))
                     });
                     var email_verified = $('<span></span>',{
                         'text': user['email_verified']
@@ -408,13 +496,13 @@ $(function(){
                         'text': subscription['topic']
                     });
                     var created_on = $('<span></span>',{
-                        'text': getFormattedDatetime(subscription['created_at'])
+                        'text': getFormattedDatetime(getLocalDatetime(subscription['created_at'], user['timezone_offset']))
                     });
                     var from = $('<span></span>',{
-                        'text': getFormattedDatetime(subscription['subscription_from'])
+                        'text': getFormattedDatetime(getLocalDatetime(subscription['subscription_from'], user['timezone_offset']))
                     });
                     var to = $('<span></span>',{
-                        'text': getFormattedDatetime(subscription['subscription_to'])
+                        'text': getFormattedDatetime(getLocalDatetime(subscription['subscription_to'], user['timezone_offset']))
                     });
                     var status = $('<span></span>',{
                         'text': subscription['subscription_status']
@@ -438,6 +526,10 @@ $(function(){
         );
     });
 
+    $('.close_plan_payment_form').on('click', function(){
+        $('.payment_detail_overlay_cont').hide();
+    })
+
     $('body').delegate('.manage_user_button','click',function(){
         window.location.href = window.location.origin + '/support/update_user?id=' + this.dataset.id;
     });
@@ -447,20 +539,32 @@ $(function(){
     });
 
     $('body').delegate('.accept_plan_change_request','click',function(){
+        $('.payment_detail_overlay_cont').show();
+
         var request_id = this.dataset.requestId;
 
-        requestAjax(
-            {
-                url: window.location.origin + "/support/accept_requests",
-                type: "POST",
-                data:{
-                    "plan_request_id": request_id
+        $('#changePlanPaymentForm').on('submit', function(e){
+            e.preventDefault();
+
+            console.log(this.payment_id.value);
+            console.log(this.payment_mode.value);
+
+            requestAjax(
+                {
+                    url: window.location.origin + "/support/accept_requests",
+                    type: "POST",
+                    data:{
+                        "plan_request_id": request_id,
+                        "payment_id":this.payment_id.value,
+                        "payment_mode":this.payment_mode.value
+                    }
+                },
+                function(data){
+                    alert(data);
+                    $('.payment_detail_overlay_cont').hide();
                 }
-            },
-            function(data){
-                alert(data);
-            }
-        );
+            );
+        });
     });
 
     $('body').delegate('.decline_plan_change_request','click',function(){

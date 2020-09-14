@@ -5,7 +5,7 @@ import traceback
 import pytz
 from datetime import datetime, timedelta
 
-from app_perf.models import Subscribers, SubscriptionModel, SubscriberPlanModel, PlanChangeRequestModel, UpcomingPlanModel
+from app_perf.models import Subscribers, SubscriptionModel, SubscriberPlanModel, PlanChangeRequestModel, UpcomingPlanModel, UserPlanHistoryModel
 from app_perf.serializers import SubscribersSerializer
 
 
@@ -26,7 +26,7 @@ def get_subscription_by_id(subscription_id):
 
 
 def get_all_subscriptions():
-    return SubscriptionModel.objects.all()
+    return SubscriptionModel.objects.all().order_by('-created_at')
 
 
 def get_user_details(email, password):
@@ -45,6 +45,10 @@ def get_all_upcoming_user_plans():
     return UpcomingPlanModel.objects.all().order_by('-created_at')
 
 
+def get_all_user_plan_history():
+    return UserPlanHistoryModel.objects.all().order_by('-created_at')
+
+
 def get_plan_by_id(plan_id):
     return SubscriberPlanModel.objects.filter(id=plan_id)
 
@@ -54,7 +58,7 @@ def delete_all_user_subscriptions(user):
 
 
 def is_user_plan_expired(user):
-    if user.plan_subscribed_at + user.plan_subscribed.plan_duration > datetime.now(tz=pytz.UTC):
+    if (user.plan_subscribed_at + timedelta(days=user.plan_subscribed.plan_duration)) < datetime.now(tz=pytz.UTC):
         return True
     return False
 
@@ -143,6 +147,19 @@ def update_subscription_details(user, subscription_id, topic, subscription_from,
         return False
 
 
+def record_plan_history(user, plan, plan_started_from, payment_id='', payment_mode='OFFLINE'):
+    history = UserPlanHistoryModel()
+    history.user = user
+    history.plan = plan
+    history.plan_started_from = plan_started_from
+    history.payment_id = payment_id
+    history.payment_mode = payment_mode
+
+    history.save()
+    
+    return history
+
+
 def add_subscription(user, topic, start_date, end_date):
 
     result_set = SubscriptionModel.objects.filter(user=user, topic=topic)
@@ -210,17 +227,21 @@ def register_or_verify_subscriber(email, password, plan_id):
     return result[0]
 
 
-def add_upcoming_plan(user, plan):
+def get_plan_starts_from(user):
     plan_starts_from = user.plan_subscribed_at
     plan_duration = user.plan_subscribed.plan_duration
     for upcoming in get_all_upcoming_user_plans():
         if user.id == upcoming.user.id and plan_starts_from < upcoming.plan_starts_from:
             plan_starts_from = upcoming.plan_starts_from
             plan_duration = upcoming.plan.plan_duration
+    return plan_starts_from + timedelta(days=plan_duration)
+
+
+def add_upcoming_plan(user, plan):
     upcoming = UpcomingPlanModel()
     upcoming.user = user
     upcoming.plan = plan
-    upcoming.plan_starts_from = plan_starts_from + timedelta(days=plan_duration)
+    upcoming.plan_starts_from = get_plan_starts_from(user)
 
     upcoming.save()
 

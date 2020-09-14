@@ -1,5 +1,6 @@
 $(function(){
     $('.result').hide();
+    $('.resultHeading').hide();
 
     $('#quickAnalysisForm').on('submit',function(e){
         e.preventDefault();
@@ -17,6 +18,7 @@ $(function(){
             function(data){
                 data = data['data'];
                 $('.result').show();
+                $('.resultHeading').show();
 
                 $('.data_timestamp').text(Date());
 

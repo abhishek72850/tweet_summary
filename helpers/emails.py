@@ -5,6 +5,7 @@ from django.utils.html import strip_tags
 import traceback
 from datetime import datetime, timedelta
 
+from helpers.utils import get_utc_now, get_local_datetime
 from helpers.auths import generate_token
 from tweet_summary.settings import SECRET_KEY, SITE_EMAIL, SENDGRID_API_KEY
 
@@ -68,6 +69,17 @@ def send_plan_change_confirmation(plan_request):
     return send_email(data)
 
 
+def send_plan_assigned_confirmation(user):
+    data = dict()
+    data["subject"] = "Plan Assigned Confirmation"
+    data["email"] = user.email
+    data["plan_name"] = user.plan_subscribed.plan_name
+    template = get_template("app_ui/email_templates/plan_assigned.html")
+    data["html_text"] = template.render(data)
+    data["plain_text"] = strip_tags(data["html_text"])
+    return send_email(data)
+
+
 def send_password_reset_link(user, password_reset_url):
     data = dict()
     data["confirmation_url"] = password_reset_url
@@ -90,15 +102,15 @@ def send_plan_renew_confirmation(user):
     return send_email(data)
 
 
-def send_analysis(subscriber, analysis):
-    current_date = datetime.now()
-    token = generate_token(subscriber.user.email, expire=1, subscription_id=subscriber.id)
-    analysis['unsubscribe_link'] = 'https://tweet-summary.herokuapp.com/subscriber/unsubscribe?verification_code={}'.format(token)
-    template = get_template("subscriber/tweet_analysis.html")
+def send_analysis(subscription, analysis):
+    current_date = get_local_datetime(subscription.user.timezone_offset)
+    token = generate_token(subscription.user.email, expire=1, subscription_id=subscription.id)
+    analysis['unsubscribe_link'] = 'https://tweet-summary.herokuapp.com/api/account/unsubscribe?verification_code={}'.format(token)
+    template = get_template("app_ui/email_templates/tweet_analysis.html")
 
     mail_data = {
-        'subject': '{} Tweet analysis on {}'.format(current_date.date(), subscriber.topic),
-        'email': subscriber.user.email,
+        'subject': '{} Tweet analysis on {}'.format(current_date.date(), subscription.topic),
+        'email': subscription.user.email,
         'html_text': template.render(analysis),
     }
 

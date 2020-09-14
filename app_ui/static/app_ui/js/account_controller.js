@@ -22,12 +22,14 @@ $(function(){
 
                 if(plan === null){
                     $('.account_quick_analysis').text('0');
-                    $('.account_plan_name').text(user.plan_status);
+                    $('.account_plan_name').text('-');
+                    $('.account_plan_status').text(user.plan_status);
                     $('.account_expiry').text('None');
                 }
                 else{
                     $('.account_quick_analysis').text(parseInt(plan.quick_analysis_quota) - parseInt(user.quick_analysis_counter));
                     $('.account_plan_name').text(plan.plan_name.toLowerCase());
+                    $('.account_plan_status').text(user.plan_status);
                     $('.account_expiry').text(getFormattedDatetime(getFutureDate(user.plan_subscribed_at, parseInt(plan.plan_duration))));
                 }
 

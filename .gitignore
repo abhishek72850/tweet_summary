@@ -4,7 +4,9 @@ venv/*
 .idea
 db.sqlite3
 exp.py
+setup.sh
 ._.DS_Store
+.DS_STORE
 dashboard/*
 subscriber
 staticfiles

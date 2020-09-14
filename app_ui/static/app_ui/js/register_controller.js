@@ -20,6 +20,7 @@ $(function(){
                     'user_email':this.user_email.value,
                     'user_password':this.user_password.value,
                     'user_cnf_password':this.user_cnf_password.value,
+                    'timezone_offset': moment().utcOffset()
                 }
             },
             function(data){

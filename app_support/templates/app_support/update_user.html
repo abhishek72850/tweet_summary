@@ -20,12 +20,24 @@
                 <input type="email" id="user_email" disabled>
             </div>
             <div>
-                <label>Registered on</label>
+                <label>User Registered on</label>
                 <input type="text" id="registered_on" disabled>
+            </div>
+            <div>
+                <label>Plan Subscribed on</label>
+                <input type="text" id="plan_subscribed_on" disabled>
             </div>
             <div>
                 <label>Plan Subscribed</label>
                 <input type="text" id="plan_subscribed" disabled>
+            </div>
+            <div>
+                <label>Plan Status</label>
+                <input type="text" id="plan_status" disabled>
+            </div>
+            <div>
+                <label>Plan Expires On</label>
+                <input type="text" id="plan_expires_on" disabled>
             </div>
             <div>
                 <label>Quick Analysis Quota</label>
@@ -60,4 +72,28 @@
         </form>
     </div>
 </section>
+<div class="payment_detail_overlay_cont">
+    <div>
+        <div>
+            <h3>Payment Details</h3>
+        </div>
+        <form action="#" method="POST" id="renewPlanPaymentForm">
+            <div>
+                <label>Payment ID:</label>
+                <input type="text" name="payment_id" placeholder="Enter payment id if any">
+            </div>
+            <div>
+                <label>Payment Mode:</label>
+                <select name="payment_mode">
+                    <option value="OFFLINE" selected>OFFLINE</option>
+                    <option value="ONLINE">ONLINE</option>
+                </select>
+            </div>
+            <div>
+                <button type="button" class="close_plan_payment_form">Close</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

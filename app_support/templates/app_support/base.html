@@ -12,6 +12,8 @@
     {% endblock %}
 
     <script type="text/javascript" src="{% static 'app_support/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'app_support/js/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'app_support/js/moment_timezone.js' %}"></script>
 
     <script>
 		var app_env = {
@@ -35,6 +37,7 @@
 <script type="text/javascript">
     $(function(){
         $('.loader_cont').hide();
+        $('.payment_detail_overlay_cont').hide();
         setInterval(function(){ $('.timestamp').text(Date()); }, 1000);
     });
 </script>

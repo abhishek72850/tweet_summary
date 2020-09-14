@@ -104,6 +104,7 @@ class Subscribers(User, PermissionsMixin):
     plan_subscribed = models.ForeignKey(SubscriberPlanModel, on_delete=models.DO_NOTHING, null=True)
     plan_status = models.CharField(max_length=64, null=False, blank=True, default='NOT_ASSIGNED')
     quick_analysis_counter = models.IntegerField(null=False, default=0)
+    timezone_offset = models.IntegerField(null=False, default=0)
 
     # Django auth columns
     is_staff = models.BooleanField(default=False)
@@ -161,5 +162,19 @@ class UpcomingPlanModel(models.Model, GeneralObject):
     class Meta:
         app_label = "app_perf"
         db_table = "upcoming_plan"
+
+
+class UserPlanHistoryModel(models.Model, GeneralObject):
+    id = models.AutoField(primary_key=True, null=False, blank=True)
+    user = models.ForeignKey(Subscribers, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(null=False, blank=True, auto_now_add=True)
+    plan = models.ForeignKey(SubscriberPlanModel, on_delete=models.DO_NOTHING, related_name='plan_history')
+    plan_started_from = models.DateTimeField(null=False, blank=True)
+    payment_id = models.CharField(max_length=200, null=True, blank=True)
+    payment_mode = models.CharField(max_length=64, null=True, blank=True)
+
+    class Meta:
+        app_label = "app_perf"
+        db_table = "user_plan_history"
 
 

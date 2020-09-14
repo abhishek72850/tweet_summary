@@ -1,12 +1,12 @@
 {% extends 'app_support/base.html' %}
 
 {% block title %}
-<title>Upcoming User Plans</title>
+<title>User Plan History</title>
 {% endblock %}
 
 {% block dependency%}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'app_support/upcoming_user_plans.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app_support/user_plan_history.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -14,7 +14,7 @@
 {% include 'app_support/header.html' %}
 <section>
     <div class="sub_sec search_form_cont">
-        <form id="search_upcoming_user_plans_form" action="#" method="get">
+        <form id="search_user_plan_history_form" action="#" method="get">
             <div>
                 <input type="text" name="search_by_email" placeholder="Enter email or leave it blank to show all">
             </div>
@@ -23,15 +23,16 @@
             </div>
         </form>
     </div>
-    <div class="sub_sec upcoming_user_plans_detail_list_cont">
-        <div class="upcoming_user_plans_list">
-            <div class="upcoming_user_plans_row upcoming_user_plans_row_head">
+    <div class="sub_sec user_plan_history_detail_list_cont">
+        <div class="user_plan_history_list">
+            <div class="user_plan_history_row user_plan_history_row_head">
                 <span>SNo.</span>
                 <span>Registered Email</span>
-                <span>Created On</span>
+                <span>Plan Request on</span>
                 <span>Plan Name</span>
-                <span>Plan Starts From</span>
-                <span>Status</span>
+                <span>Plan Started From</span>
+                <span>Payment ID</span>
+                <span>Payment Mode</span>
             </div>
         </div>
     </div>

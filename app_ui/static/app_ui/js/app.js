@@ -4,23 +4,34 @@ var showDialog = function(message, dialogType){
 }
 
 var getFutureDate = function(date_str, days){
-    date = new Date(date_str);
-    date.setDate(date.getDate() + days);
+    return moment(date_str).utc().add({days:days}).format();
 
-    return date.toDateString();
+    // date = new Date(date_str);
+    // date.setDate(date.getDate() + days);
+
+    // return date.toDateString();
+}
+
+var getUTCDateTime = function(date_str){
+    data = new Date(date_str)  
+}
+
+var getLocalDatetime = function(date_str, offset){
+    return moment(date_str).utc().add({minutes:offset}).format();
 }
 
 var getFormattedDatetime = function(date_str){
-    date = new Date(date_str);
+    return moment(date_str).utc().format('DD MMM YYYY hh:mm:ssA');
+    // date = new Date(date_str);
 
-    month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1);
-    day = date.getDate() >= 10 ? date.getDate() : "0" + date.getDate();
+    // month = (date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1);
+    // day = date.getDate() >= 10 ? date.getDate() : "0" + date.getDate();
 
-    hours = date.getHours() >= 10 ? date.getHours() : "0" + date.getHours();
-    seconds = date.getSeconds() >= 10 ? date.getSeconds() : "0" + date.getSeconds();
-    minutes = date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes()
+    // hours = date.getHours() >= 10 ? date.getHours() : "0" + date.getHours();
+    // seconds = date.getSeconds() >= 10 ? date.getSeconds() : "0" + date.getSeconds();
+    // minutes = date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes()
 
-    return date.getFullYear() + "-" + month + "-" + day + " " +  hours + ":" + minutes + ":" + seconds;
+    // return date.getFullYear() + "-" + month + "-" + day + " " +  hours + ":" + minutes + ":" + seconds;
 }
 
 function createTextLinks_(text) {
