@@ -169,7 +169,7 @@ class AccountSubscribeTopic(APIView):
                 if status_msg == 'CREATED':
                     return Response(
                         status=status.HTTP_200_OK,
-                        data={'data': 'Subscription created, please check email to verify'}
+                        data={'data': 'Subscription created, please check email to verify the subscription'}
                     )
                 elif status_msg == 'UPDATED':
                     return Response(
