@@ -86,13 +86,14 @@ def hourly_service_plan_update():
     upcoming_plan_set = get_all_upcoming_user_plans()
 
     for user in get_all_users():
-        if get_local_datetime(user.timezone_offset, (user.plan_subscribed_at + timedelta(days=user.plan_subscribed.plan_duration))) <= get_local_datetime(user.timezone_offset):
-            Subscribers.objects.filter(id=user.id).update(
-                plan_status='EXPIRED'
-            )
-            SubscriptionModel.objects.filter(user=user).update(
-                status='EXPIRED'
-            )
+        if user.plan_subscribed:
+            if get_local_datetime(user.timezone_offset, (user.plan_subscribed_at + timedelta(days=user.plan_subscribed.plan_duration))) <= get_local_datetime(user.timezone_offset):
+                Subscribers.objects.filter(id=user.id).update(
+                    plan_status='EXPIRED'
+                )
+                SubscriptionModel.objects.filter(user=user).update(
+                    status='EXPIRED'
+                )
 
     for upcoming in upcoming_plan_set:
         if get_local_datetime(upcoming.user.timezone_offset, upcoming.plan_starts_from).date() == get_local_datetime(upcoming.user.timezone_offset).date():
