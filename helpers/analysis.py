@@ -27,10 +27,10 @@ def prepare_twitter_analysis(topic):
                     negative_tweet += 1
                 elif sentiment['sentiment']['document']['label'] == 'neutral':
                     neutral_tweet += 1
-            else:
-                print(tweet_obj['text'], keywords)
-        else:
-            print(tweet_obj['text'])
+        #     else:
+        #         print(tweet_obj['text'], keywords)
+        # else:
+        #     print(tweet_obj['text'])
 
     if data['success']:
         print('Preparing....')
