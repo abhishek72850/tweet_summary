@@ -48,10 +48,10 @@ def hourly_service_email_analysis():
         if get_local_datetime(subscription.user.timezone_offset).hour == 20:
             print(subscription.user.email, subscription.topic)
             if (subscription.subscription_status == 'ACTIVE') and (
-                    subscription.subscription_from <= current_date <= subscription.subscription_to):
+                    get_local_datetime(subscription.user.timezone_offset, subscription.subscription_from) <= get_local_datetime(subscription.user.timezone_offset) <= get_local_datetime(subscription.user.timezone_offset, subscription.subscription_to)):
                 analysis_data = prepare_twitter_analysis(subscription.topic)
                 send_analysis(subscription, analysis_data)
-            elif subscription.subscription_to < current_date and subscription.subscription_status not in ['SUSPENDED', 'UNSUBSCRIBED', 'EXPIRED']:
+            elif get_local_datetime(subscription.user.timezone_offset, subscription.subscription_to) < get_local_datetime(subscription.user.timezone_offset) and subscription.subscription_status not in ['SUSPENDED', 'UNSUBSCRIBED', 'EXPIRED']:
                 unsubscribe(subscription.user.email, subscription.id, status='EXPIRED')            
 
 
