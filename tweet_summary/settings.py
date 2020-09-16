@@ -176,7 +176,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULE = {
     'send-ready-call': {
         'task': 'api_manager.tasks.ready',
-        'schedule': 60.0,
+        'schedule': 120.0,
     },
     'send-tweet-analysis-everyday': {
         'task': 'api_manager.tasks.daily_service',
