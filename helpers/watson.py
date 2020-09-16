@@ -36,7 +36,8 @@ class Watson:
                         sentiment = True,
                         emotion = True
                     )
-                )
+                ),
+                language='en'
             ).get_result()
 
             # print(response)
@@ -64,7 +65,8 @@ class Watson:
                         targets = keywords,
                         document=True
                     )
-                )
+                ),
+                language='en'
             ).get_result()
             # print(response)
         except Exception as e:
@@ -77,7 +79,8 @@ class Watson:
         try:
             response = self.tone_analyzer.tone(
                 {'text': text},
-                content_type='application/json'
+                content_type='application/json',
+                language='en'
             ).get_result()
 
         except Exception as e:
