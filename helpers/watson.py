@@ -1,7 +1,7 @@
 from ibm_watson import NaturalLanguageUnderstandingV1, ToneAnalyzerV3, VisualRecognitionV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson.natural_language_understanding_v1 import Features, KeywordsOptions, SentimentOptions
-from ibm_watson import ApiException
+from ibm_cloud_sdk_core.api_exception import ApiException
 
 
 class Watson:
