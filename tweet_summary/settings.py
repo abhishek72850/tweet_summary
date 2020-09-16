@@ -178,14 +178,14 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'api_manager.tasks.ready',
         'schedule': 120.0,
     },
-    'send-tweet-analysis-everyday': {
-        'task': 'api_manager.tasks.daily_service',
-        'schedule': crontab(day_of_week="0-6", hour=20, minute=0),
-    },
-    'manage-plan': {
-        'task': 'api_manager.tasks.plan_update_service',
-        'schedule': crontab(day_of_week="0-6", hour=0, minute=0),
-    }
+    # 'send-tweet-analysis-everyday': {
+    #     'task': 'api_manager.tasks.daily_service',
+    #     'schedule': crontab(day_of_week="0-6", hour=20, minute=0),
+    # },
+    # 'manage-plan': {
+    #     'task': 'api_manager.tasks.plan_update_service',
+    #     'schedule': crontab(day_of_week="0-6", hour=0, minute=0),
+    # }
     # 'send-tweet-analysis-everyday': {
     #     'task': 'subscriber.tasks.daily_service',
     #     'schedule': 60.0,
