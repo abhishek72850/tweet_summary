@@ -3,6 +3,8 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson.natural_language_understanding_v1 import Features, KeywordsOptions, SentimentOptions
 from ibm_cloud_sdk_core.api_exception import ApiException
 
+import traceback
+
 
 class Watson:
 
@@ -38,8 +40,8 @@ class Watson:
             ).get_result()
 
             # print(response)
-        except ApiException as ex:
-            return {'message':ex.message, 'status':ex.code, 'success':False}
+        except Exception as e:
+            return {'message':traceback.format_exc(), 'status':400, 'success':False}
 
         return {'data':response, 'success':True}
 
@@ -65,8 +67,8 @@ class Watson:
                 )
             ).get_result()
             # print(response)
-        except ApiException as ex:
-            return {'message':ex.message, 'status':ex.code, 'success':False}
+        except Exception as e:
+            return {'message':traceback.format_exc(), 'status':400, 'success':False}
 
         return {'data':response, 'success':True}
 
@@ -78,8 +80,8 @@ class Watson:
                 content_type='application/json'
             ).get_result()
 
-        except ApiException as ex:
-            return {'message':ex.message, 'status':ex.code, 'success':False}
+        except Exception as e:
+            return {'message':traceback.format_exc(), 'status':400, 'success':False}
 
         return {'data':response, 'success':True}
 
