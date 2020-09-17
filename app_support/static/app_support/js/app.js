@@ -66,7 +66,7 @@ $(function(){
             function(data){
                 var user = JSON.parse(data['user']);
                 var plan = JSON.parse(data['plan']);
-                var subscription = JSON.parse(data['subscription'])[0];
+                var subscription = JSON.parse(data['subscription']);
 
                 $('#user_email').attr('value', user.email);
                 $('#plan_subscribed').attr('value', plan.plan_name);
