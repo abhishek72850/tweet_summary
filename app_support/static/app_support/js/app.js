@@ -380,7 +380,7 @@ $(function(){
     $('#test_plan_assign_form').on('submit',function(e){
         e.preventDefault();
 
-        var email = this.test_user_email.value;
+        var email = this.user_email.value;
         // var password = this.test_user_password.value;
         // var cnf_password = this.test_user_cnf_password.value;
 
