@@ -135,7 +135,7 @@ class RegisterTestUser(APIView):
 				if assign_plan:
 					if update_user_plan(user_set[0], get_plan_by_id(5)[0]) == 1:
 						record_plan_history(user_set[0], get_plan_by_id(5)[0], get_utc_now())
-						send_plan_assigned_confirmation(user_set[0])
+						send_plan_assigned_confirmation(get_user_by_id(user_set[0].id)[0])
 						return Response(data={'data': 'Plan assigned and confirmation sent successfully'}, status=status.HTTP_200_OK)
 					else:
 						return Response(data={'data': 'Something went wrong, code: CNSU5'},
