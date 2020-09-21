@@ -386,23 +386,21 @@ $(function(){
         // if(password.trim() !== cnf_password.trim()){
         //     alert('Password does not matched!!');
         // }
-        
-        else{
-            requestAjax(
-                {
-                    url: window.location.origin + "/support/assign",
-                    type: "POST",
-                    data:{
-                        'user_email':email,
-                        // 'test_user_password':password,
-                        // 'test_user_cnf_password':cnf_password,
-                    }
-                },
-                function(data){
-                    alert(data);
+
+        requestAjax(
+            {
+                url: window.location.origin + "/support/assign",
+                type: "POST",
+                data:{
+                    'user_email':email,
+                    // 'test_user_password':password,
+                    // 'test_user_cnf_password':cnf_password,
                 }
-            );
-        }
+            },
+            function(data){
+                alert(data);
+            }
+        );
     });
 
     $('#search_users_form').on('submit',function(e){
