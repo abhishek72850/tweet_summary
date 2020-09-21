@@ -383,10 +383,10 @@ $(function(){
         var email = this.user_email.value;
         // var password = this.test_user_password.value;
         // var cnf_password = this.test_user_cnf_password.value;
-
-        if(password.trim() !== cnf_password.trim()){
-            alert('Password does not matched!!');
-        }
+        // if(password.trim() !== cnf_password.trim()){
+        //     alert('Password does not matched!!');
+        // }
+        
         else{
             requestAjax(
                 {
