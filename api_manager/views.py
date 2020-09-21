@@ -13,7 +13,7 @@ from helpers.twitter import TwitterHelper
 from helpers.utils import request_contain_keys, get_host_origin, get_utc_now, get_local_datetime
 from helpers.db import get_account_details, get_plan_by_id, add_plan_request, update_quick_analysis_counter, \
     add_subscription, get_user_by_email, update_user_password, confirm_subscription, confirm_email_verification, \
-    unsubscribe, remove_subscription
+    unsubscribe, remove_subscription, is_topic_quota_exhausted
 
 from app_perf.forms import CustomUserLoginForm, CustomUserRegisterForm
 from app_perf.auths import CustomUserAuthentication
@@ -277,8 +277,14 @@ class ConfirmSubscription(APIView):
                 subscription_id = payload['subscription_id']
                 email = payload['email']
 
-                if confirm_subscription(email, subscription_id):
-                    return Response({'status': status.HTTP_200_OK, 'data': 'Subscription verified successfully'})
+                user_set = get_user_by_email(email)
+
+                if len(user_set) > 0:
+                    if is_topic_quota_exhausted(user_set[0]):
+                        return Response({'status': status.HTTP_403_FORBIDDEN, 'data': 'You have reached your ACTIVE subscriptions quota!!'})
+
+                    if confirm_subscription(email, subscription_id):
+                        return Response({'status': status.HTTP_200_OK, 'data': 'Subscription verified successfully'})
 
         return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Link expired!!'})
 

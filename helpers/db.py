@@ -160,14 +160,18 @@ def record_plan_history(user, plan, plan_started_from, payment_id='', payment_mo
     return history
 
 
+def is_topic_quota_exhausted(user):
+    quota = user.plan_subscribed.topic_quota
+    count = SubscriptionModel.objects.filter(user=user, subscription_status='ACTIVE').count()
+
+    return count >= quota
+
+
 def add_subscription(user, topic, start_date, end_date):
 
     result_set = SubscriptionModel.objects.filter(user=user, topic=topic)
 
-    quota = user.plan_subscribed.topic_quota
-    count = SubscriptionModel.objects.filter(user=user, subscription_status='ACTIVE').count()
-
-    if count >= quota:
+    if is_topic_quota_exhausted(user):
         return None, 'QUOTA_EXHAUSTED'
 
     if len(result_set) > 0:
