@@ -14,7 +14,7 @@ from helpers.utils import request_contain_keys, get_host_origin, get_utc_now
 from helpers.emails import send_email_verification_link, send_subscription_verification_link, \
 	send_plan_change_confirmation, send_plan_assigned_confirmation
 from helpers.db import register_or_verify_subscriber, get_user_details, get_all_users, get_all_subscriptions, \
-	get_user_by_id, get_user_by_email, get_subscription_by_id, update_user_status, \
+	get_user_by_id, get_user_by_email, get_subscription_by_id, update_user_status, get_plan_by_id, \
 	update_subscription_status, get_all_plan_change_requests, get_all_user_plan_history, \
 	get_plan_request_by_id, update_plan_request_status, update_user_plan, get_plan_starts_from, \
 	get_all_upcoming_user_plans, is_user_plan_expired, add_upcoming_plan, record_plan_history
