@@ -19,6 +19,11 @@ from celery.schedules import crontab
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from celery.schedules import crontab
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.celery import CeleryIntegration
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -212,10 +217,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_BEAT_SCHEDULE = {
-    'send-ready-call': {
-        'task': 'api_manager.tasks.ready',
-        'schedule': 120.0,
-    },
+    # 'send-ready-call': {
+    #     'task': 'api_manager.tasks.ready',
+    #     'schedule': 120.0,
+    # },
     # 'send-tweet-analysis-everyday': {
     #     'task': 'api_manager.tasks.daily_service',
     #     'schedule': crontab(day_of_week="0-6", hour=20, minute=0),
@@ -229,6 +234,12 @@ CELERY_BEAT_SCHEDULE = {
     #     'schedule': 60.0,
     # },
 }
+
+sentry_sdk.init(
+    dsn=os.environ['SENTRY_DSN'],
+    integrations=[DjangoIntegration(), CeleryIntegration()],
+    traces_sample_rate=1.0,
+)
 
 LANGUAGE_CODE = 'en-us'
 
