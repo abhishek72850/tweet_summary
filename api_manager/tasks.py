@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from celery import shared_task
 from app_perf.models import SubscriptionModel, UpcomingPlanModel, Subscribers
 
-from helpers.db import unsubscribe, delete_all_user_subscriptions, get_all_users, get_all_subscriptions, get_all_upcoming_user_plans, update_user_plan
+from helpers.db import unsubscribe, delete_all_user_subscriptions, get_all_users, get_all_subscriptions, get_all_upcoming_user_plans, update_user_plan, update_upcoming_plan_status
 from helpers.emails import send_analysis
 from helpers.analysis import prepare_twitter_analysis
 from helpers.utils import get_local_datetime
@@ -97,13 +97,12 @@ def hourly_service_plan_update():
 
     for upcoming in upcoming_plan_set:
         if get_local_datetime(upcoming.user.timezone_offset, upcoming.plan_starts_from).date() == get_local_datetime(upcoming.user.timezone_offset).date():
-            SubscriptionModel.objects.filter(user=upcoming.user).update(
-                status='EXPIRED'
-            )
-            # if upcoming.user.plan_subscribed.id > upcoming.plan.id:
-            #     delete_all_user_subscriptions(upcoming.user)
-
-            update_user_plan(upcoming.user, upcoming.plan)    
+            if upcoming.status == 'IN_QUEUE':
+                SubscriptionModel.objects.filter(user=upcoming.user).update(
+                    status='EXPIRED'
+                )
+                update_user_plan(upcoming.user, upcoming.plan)
+                update_upcoming_plan_status(upcoming)
 
 
 

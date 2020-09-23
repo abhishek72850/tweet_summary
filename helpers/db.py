@@ -121,6 +121,14 @@ def update_user_plan(user, plan, status='ACTIVE'):
     return success
 
 
+def update_upcoming_plan_status(upcoming, status='ASSIGNED'):
+    success = UpcomingPlanModel.objects.filter(id=upcoming.id).update(
+        status=status
+    )
+
+    return success
+
+
 def update_quick_analysis_counter(user):
     success = Subscribers.objects.filter(id=user.id).update(
         quick_analysis_counter=user.quick_analysis_counter + 1
