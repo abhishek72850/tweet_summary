@@ -67,13 +67,13 @@ def plan_update_service():
                 plan_status='EXPIRED'
             )
             SubscriptionModel.objects.filter(user=user).update(
-                status='EXPIRED'
+                subscription_status='EXPIRED'
             )
 
     for upcoming in upcoming_plan_set:
         if upcoming.plan_starts_from.date() == current_date.date():
             SubscriptionModel.objects.filter(user=upcoming.user).update(
-                status='EXPIRED'
+                subscription_status='EXPIRED'
             )
             # if upcoming.user.plan_subscribed.id > upcoming.plan.id:
             #     delete_all_user_subscriptions(upcoming.user)
@@ -92,14 +92,14 @@ def hourly_service_plan_update():
                     plan_status='EXPIRED'
                 )
                 SubscriptionModel.objects.filter(user=user).update(
-                    status='EXPIRED'
+                    subscription_status='EXPIRED'
                 )
 
     for upcoming in upcoming_plan_set:
-        if get_local_datetime(upcoming.user.timezone_offset, upcoming.plan_starts_from).date() == get_local_datetime(upcoming.user.timezone_offset).date():
+        if get_local_datetime(upcoming.user.timezone_offset, upcoming.plan_starts_from) <= get_local_datetime(upcoming.user.timezone_offset):
             if upcoming.status == 'IN_QUEUE':
                 SubscriptionModel.objects.filter(user=upcoming.user).update(
-                    status='EXPIRED'
+                    subscription_status='EXPIRED'
                 )
                 update_user_plan(upcoming.user, upcoming.plan)
                 update_upcoming_plan_status(upcoming)
