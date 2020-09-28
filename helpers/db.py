@@ -177,7 +177,7 @@ def is_topic_quota_exhausted(user):
 
 def add_subscription(user, topic, start_date, end_date):
 
-    result_set = SubscriptionModel.objects.filter(user=user, topic=topic)
+    result_set = SubscriptionModel.objects.filter(user=user, topic=topic, subscription_status__in=('ACTIVE', 'IDLE'))
 
     if is_topic_quota_exhausted(user):
         return None, 'QUOTA_EXHAUSTED'
