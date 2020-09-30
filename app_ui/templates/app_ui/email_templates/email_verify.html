@@ -1,16 +1,39 @@
-<div style="padding: 20px; background: #fafafa;font-size:15px;">
-    Hi<br>
-    Thanks for subscribing to Tweet Analytica.<br>
-    <br>
-    To confirm your registration, please click on the link given below (valid for next 7 days). If clicking doesn't work, copy paste the URL in browser.<br>
-    If you think this is a mistake, just ignore this email and we won't bother you again.
-    <br>
-    <br>
-    <a href="{{ confirmation_url }}">{{ confirmation_url }}</a>
-    <br>
-    <br>
-    <p>
-        Note:<br>
-        This is notification only email. Please do not reply on this email.<br>
-    </p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'app_ui/style/email/emailVerifyStyle.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="allContent">
+        <div class="imagesAndLink">
+            <img src="{% static 'app_ui/images/distort1.png' %}" alt="logo">
+            <a href="http://www.socialmediapulsemonitor.com/">www.SocialMediaPulseMonitor.com</a>
+            <img src="{% static 'app_ui/images/tag.jpg' %}" alt="tag line">
+        </div>
+        <div class="contentBox">
+            <div class="title">
+                <h2 class="heading">Verify Your Email Address</h2>
+                <p>Please confirm that you want to use this as your Social Media Pulse Monitor
+                    account email address. Once it's done you will be able to start checking the 
+                    pulse of social media.
+                </p>
+                <a href="{{ confirmation_url }}">Verify my email</a>
+            </div>
+    
+            <div class="regards">
+                <p>Thank You,</p>
+                <p>Social Media Pulse Monitor</p>
+            </div>
+    
+            <div class="copyright">
+                <p>Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
+                email because you submitted the contact form via our website, www.SocialMediaPulseMonitor.com</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

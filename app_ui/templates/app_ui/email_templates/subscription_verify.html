@@ -1,23 +1,43 @@
-<div style="padding: 20px; background: #fafafa;font-size:15px;">
-    Hi<br>
-    Thanks for subscribing to Tweet Analytica.<br>
-    We will be sending you analytical insights right in your inbox. Mail frequency will be once a day.<br>
-    <br>
-    To confirm your subscription, please click on the link given below (valid for next 7 days). If clicking doesn't work, copy paste the URL in browser.<br>
-    If you think this is a mistake, just ignore this email and we won't bother you again.
-    <br>
-    <br>
-    Subscription Topic: {{topic}}<br>
-    Subscription Period:<br>
-    From: {{start_date}}<br>
-    To: {{end_date}}<br>
-    <br>
-    <a href="{{ confirmation_url }}">{{ confirmation_url }}</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'app_ui/style/email/subscriptionVerifyStyle.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="contentBox">
+        <img class="logo" src="{% static 'app_ui/images/distort1.png' %}" alt="logo">
+        <a class="website" href="http://www.socialmediapulsemonitor.com/">www.SocialMediaPulseMonitor.com</a>
+        <img class="tagImage" src="{% static 'app_ui/images/tag.jpg' %}" alt="tag line">
+        <div class="content">
+            <p>Dear Social Media Pulse Monitor Subscriber,</p><br>
+            <p>Thank you for subscribing to Social Media Pulse Monitor daily report. You will receive 
+                Actionable Artificial Intelligence based analytical insights (Pulse) of social media daily on the 
+                below subscribed topics.
+            </p><br>
 
-    <br>
-    <br>
-    <p>
-        Note:<br>
-        This is notification only email. Please do not reply on this email.<br>
-    </p>
-</div>
+            <span>Subscription Topic:</span><span>{{topic}}</span><br>
+            <span>Subscription Period:</span><span></span><br>
+            <span>From:</span><span>{{start_date}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>To:</span><span>{{end_date}}</span><br>
+
+            <a href="{{ confirmation_url }}">Confirm Subscription</a>
+
+            <p class="regards">Thankyou,</p><br>
+            <p>Social Media Pulse Monitor</p>
+
+            <p class="tagline">“Translating Information into an Actionable Intelligence: The Pulse of Social Media”</p>
+        </div>
+        <div class="footer">
+            <p>
+                Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
+                email because you submitted the contact form via our website, www.SocialMediaPulseMonitor.com
+            </p>
+        </div>
+        
+    </div>
+</body>
+</html>
