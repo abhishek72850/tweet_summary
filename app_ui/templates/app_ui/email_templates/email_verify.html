@@ -1,127 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'app_ui/style/email/emailVerifyStyle.css' %}">
-    <title>Document</title>
-    <style type="text/css">
-        *{
-            margin:0;
-            padding:0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body{
-            background-image: url("bg.png");
-            background-position: top;
-            background-size: auto;
-            background-repeat: no-repeat;
-            overflow-x: hidden;
-        }
-        .allContent{
-            width:80%;
-            height:70vh;
-            position:relative;
-            top:15vh;
-            left:10%;
-            background-color: #e2e2e2;
-            border:1px solid black;
-        }
-        .imagesAndLink img:first-child{
-            display:inline-block;
-            width:400px;
-            height:200px;
-            position:absolute;
-            top:-105px;
-            left:-20px;
-        }
-        .imagesAndLink a{
-            display:inline-block;
-            position:absolute;
-            left:40%;
-            top:-21px;
-            text-decoration: none;
-        }
-        .imagesAndLink img:last-child{
-            position:absolute;
-            right:0;
-            top:-85px;
-        }
-        .contentBox{
-            width:50%;
-            height:100%;
-            position:relative;
-            left:25%;
-        }
-        .title{
-            background-color: white;
-            border:1px solid black;
-            border-top:none;
-            height:35%;
-            padding:30px 25px;
-        }
-        .title p{
-            margin-top:10px;
-            margin-bottom:40px;
-        }
-        .title a{
-            text-decoration: none;
-            color:white;
-            background-color:#ffa500;
-            padding:10px 20px;
-            box-shadow:3px 3px 6px #0000006e;
-        }
-        .regards{
-            padding:25px;
-            padding-top:70px;
-        }
-        .regards p{
-            margin:10px 0;
-        }
-        .copyright{
-            background-color:#1daf3b;
-            color:white;
-            text-align: center;
-            font-size:12px;
-            position:absolute;
-            bottom:0;
-            border:1px solid black;
-            border-bottom:none;
-            padding:5px;
-            box-sizing: border-box;
-            height:10%;
-        }
-
-    </style>
-</head>
-<body>
-    <div class="allContent">
-        <div class="imagesAndLink">
-            <img src="{% static 'app_ui/images/distort1.png' %}" alt="logo">
-            <a href="http://www.socialmediapulsemonitor.com/">www.SocialMediaPulseMonitor.com</a>
-            <img src="{% static 'app_ui/images/tag.jpg' %}" alt="tag line">
+<div style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-image: url(bg.png);background-position: top;background-size: auto;background-repeat: no-repeat;overflow-x: hidden;">
+    <div class="allContent" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;width: 80%;height: 70vh;position: relative;top: 15vh;left: 10%;background-color: #e2e2e2;border: 1px solid black;">
+        <div class="imagesAndLink" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            <img src="{% static 'app_ui/images/distort1.png' %}" alt="logo" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;display: inline-block;width: 400px;height: 200px;position: absolute;top: -105px;left: -20px;">
+            <a href="http://www.socialmediapulsemonitor.com/" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;display: inline-block;position: absolute;left: 40%;top: -21px;text-decoration: none;">www.SocialMediaPulseMonitor.com</a>
+            <img src="{% static 'app_ui/images/tag.jpg' %}" alt="tag line" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;position: absolute;right: 0;top: -85px;">
         </div>
-        <div class="contentBox">
-            <div class="title">
-                <h2 class="heading">Verify Your Email Address</h2>
-                <p>Please confirm that you want to use this as your Social Media Pulse Monitor
+        <div class="contentBox" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;width: 50%;height: 100%;position: relative;left: 25%;">
+            <div class="title" style="margin: 0;padding: 30px 25px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: white;border: 1px solid black;border-top: none;height: 35%;">
+                <h2 class="heading" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Verify Your Email Address</h2>
+                <p style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin-top: 10px;margin-bottom: 40px;">Please confirm that you want to use this as your Social Media Pulse Monitor
                     account email address. Once it's done you will be able to start checking the 
                     pulse of social media.
                 </p>
-                <a href="{{ confirmation_url }}">Verify my email</a>
+                <a href="{{ confirmation_url }}" style="margin: 0;padding: 10px 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;text-decoration: none;color: white;background-color: #ffa500;box-shadow: 3px 3px 6px #0000006e;">Verify my email</a>
             </div>
     
-            <div class="regards">
-                <p>Thank You,</p>
-                <p>Social Media Pulse Monitor</p>
+            <div class="regards" style="margin: 0;padding: 25px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding-top: 70px;">
+                <p style="margin: 10px 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Thank You,</p>
+                <p style="margin: 10px 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Social Media Pulse Monitor</p>
             </div>
     
-            <div class="copyright">
-                <p>Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
+            <div class="copyright" style="margin: 0;padding: 5px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: #1daf3b;color: white;text-align: center;font-size: 12px;position: absolute;bottom: 0;border: 1px solid black;border-bottom: none;box-sizing: border-box;height: 10%;">
+                <p style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
                 email because you submitted the contact form via our website, www.SocialMediaPulseMonitor.com</p>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
