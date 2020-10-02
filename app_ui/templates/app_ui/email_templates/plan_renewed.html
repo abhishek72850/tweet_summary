@@ -1,13 +1,37 @@
-<div style="padding: 20px; background: #fafafa;font-size:15px;">
-    Hi<br>
-    Your Plan renewal has been processed successfully<br>
-    <br>
-    Your current plan is: {{plan_name}}<br>
-    <br>
-    <br>
-    <br>
-    <p>
-        Note:<br>
-        This is notification only email. Please do not reply on this email.<br>
-    </p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'app_ui/style/email/planRenewalStyle.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="contentBox">
+        <img class="logo" src="distort1.png" alt="">
+        <a class="website" href="http://www.socialmediapulsemonitor.com/">www.SocialMediaPulseMonitor.com</a>
+        <img class="tagImage" src="tag.jpg" alt="">
+        <div class="content">
+            <p>Dear Social Media Pulse Monitor User,</p> <br><br>
+            <p>Your plan renewal has been processed successfully.</p> <br>
+
+            
+            <p>Your current plan is: <span>{{plan_name}}</span></p> <br>
+
+            <p><b>Note:</b> This is notification only email. Please do not reply on this email.</p> <br><br><br>
+
+            <p>Thank You,</p> <br>
+            <p class="regards">Social Media Pulse Monitor</p>
+
+
+            
+        </div>
+        <div class="footer">
+            <p>
+                Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
+                email because you submitted the contact form via our website, www.SocialMediaPulseMonitor.com
+            </p>
+        </div>
+        
+    </div>

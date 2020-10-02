@@ -1,14 +1,38 @@
-<div style="padding: 20px; background: #fafafa;font-size:15px;">
-    Hi<br>
-    We have assigned a Plan to your account<br>
-    <br>
-    Your Assigned plan is: {{plan_name}}<br>
-    <br>
-    To Know more about the plan, please login to your account
-    <br>
-    <br>
-    <p>
-        Note:<br>
-        This is notification only email. Please do not reply on this email.<br>
-    </p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'app_ui/style/email/planAssignedStyle.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="contentBox">
+        <img class="logo" src="distort1.png" alt="">
+        <a class="website" href="http://www.socialmediapulsemonitor.com/">www.SocialMediaPulseMonitor.com</a>
+        <img class="tagImage" src="tag.jpg" alt="">
+        <div class="content">
+            <p>Dear Social Media Pulse Monitor User,</p> <br>
+            <p>We have assigned a below plan to your account.</p> <br><br>
+
+            <span>Your assigned plan is:</span><span>{{plan_name}}</span> <br><br>
+
+            <p>To know more about the plan, please login to your account and click “view details” tab.</p> <br><br>
+
+            <p><b>Note:</b> This is notification only email. Please do not reply on this email.</p> <br><br><br>
+
+            <p>Thank You,</p> <br>
+            <p class="regards">Social Media Pulse Monitor</p>
+
+
+            
+        </div>
+        <div class="footer">
+            <p>
+                Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
+                email because you submitted the contact form via our website, www.SocialMediaPulseMonitor.com
+            </p>
+        </div>
+        
+    </div>
