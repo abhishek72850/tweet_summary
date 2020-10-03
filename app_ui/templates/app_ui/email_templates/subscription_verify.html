@@ -1,43 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'app_ui/style/email/subscriptionVerifyStyle.css' %}">
-    <title>Document</title>
-</head>
-<body>
-    <div class="contentBox">
-        <img class="logo" src="{% static 'app_ui/images/distort1.png' %}" alt="logo">
-        <a class="website" href="http://www.socialmediapulsemonitor.com/">www.SocialMediaPulseMonitor.com</a>
-        <img class="tagImage" src="{% static 'app_ui/images/tag.jpg' %}" alt="tag line">
-        <div class="content">
-            <p>Dear Social Media Pulse Monitor Subscriber,</p><br>
-            <p>Thank you for subscribing to Social Media Pulse Monitor daily report. You will receive 
-                Actionable Artificial Intelligence based analytical insights (Pulse) of social media daily on the 
-                below subscribed topics.
-            </p><br>
-
-            <span>Subscription Topic:</span><span>{{topic}}</span><br>
-            <span>Subscription Period:</span><span></span><br>
-            <span>From:</span><span>{{start_date}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>To:</span><span>{{end_date}}</span><br>
-
-            <a href="{{ confirmation_url }}">Confirm Subscription</a>
-
-            <p class="regards">Thankyou,</p><br>
-            <p>Social Media Pulse Monitor</p>
-
-            <p class="tagline">“Translating Information into an Actionable Intelligence: The Pulse of Social Media”</p>
+<div style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-image: url(https://tweet-summary.herokuapp.com/staticfiles/app_ui/images/bg.png);background-position: top;background-size: auto;background-repeat: no-repeat;overflow-x: hidden;/*! display: flex; *//*! justify-content: center; *//*! align-items: center; */">
+    <div class="allContent" style="margin: 0 auto;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;width: 90%;height: 70vh;">
+        <div class="imagesAndLink" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;height: 15vh;display: table-row;/*! justify-content: space-between; *//*! align-items: end; *//*! position: relative; *//*! vertical-align: top; */">
+            <img src="https://tweet-summary.herokuapp.com/staticfiles/app_ui/images/distort1.png" alt="logo" style="margin-bottom: -6em;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;display: inline-block;width: 33%;height: 150%;/*! position: absolute; *//*! top: -105px; *//*! left: -20px; */">
+            <a href="http://www.socialmediapulsemonitor.com/" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;display: inline-block;/*! position: absolute; *//*! left: 40%; *//*! top: -21px; */text-decoration: none;width: 33%;text-align: center;">www.SocialMediaPulseMonitor.com</a>
+            <img src="https://tweet-summary.herokuapp.com/staticfiles/app_ui/images/tag.jpg" alt="tag line" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;/*! position: absolute; *//*! right: 0; *//*! top: -85px; */width: 33%;">
         </div>
-        <div class="footer">
-            <p>
-                Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
-                email because you submitted the contact form via our website, www.SocialMediaPulseMonitor.com
-            </p>
+        <div class="contentBox" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;width: 100%;height: 55vh;background-color: #e2e2e2;border: 1px solid black;/*! display: flex; *//*! flex-direction: column; *//*! justify-content: center; *//*! align-items: center; */">
+            <div class="title" style="margin: 0 auto;padding: 10px 25px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: white;/*! border: 1px solid black; */border-top: none;height: 45vh;width: 100%;box-sizing: border-box;">
+                <p style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Dear Social Media Pulse Monitor Subscriber,</p><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <p style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Thank you for subscribing to Social Media Pulse Monitor daily report. You will receive 
+                    Actionable Artificial Intelligence based analytical insights (Pulse) of social media daily on the 
+                    below subscribed topics.
+                </p><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+                <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;">Subscription Topic:</span><span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;">{{topic}}</span><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;">Subscription Period:</span><span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;"></span><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;">From:</span><span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;">{{start_date}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;">To:</span><span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bold;">{{end_date}}</span><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+                <a href="{{ confirmation_url }}" style="margin: 0;padding: 10px 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;display: inline-block;color: white;background-color: #ffa500;text-decoration: none;box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.445);margin-top: 20px;">Confirm Subscription</a>
+
+                <p class="regards" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin-top: 20px;">Thankyou,</p><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <p style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Social Media Pulse Monitor</p>
+
+                <p class="tagline" style="margin: 0;padding: 10px 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding-bottom: 50px;font-weight: bold;">“Translating Information into an Actionable Intelligence: The Pulse of Social Media”</p>
+            </div>
+    
+            <div class="copyright" style="margin: 0 auto;padding: 10px 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: #1daf3b;color: white;text-align: center;font-size: 12px;/*! position: absolute; *//*! bottom: ; *//*! border: 1px solid black; */border-bottom: none;box-sizing: border-box;height: 10vh;/*! display: flex; *//*! justify-content: center; *//*! align-items: center; */width: 100%;">
+                <p style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Copyright © 2017 CXODNA LLC. All rights reserved. You are receiving this 
+                email because you submitted the contact form via our website, www.SocialMediaPulseMonitor.com</p>
+            </div>
         </div>
-        
     </div>
-</body>
-</html>
+</div>
