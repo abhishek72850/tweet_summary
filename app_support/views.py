@@ -321,7 +321,7 @@ class SendSubscriptionVerificationLink(APIView):
 			if len(subscription_set) > 0:
 				if subscription_set[0].user.email_verified:
 					token = generate_token(email=subscription_set[0].user.email, subscription_id=subscription_set[0].id)
-					confirmation_url = '/api/account/confirm_subscription?verification_code={}'.format(get_host_origin(request),
+					confirmation_url = '{}/api/account/confirm_subscription?verification_code={}'.format(get_host_origin(request),
 																							   token)
 					send_subscription_verification_link(subscription_set[0], confirmation_url)
 
