@@ -50,7 +50,14 @@ $(function(){
                 mention_list = Array.from(mention_list);
 
                 if(mention_list.length > 0){
-                    $('.noticeable_user').text(mention_list.slice(0,5).join(", "));
+                    if(mention_list.length < 5){
+                        $('.noticeable_user').text(mention_list.join(", "));    
+                    }
+                    else{
+                        var top_5_user = mention_list.slice(0,5).join(", ");
+                        var other_user = " and " + (mention_list.length - 5) + "other's."
+                        $('.noticeable_user').text(top_5_user + other_user);
+                    }
                 }
                 else{
                     $('.noticeable_user').text('None');

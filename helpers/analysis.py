@@ -60,6 +60,16 @@ def prepare_twitter_analysis(topic):
         mention_list = list(mention_list)
         analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])
 
+        if len(mention_list) > 0:
+            if len(mention_list) < 5:
+                analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])
+            else:
+                top_5_user = ', '.join(mention_list[0:5])
+                other_user = " and {} other's.".format((len(mention_list) - 5))
+                analysis_data['noticeable_user'] = '{}{}'.format(top_5_user, other_user)
+        else:
+            analysis_data['noticeable_user'] = 'None'
+
         analysis_data['most_active_verified_tweet_user_name'] = data['most_active_verified_tweet']['user'].get('name', '')
         analysis_data['most_active_verified_tweet_retweets'] = data['most_active_verified_tweet'].get('retweet_count', 0)
         analysis_data['most_active_verified_tweet_favorite'] = data['most_active_verified_tweet'].get('favorite_count', 0)
