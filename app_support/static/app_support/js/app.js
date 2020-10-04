@@ -220,6 +220,9 @@ $(function(){
                     var plan_starts_from = $('<span></span>',{
                         'text': getFormattedDatetime(getLocalDatetime(upcoming_plan['plan_starts_from'], user['timezone_offset']))
                     });
+                    var plan_expires_on = $('<span></span>',{
+                        'text': getFormattedDatetime(getLocalDatetime(getFutureDate(upcoming_plan['plan_starts_from'], plan['plan_duration']), user['timezone_offset']))
+                    });
                     var status = $('<span></span>',{
                         'text': upcoming_plan['status']
                     });
@@ -278,6 +281,9 @@ $(function(){
                     });
                     var plan_started_from = $('<span></span>',{
                         'text': getFormattedDatetime(getLocalDatetime(plan_history['plan_started_from'], user['timezone_offset']))
+                    });
+                    var plan_expires_on = $('<span></span>',{
+                        'text': getFormattedDatetime(getLocalDatetime(getFutureDate(plan_history['plan_started_from'], plan['plan_duration']), user['timezone_offset']))
                     });
                     var payment_id = $('<span></span>',{
                         'text': plan_history['payment_id']

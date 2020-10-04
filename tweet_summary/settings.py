@@ -37,8 +37,8 @@ DEBUG = os.environ.get('APP_DEBUG', True)
 
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 
-SITE_EMAIL = 'pulse@socialmediapulsemonitor.com'
-EMAIL_HOST_USER = 'pulse@socialmediapulsemonitor.com'
+SITE_EMAIL = 'noreply@socialmediapulsemonitor.com'
+EMAIL_HOST_USER = 'noreply@socialmediapulsemonitor.com'
 EMAIL_HOST_PASSWORD = 'pampa0123'
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
