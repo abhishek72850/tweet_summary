@@ -29,7 +29,6 @@ def LoginView(request):
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
-		logout(request)
 		print(username, password)
 		user = authenticate(request, email=username, password=password)
 		if user is not None:

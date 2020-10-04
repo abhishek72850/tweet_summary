@@ -35,8 +35,6 @@ class AccountLogin(APIView):
                 'password': request.POST['user_password']
             }
 
-            logout(request)
-
             form = CustomUserLoginForm(form_data)
 
             # is_valid return true if user not in db
