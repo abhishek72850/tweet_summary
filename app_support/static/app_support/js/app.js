@@ -298,7 +298,7 @@ $(function(){
                     user_plan_history_row.append(plan_requested_on);
                     user_plan_history_row.append(plan_name);
                     user_plan_history_row.append(plan_started_from);
-                    upcoming_user_plans_row.append(plan_expires_on);
+                    user_plan_history_row.append(plan_expires_on);
                     user_plan_history_row.append(payment_id);
                     user_plan_history_row.append(payment_mode);
 
