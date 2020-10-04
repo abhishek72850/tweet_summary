@@ -73,7 +73,7 @@ section{
 }
 .upcoming_user_plans_row>span:nth-child(1){
 	border-right: 1px solid #ccc;
-	width: 10%;
+	width: 5%;
 }
 .upcoming_user_plans_row>span:nth-child(2){
 	width: 30%;
@@ -88,15 +88,18 @@ section{
 	width: 15%;
 }
 .upcoming_user_plans_row>span:nth-child(6){
+	width: 15%;
+}
+.upcoming_user_plans_row>span:nth-child(7){
 	display: inline-flex;
 	flex-direction: row;
 	justify-content:space-around;
-	width: 15%;
+	width: 10%;
 }
-.upcoming_user_plans_row>span:nth-child(6)>button{
+.upcoming_user_plans_row>span:nth-child(7)>button{
 	border: 1px solid #ccc;
 	width: 40%;
 }
-.upcoming_user_plans_row>span:nth-child(6)>button:last-child{
+.upcoming_user_plans_row>span:nth-child(7)>button:last-child{
 	background-color: #f55;
 }
