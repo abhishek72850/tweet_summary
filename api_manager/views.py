@@ -5,7 +5,7 @@ from rest_framework import status
 
 from datetime import datetime, timedelta
 
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 from helpers.auths import is_action_allowed, generate_token, decode_token
 from helpers.emails import send_email_verification_link, send_subscription_verification_link, send_password_reset_link
@@ -34,6 +34,8 @@ class AccountLogin(APIView):
                 'email': request.POST['user_email'],
                 'password': request.POST['user_password']
             }
+
+            logout(request)
 
             form = CustomUserLoginForm(form_data)
 
