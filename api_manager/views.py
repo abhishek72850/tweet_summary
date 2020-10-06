@@ -330,7 +330,7 @@ class SummaryAnalysis(APIView):
                             return Response(data={'data': 'Something went wrong, code:CNSU1'},
                                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                     else:
-                        return Response(data={'data': data}, status=data['status'])
+                        return Response(data={'data': data['message']}, status=data['status'])
                 else:
                     return Response(data={'data': 'You have exhausted your quick analysis quota'},
                                     status=status.HTTP_400_BAD_REQUEST)
