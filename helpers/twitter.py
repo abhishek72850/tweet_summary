@@ -253,6 +253,7 @@ class TwitterHelper:
         if len(self.result) > 0:
             response = {
                 "success": True,
+                "status": 200,
                 "data": {
                     "query": self.query,
                     "total_tweets": len(self.result),

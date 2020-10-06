@@ -323,11 +323,14 @@ class SummaryAnalysis(APIView):
                     tweet = TwitterHelper(request.GET['query'])
                     data = tweet.fetch_analysis()
 
-                    if update_quick_analysis_counter(request.user) == 1:
-                        return Response(data={'data': data}, status=status.HTTP_200_OK)
+                    if data['success']:
+                        if update_quick_analysis_counter(request.user) == 1:
+                            return Response(data={'data': data}, status=status.HTTP_200_OK)
+                        else:
+                            return Response(data={'data': 'Something went wrong, code:CNSU1'},
+                                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                     else:
-                        return Response(data={'data': 'Something went wrong, code:CNSU1'},
-                                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                        return Response(data={'data': data}, status=data['status'])
                 else:
                     return Response(data={'data': 'You have exhausted your quick analysis quota'},
                                     status=status.HTTP_400_BAD_REQUEST)
