@@ -36,7 +36,7 @@ def prepare_twitter_analysis(topic):
         print('Preparing....')
         data = data['data']
         analysis_data = {
-            'success': data['success'],
+            'success': True,
             'query': data['query'],
             'increase': data['increase_in_tweets'],
             'total_tweets': data['total_tweets'],
