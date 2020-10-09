@@ -56,7 +56,7 @@ def prepare_twitter_analysis(topic):
 
         mention_list = set()
         for value in data['noticeable_user']:
-            mention_list.add(value[0])
+            mention_list.add("{}(@{})".format(value[0], value[1][1]))
 
         mention_list = list(mention_list)
         analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])

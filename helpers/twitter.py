@@ -202,7 +202,7 @@ class TwitterHelper:
         verified_account = []
         for tweet in self.result:
             if tweet['user']['verified'] and tweet['user']['id'] != self.most_retweeted_verified_tweet()['user']['id']:
-                verified_account.append((tweet['user']['id'], tweet['user']['name']))
+                verified_account.append((tweet['user']['id'], tweet['user']['name'], tweet['user']['screen_name']))
 
         return verified_account
 
@@ -212,11 +212,11 @@ class TwitterHelper:
 
         for account in verified_account:
             if account[1] not in verified_count.keys():
-                verified_count[account[1]] = 1
+                verified_count[account[1]] = [1, account[2]]
             else:
-                verified_count[account[1]] += 1
+                verified_count[account[1]][0] += 1
 
-        verified_sort = sorted(verified_count.items(), key=lambda k: k[1], reverse=True)
+        verified_sort = sorted(verified_count.items(), key=lambda k: k[1][0], reverse=True)
 
         return verified_sort
 
@@ -239,6 +239,7 @@ class TwitterHelper:
 
             response.append({
                 "user_name": user[0],
+                "screen_name": user[1][1],
                 "tweet_content": tweet_text,
                 "mentions": mentions,
                 "favorite_count": favorite_count,

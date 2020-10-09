@@ -44,7 +44,7 @@ $(function(){
 
                 var mention_list = new Set();
                 for(var value of data['noticeable_user']){
-                    mention_list.add(value[0]);
+                    mention_list.add(value[0] + "(@" + value[1][1] + ")");
                 }
 
                 mention_list = Array.from(mention_list);
@@ -55,7 +55,7 @@ $(function(){
                     }
                     else{
                         var top_5_user = mention_list.slice(0,5).join(", ");
-                        var other_user = " and " + (mention_list.length - 5) + "other's."
+                        var other_user = " and " + (mention_list.length - 5) + " other's."
                         $('.noticeable_user').text(top_5_user + other_user);
                     }
                 }
@@ -65,6 +65,7 @@ $(function(){
 
 
                 $('.most_active_verified_tweet_user_name').text(data['most_active_verified_tweet']['user']['name']);
+                $('.most_active_verified_tweet_screen_name').text("(@" + data['most_active_verified_tweet']['user']['screen_name'] + ")");
                 $('.most_active_verified_tweet_retweets').text(data['most_active_verified_tweet']['retweet_count']);
                 $('.most_active_verified_tweet_favorite').text(data['most_active_verified_tweet']['favorite_count']);
                 $('.most_active_verified_tweet').html(createTextLinks_(data['most_active_verified_tweet']['text']));
@@ -97,6 +98,7 @@ $(function(){
                 }
 
                 $('.noticeable_user_tweet_user_name_1').text(data['noticeable_user_tweet'][0]['user_name']);
+                $('.noticeable_user_tweet_screen_name_1').text("(@" + data['noticeable_user_tweet'][0]['screen_name'] + ")");
                 $('.noticeable_user_tweet_total_1').text(data['noticeable_user_tweet'][0]['tweet_content'].length);
                 $('.noticeable_user_tweet_total_retweets_1').text(data['noticeable_user_tweet'][0]['retweets_count']);
                 $('.noticeable_user_tweet_total_favorite_1').text(data['noticeable_user_tweet'][0]['favorite_count']);
@@ -116,6 +118,7 @@ $(function(){
                 }
 
                 $('.noticeable_user_tweet_user_name_2').text(data['noticeable_user_tweet'][1]['user_name']);
+                $('.noticeable_user_tweet_screen_name_2').text("(@" + data['noticeable_user_tweet'][1]['screen_name'] + ")");
                 $('.noticeable_user_tweet_total_2').text(data['noticeable_user_tweet'][1]['tweet_content'].length);
                 $('.noticeable_user_tweet_total_retweets_2').text(data['noticeable_user_tweet'][1]['retweets_count']);
                 $('.noticeable_user_tweet_total_favorite_2').text(data['noticeable_user_tweet'][1]['favorite_count']);
