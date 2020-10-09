@@ -72,6 +72,7 @@ def prepare_twitter_analysis(topic):
             analysis_data['noticeable_user'] = 'None'
 
         analysis_data['most_active_verified_tweet_user_name'] = data['most_active_verified_tweet']['user'].get('name', '')
+        analysis_data['most_active_verified_tweet_screen_name'] = "(@{})".format(data['most_active_verified_tweet']['user'].get('screen_name', ''))
         analysis_data['most_active_verified_tweet_retweets'] = data['most_active_verified_tweet'].get('retweet_count', 0)
         analysis_data['most_active_verified_tweet_favorite'] = data['most_active_verified_tweet'].get('favorite_count', 0)
         analysis_data['most_active_verified_tweet'] = data['most_active_verified_tweet'].get('text', '')
@@ -90,6 +91,7 @@ def prepare_twitter_analysis(topic):
 
         if len(data['noticeable_user_tweet']) > 0:
             analysis_data['noticeable_user_tweet_user_name_1'] = data['noticeable_user_tweet'][0]['user_name']
+            analysis_data['noticeable_user_tweet_screen_name_1'] = "(@{})".format(data['noticeable_user_tweet'][0]['screen_name'])
             analysis_data['noticeable_user_tweet_total_1'] = len(data['noticeable_user_tweet'][0]['tweet_content'])
             analysis_data['noticeable_user_tweet_total_retweets_1'] = data['noticeable_user_tweet'][0]['retweets_count']
             analysis_data['noticeable_user_tweet_total_favorite_1'] = data['noticeable_user_tweet'][0]['favorite_count']
@@ -107,6 +109,7 @@ def prepare_twitter_analysis(topic):
                 analysis_data['noticeable_user_tweet_mentions_1'] = 'None'
 
             analysis_data['noticeable_user_tweet_user_name_2'] = data['noticeable_user_tweet'][1]['user_name']
+            analysis_data['noticeable_user_tweet_screen_name_2'] = "(@{})".format(data['noticeable_user_tweet'][1]['screen_name'])
             analysis_data['noticeable_user_tweet_total_2'] = len(data['noticeable_user_tweet'][1]['tweet_content'])
             analysis_data['noticeable_user_tweet_total_retweets_2'] = data['noticeable_user_tweet'][1]['retweets_count']
             analysis_data['noticeable_user_tweet_total_favorite_2'] = data['noticeable_user_tweet'][1]['favorite_count']
