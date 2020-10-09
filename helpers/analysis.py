@@ -44,6 +44,7 @@ def prepare_twitter_analysis(topic):
             'total_retweets': data['total_retweets'],
             'total_favorite': data['total_favorite'],
             'total_todays_tweet': len(todays_tweets),
+            'total_unique_users': data['total_unique_users'],
             'total_positive_tweets': positive_tweet,
             'total_negative_tweets': negative_tweet,
             'total_neutral_tweets': neutral_tweet

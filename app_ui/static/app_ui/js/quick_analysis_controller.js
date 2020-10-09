@@ -40,6 +40,7 @@ $(function(){
                 $('.total_mentions').text(data['total_mentions'].length);
                 $('.total_retweets').text(data['total_retweets']);
                 $('.total_favorite').text(data['total_favorite']);
+                $('.total_unique_users').text(data['total_unique_users']);
 
 
                 var mention_list = new Set();

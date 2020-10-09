@@ -162,6 +162,18 @@ class TwitterHelper:
                 user_mentions.extend(tweet['entities']['user_mentions'])
         return user_mentions
 
+    def total_unique_users(self, verified=False):
+        user_ids = []
+        for tweet in self.result:
+            if verified:
+                if tweet['user']['verified']:
+                    user_ids.append(tweet['user']['id']) 
+            else:
+                user_ids.append(tweet['user']['id'])
+
+        unique_ids = list(set(user_ids))
+        return len(unique_ids)
+
     def mentioned_user_tweets(self, verified=True):
         user_mentions = self.total_user_mentioned(verified)
         mentioned_tweets = []
@@ -260,6 +272,7 @@ class TwitterHelper:
                     "total_tweets": len(self.result),
                     "total_retweets": total_retweets,
                     "total_favorite": total_favorite,
+                    "total_unique_users": self.total_unique_users(verified=False),
                     "total_mentions": self.total_user_mentioned(verified=False),
                     "increase_in_tweets": self.increase_in_tweets(),
                     "total_verified_mentions": self.total_user_mentioned(verified=True),
