@@ -54,6 +54,7 @@ LOGIN_REDIRECT_URL = '/support/login'
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'app_ui.apps.AppUiConfig',
     'app_support.apps.AppSupportConfig',
     'app_perf',
