@@ -47,7 +47,8 @@ def prepare_twitter_analysis(topic):
             'total_unique_users': data['total_unique_users'],
             'total_positive_tweets': positive_tweet,
             'total_negative_tweets': negative_tweet,
-            'total_neutral_tweets': neutral_tweet
+            'total_neutral_tweets': neutral_tweet,
+            'noticeable_user_tweet_user_name_1': ''
         }
 
         if data['increase_in_tweets'] < 0:
