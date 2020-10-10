@@ -35,7 +35,7 @@ SECRET_KEY = '0j^cnixv3svemc5_83*dv^-09%-lra57pybco#b&(arnr_jbjg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('APP_DEBUG', 1)))
 
-SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 
 SITE_EMAIL = 'noreply@socialmediapulsemonitor.com'
 EMAIL_HOST_USER = 'noreply@socialmediapulsemonitor.com'
@@ -54,7 +54,6 @@ LOGIN_REDIRECT_URL = '/support/login'
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
     'app_ui.apps.AppUiConfig',
     'app_support.apps.AppSupportConfig',
     'app_perf',
@@ -237,7 +236,7 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 sentry_sdk.init(
-    dsn=os.environ['SENTRY_DSN'],
+    dsn=os.environ.get('SENTRY_DSN'),
     integrations=[DjangoIntegration(), CeleryIntegration()],
     traces_sample_rate=1.0,
 )
@@ -261,7 +260,7 @@ STATIC_URL = '/staticfiles/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'app_support/static'),
-#     os.path.join(BASE_DIR, 'app_ui/static'),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app_support/staticfiles'),
+    os.path.join(BASE_DIR, 'app_ui/staticfiles'),
+]
