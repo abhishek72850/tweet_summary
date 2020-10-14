@@ -28,7 +28,8 @@
                             <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> {{ total_neutral_tweets }}  neutral tweets.</span>
 
                             {% if unrecognized_sentiment_tweets > 0 %}
-                            <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> and for {{ unrecognized_sentiment_tweets }} tweets Artificial Intelligence system couldn’t decide sentiments.</span>                            
+                                <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> and for {{ unrecognized_sentiment_tweets }} tweets Artificial Intelligence system couldn’t decide sentiments.</span>
+                            {% endif %}                            
                         </li>
                         <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">In the past  one week, the overall twitter conversations related to 
                             <span class="query bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ query }} </span>
