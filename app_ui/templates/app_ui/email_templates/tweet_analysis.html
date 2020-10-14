@@ -41,10 +41,10 @@
                             <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_verified_users }} </span> verified users and 
                             <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_unverified_users }} </span> unverified users), 
 
-                            {% if len(most_active_users) > 0 %}
+                            {% if most_active_users|length > 0 %}
 
                                 and is driven by tweets of the top 
-                                <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ len(most_active_users) }} </span> 
+                                <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ most_active_users|length }} </span> 
                                 most active verified users:
 
                                 <ul style="margin: 0 0 0 20px;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
