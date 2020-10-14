@@ -51,27 +51,54 @@ def prepare_twitter_analysis(topic):
             'noticeable_user_tweet_user_name_1': ''
         }
 
+        analysis_data['unrecognized_sentiment_tweets'] = len(todays_tweets) - (positive_tweet + negative_tweet + neutral_tweet)
+
+        analysis_data['total_verified_users'] = len(data['noticeable_user'])
+        analysis_data['total_unverified_users'] = data['total_unique_users'] - len(data['noticeable_user'])
+
         if data['increase_in_tweets'] < 0:
             analysis_data['increase_or_decrease'] = '{} decrease'.format(str(data['increase_in_tweets']*(-1)))
         else:
             analysis_data['increase_or_decrease'] = '{} increase'.format(str(data['increase_in_tweets']))
 
-        mention_list = set()
-        for value in data['noticeable_user']:
-            mention_list.add("{}(@{})".format(value[0], value[1][1]))
 
-        mention_list = list(mention_list)
-        analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])
+        analysis_data['most_active_users'] = []
 
-        if len(mention_list) > 0:
-            if len(mention_list) < 5:
-                analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])
+        for user in data['most_active_users'][0:5]:
+            mention_list = set()
+            for value in user['mentions']:
+                mention_list.add("{}(@{})".format(value['name'], value['screen_name']))
+
+            mention_list = list(mention_list)
+
+            if len(mention_list) > 0:
+                if len(mention_list) < 5:
+                    user['mention_join'] = ', '.join(mention_list[0:5])
+                else:
+                    top_5_user = ', '.join(mention_list[0:5])
+                    other_user = " and {} other's.".format((len(mention_list) - 5))
+                    user['mention_join'] = '{}{}'.format(top_5_user, other_user)
             else:
-                top_5_user = ', '.join(mention_list[0:5])
-                other_user = " and {} other's.".format((len(mention_list) - 5))
-                analysis_data['noticeable_user'] = '{}{}'.format(top_5_user, other_user)
-        else:
-            analysis_data['noticeable_user'] = 'None'
+                user['mention_join'] = 'None'
+
+            analysis_data['most_active_users'].append(user)
+
+        # mention_list = set()
+        # for value in data['noticeable_user']:
+        #     mention_list.add("{}(@{})".format(value[0], value[1][1]))
+
+        # mention_list = list(mention_list)
+        # analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])
+
+        # if len(mention_list) > 0:
+        #     if len(mention_list) < 5:
+        #         analysis_data['noticeable_user'] = ', '.join(mention_list[0:5])
+        #     else:
+        #         top_5_user = ', '.join(mention_list[0:5])
+        #         # other_user = " and {} other's.".format((len(mention_list) - 5))
+        #         analysis_data['noticeable_user'] = '{}{}'.format(top_5_user, other_user)
+        # else:
+        #     analysis_data['noticeable_user'] = 'None'
 
         analysis_data['most_active_verified_tweet_user_name'] = data['most_active_verified_tweet']['user'].get('name', '')
         analysis_data['most_active_verified_tweet_screen_name'] = "(@{})".format(data['most_active_verified_tweet']['user'].get('screen_name', ''))
@@ -91,42 +118,42 @@ def prepare_twitter_analysis(topic):
         else:
             analysis_data['most_active_verified_tweet_mentions'] = 'None'
 
-        if len(data['noticeable_user_tweet']) > 0:
-            analysis_data['noticeable_user_tweet_user_name_1'] = data['noticeable_user_tweet'][0]['user_name']
-            analysis_data['noticeable_user_tweet_screen_name_1'] = "(@{})".format(data['noticeable_user_tweet'][0]['screen_name'])
-            analysis_data['noticeable_user_tweet_total_1'] = len(data['noticeable_user_tweet'][0]['tweet_content'])
-            analysis_data['noticeable_user_tweet_total_retweets_1'] = data['noticeable_user_tweet'][0]['retweets_count']
-            analysis_data['noticeable_user_tweet_total_favorite_1'] = data['noticeable_user_tweet'][0]['favorite_count']
+        # if len(data['noticeable_user_tweet']) > 0:
+        #     analysis_data['noticeable_user_tweet_user_name_1'] = data['noticeable_user_tweet'][0]['user_name']
+        #     analysis_data['noticeable_user_tweet_screen_name_1'] = "(@{})".format(data['noticeable_user_tweet'][0]['screen_name'])
+        #     analysis_data['noticeable_user_tweet_total_1'] = len(data['noticeable_user_tweet'][0]['tweet_content'])
+        #     analysis_data['noticeable_user_tweet_total_retweets_1'] = data['noticeable_user_tweet'][0]['retweets_count']
+        #     analysis_data['noticeable_user_tweet_total_favorite_1'] = data['noticeable_user_tweet'][0]['favorite_count']
 
-            mention_list = set()
+        #     mention_list = set()
 
-            for value in data['noticeable_user_tweet'][0]['mentions']:
-                mention_list.add(value['name'])
+        #     for value in data['noticeable_user_tweet'][0]['mentions']:
+        #         mention_list.add(value['name'])
 
-            mention_list = list(mention_list)
+        #     mention_list = list(mention_list)
 
-            if len(mention_list) > 0:
-                analysis_data['noticeable_user_tweet_mentions_1'] = ', '.join(mention_list)
-            else:
-                analysis_data['noticeable_user_tweet_mentions_1'] = 'None'
+        #     if len(mention_list) > 0:
+        #         analysis_data['noticeable_user_tweet_mentions_1'] = ', '.join(mention_list)
+        #     else:
+        #         analysis_data['noticeable_user_tweet_mentions_1'] = 'None'
 
-            analysis_data['noticeable_user_tweet_user_name_2'] = data['noticeable_user_tweet'][1]['user_name']
-            analysis_data['noticeable_user_tweet_screen_name_2'] = "(@{})".format(data['noticeable_user_tweet'][1]['screen_name'])
-            analysis_data['noticeable_user_tweet_total_2'] = len(data['noticeable_user_tweet'][1]['tweet_content'])
-            analysis_data['noticeable_user_tweet_total_retweets_2'] = data['noticeable_user_tweet'][1]['retweets_count']
-            analysis_data['noticeable_user_tweet_total_favorite_2'] = data['noticeable_user_tweet'][1]['favorite_count']
+        #     analysis_data['noticeable_user_tweet_user_name_2'] = data['noticeable_user_tweet'][1]['user_name']
+        #     analysis_data['noticeable_user_tweet_screen_name_2'] = "(@{})".format(data['noticeable_user_tweet'][1]['screen_name'])
+        #     analysis_data['noticeable_user_tweet_total_2'] = len(data['noticeable_user_tweet'][1]['tweet_content'])
+        #     analysis_data['noticeable_user_tweet_total_retweets_2'] = data['noticeable_user_tweet'][1]['retweets_count']
+        #     analysis_data['noticeable_user_tweet_total_favorite_2'] = data['noticeable_user_tweet'][1]['favorite_count']
 
-            mention_list = set()
+        #     mention_list = set()
 
-            for value in data['noticeable_user_tweet'][1]['mentions']:
-                mention_list.add(value['name'])
+        #     for value in data['noticeable_user_tweet'][1]['mentions']:
+        #         mention_list.add(value['name'])
 
-            mention_list = list(mention_list)
+        #     mention_list = list(mention_list)
 
-            if len(mention_list) > 0:
-                analysis_data['noticeable_user_tweet_mentions_2'] = ', '.join(mention_list)
-            else:
-                analysis_data['noticeable_user_tweet_mentions_2'] = 'None'
+        #     if len(mention_list) > 0:
+        #         analysis_data['noticeable_user_tweet_mentions_2'] = ', '.join(mention_list)
+        #     else:
+        #         analysis_data['noticeable_user_tweet_mentions_2'] = 'None'
 
         return analysis_data
     else:

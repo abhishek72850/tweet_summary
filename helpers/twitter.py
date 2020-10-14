@@ -67,9 +67,9 @@ class TwitterHelper:
         # if total_tweets_before_current == 0:
         #     return count_lst[-1] * 100
         if len(count_lst) > 1:
-            return count_lst[-2] - count_lst[-1]
+            return count_lst[0] - count_lst[1]
         else:
-            return count_lst[-1]
+            return count_lst[0]
 
         # increase = (count_lst[-1] / sum(count_lst[:-1])) * 100
 
@@ -232,6 +232,48 @@ class TwitterHelper:
 
         return verified_sort
 
+    def get_verified_users(self):
+        verified_accounts = {}
+        for tweet in self.result:
+            if tweet['user']['verified']:
+                verified_accounts[tweet['user']['id']] = tweet['user']
+
+        return verified_accounts
+
+    def get_most_active_verified_users(self):
+        verfied_users = self.get_verified_users()
+        response = []
+
+        for user_id in verfied_users.keys():
+            tweet_count = 0
+            retweets_count = 0
+            favorite_count = 0
+            mentions = []
+            tweet_texts = []
+
+            for tweet in self.result:
+                if tweet['user']['id'] == user_id:
+                    tweet_count += 1
+                    retweets_count += tweet['retweet_count']
+                    favorite_count += tweet['favorite_count']
+                    mentions.extend(tweet['entities']['user_mentions'])
+                    tweet_texts.append(tweet['text'])
+
+            response.append({
+                "user_id": user_id,
+                "user_name": verfied_users[user_id]['name'],
+                "screen_name": verfied_users[user_id]['screen_name'],
+                "tweet_content": tweet_texts,
+                "mentions": mentions,
+                "tweet_count": tweet_count,
+                "favorite_count": favorite_count,
+                "retweets_count": retweets_count
+            })
+
+        response = sorted(response, key=lambda v:v['tweet_count'], reverse=True)
+
+        return response
+
     def most_tweets_by_verified_user(self):
         verified_user = self.most_tweeted_verified_account()[0:2]
         response = []
@@ -279,6 +321,7 @@ class TwitterHelper:
                     "most_active_verified_tweet": self.most_retweeted_verified_tweet(),
                     "noticeable_user": self.most_tweeted_verified_account(),
                     "noticeable_user_tweet": self.most_tweets_by_verified_user(),
+                    "most_active_users": self.get_most_active_verified_users(),
                     "24_hour_stats": self.stats_for_24_hour()
                 }
             }

@@ -26,18 +26,42 @@
                             <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #0f0;"> {{ total_positive_tweets }}  positive tweets </span>
                             <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #f00;"> {{ total_negative_tweets }}  negative tweets</span> and
                             <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> {{ total_neutral_tweets }}  neutral tweets.</span>
+
+                            {% if unrecognized_sentiment_tweets > 0 %}
+                            <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> and for {{ unrecognized_sentiment_tweets }} tweets Artificial Intelligence system couldn’t decide sentiments.</span>                            
                         </li>
-                        <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">In the past one week, there have been
+                        <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">In the past  one week, the overall twitter conversations related to 
+                            <span class="query bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ query }} </span>
+                            includes 
                             <span class="total_tweets bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_tweets }} </span> tweets,
                             <span class="total_mentions bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_mentions }} </span> mentions,
-                            <span class="total_retweets bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_retweets }} </span> retweets,
-                            primarily related to <span class="query bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ query }} </span>
-                        </li>
-                        <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                            Overall Twitter conversations include
-                            <span class="total_mentions bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_mentions }} </span> social mentions,
-                            <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_favorite }} </span> total likes made by total <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_unique_users }} </span> users and
-                            is driven by retweets of <span class="noticeable_user bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ noticeable_user }} </span>
+                            <span class="total_retweets bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_retweets }} </span> retweets, 
+                            <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_favorite }} </span> total likes made by total of 
+                            <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_unique_users }} </span> users (
+                            <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_verified_users }} </span> verified users and 
+                            <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_unverified_users }} </span> unverified users), 
+
+                            {% if len(most_active_users) > 0 %}
+
+                                and is driven by tweets of the top 
+                                <span class="total_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ len(most_active_users) }} </span> 
+                                most active verified users:
+
+                                <ul style="margin: 0 0 0 20px;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                {% for user in most_active_users %}
+                                    <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                        <span style="font-weight: bold;margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="noticeable_user_tweet_user_name_1 bold"> {{ user.user_name }}</span>
+                                        <span style="font-weight: bold;margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="noticeable_user_tweet_user_name_1 bold"> {{ user.screen_name }} </span>,
+                                        total <span class="noticeable_user_tweet_total_1 bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ user.tweet_count }} </span> tweets posted,
+                                        <span class="noticeable_user_tweet_total_retweets_1 bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ user.retweets_count }} </span> retweets,
+                                        <span class="noticeable_user_tweet_total_favorite_1 bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ user.favorite_count }} </span> likes,
+                                        Noticeable mentions were <span class="noticeable_user_tweet_mentions_1 bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ user.mention_join }} </span>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                and there were no active verified users.
+                            {% endif %}
                         </li>
                         {% if most_active_verified_tweet_user_name != '' %}
                             <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -51,7 +75,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            {% if noticeable_user_tweet_user_name_1 != '' %}
+                            <!-- {% if noticeable_user_tweet_user_name_1 != '' %}
                                 <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                                     <span style="font-weight: bold;margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Other tweets which were most active was made by</span>
                                     <ul style="margin: 0 0 0 20px;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -77,14 +101,11 @@
                                 <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                                     There were no other tweets which were most active.
                                 </li>
-                            {% endif %}
+                            {% endif %} -->
                         {% else %}
-                        <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                            There's no user tweet which have got more attention.
-                        </li>
-                        <li>
-                            There were no noticeable user tweet's found in past one week.
-                        </li>
+                            <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                There's no user tweet which have got more attention.
+                            </li>
                         {% endif %}
                     </ul>
                 {% else %}
