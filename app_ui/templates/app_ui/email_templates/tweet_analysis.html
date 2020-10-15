@@ -23,12 +23,14 @@
                         </li>
                         <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                             Out of today's <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ total_todays_tweet }} </span> total tweets there has been
-                            <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #0f0;"> {{ total_positive_tweets }}  positive tweets </span>
+                            <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #0f0;"> {{ total_positive_tweets }}  positive tweets, </span>
                             <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #f00;"> {{ total_negative_tweets }}  negative tweets</span> and
-                            <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> {{ total_neutral_tweets }}  neutral tweets.</span>
+                            <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> {{ total_neutral_tweets }}  neutral tweets</span>
 
                             {% if unrecognized_sentiment_tweets > 0 %}
-                                <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #a70"> and for {{ unrecognized_sentiment_tweets }} tweets Artificial Intelligence system couldn’t decide sentiments.</span>
+                                and for
+                                <span style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: #770"> {{ unrecognized_sentiment_tweets }} tweets </span>
+                                Artificial Intelligence system couldn’t decide sentiments.
                             {% endif %}                            
                         </li>
                         <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">In the past  one week, the overall twitter conversations related to 
@@ -52,7 +54,7 @@
                                 {% for user in most_active_users %}
                                     <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                                         <span style="font-weight: bold;margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="noticeable_user_tweet_user_name_1 bold"> {{ user.user_name }}</span>
-                                        <span style="font-weight: bold;margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="noticeable_user_tweet_user_name_1 bold"> {{ user.screen_name }} </span>,
+                                        <span style="font-weight: bold;margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="noticeable_user_tweet_user_name_1 bold"> (@ {{ user.screen_name }} )</span>,
                                         total <span class="noticeable_user_tweet_total_1 bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ user.tweet_count }} </span> tweets posted,
                                         <span class="noticeable_user_tweet_total_retweets_1 bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ user.retweets_count }} </span> retweets,
                                         <span class="noticeable_user_tweet_total_favorite_1 bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ user.favorite_count }} </span> likes,
@@ -66,7 +68,7 @@
                         </li>
                         {% if most_active_verified_tweet_user_name != '' %}
                             <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                                <span class="most_active_verified_tweet_user_name bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ most_active_verified_tweet_user_name }}</span><span class="most_active_verified_tweet_user_name bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ most_active_verified_tweet_screen_name }} </span> tweet has got more attention and has received
+                                <span class="most_active_verified_tweet_user_name bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ most_active_verified_tweet_user_name }}</span><span class="most_active_verified_tweet_user_name bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ most_active_verified_tweet_screen_name }} </span> tweet has got <span style="font-weight: bold;">highest attention</span> and has received
                                 <span class="most_active_verified_tweet_retweets bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ most_active_verified_tweet_retweets }} </span> retweets and
                                 <span class="most_active_verified_tweet_favorite bold" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> {{ most_active_verified_tweet_favorite }} </span> likes.
                                 <ul style="margin: 0 0 0 20px;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -114,7 +116,7 @@
                 {% endif %}
                 <p></p>
 
-                <p class="regards" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin-top: 20px;">Thankyou,</p><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <p class="regards" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin-top: 20px;">Thank you,</p><br style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                 <p style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Social Media Pulse Monitor</p>
 
                 <p class="tagline" style="margin: 0;/*! padding: 30px 0; */font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding-top: 5px;font-weight: bold;">“Translating Information into an Actionable Intelligence: The Pulse of Social Media”</p>

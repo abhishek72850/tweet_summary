@@ -53,8 +53,8 @@ def prepare_twitter_analysis(topic):
 
         analysis_data['unrecognized_sentiment_tweets'] = len(todays_tweets) - (positive_tweet + negative_tweet + neutral_tweet)
 
-        analysis_data['total_verified_users'] = len(data['noticeable_user'])
-        analysis_data['total_unverified_users'] = data['total_unique_users'] - len(data['noticeable_user'])
+        analysis_data['total_verified_users'] = len(data['most_active_users'])
+        analysis_data['total_unverified_users'] = data['total_unique_users'] - len(data['most_active_users'])
 
         if data['increase_in_tweets'] < 0:
             analysis_data['increase_or_decrease'] = '{} decrease'.format(str(data['increase_in_tweets']*(-1)))

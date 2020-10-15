@@ -42,6 +42,80 @@ $(function(){
                 $('.total_favorite').text(data['total_favorite']);
                 $('.total_unique_users').text(data['total_unique_users']);
 
+                $('.total_unique_users').text(data['total_unique_users']);
+                $('.total_verified_users').text(data['most_active_users'].length)
+                $('.total_unverified_users').text(data['total_unique_users'] - data['most_active_users'].length);
+
+                if(data['most_active_users'].length > 0){
+                    $('.driven_by').show();
+                    $('.not_driven_by').hide();
+                    $('.active_users').empty();
+
+                    if(data['most_active_users'].length > 5){
+                        $('.top_total_users').text("5");    
+                    }
+                    else{
+                        $('.top_total_users').text(data['most_active_users'].length);    
+                    }
+
+                    for(var user of data['most_active_users'].slice(0,5)){
+                        var li = $("<li></li>");
+                        var user_name = $("<span></span>",{
+                            text: user['user_name'],
+                            style: "font-weight:bold"
+                        });
+
+                        var screen_name = $("<span></span>",{
+                            text: "(@" + user['screen_name'] + "), ",
+                            style: "font-weight:bold"
+                        });
+
+                        var tweet_count = $("<span></span>",{
+                            text: user['tweet_count'] + " tweets posted, ",
+                        });
+
+                        var retweets_count = $("<span></span>",{
+                            text: user['retweets_count'] + " retweets, ",
+                        });
+
+                        var favorite_count = $("<span></span>",{
+                            text: user['favorite_count'] + " likes, ",
+                        });
+
+                        var mention_list = new Set();
+                        for(var mention of user['mentions']){
+                            mention_list.add(mention['name'] + "(@" + mention['screen_name'] + ")");
+                        }
+
+                        mention_list = Array.from(mention_list);
+
+                        mentions_text = 'None';
+
+                        if(mention_list.length > 0){
+                            if(mention_list.length < 5){
+                                mentions_text = mention_list.join(", ");    
+                            }
+                            else{
+                                var top_5_user = mention_list.slice(0,5).join(", ");
+                                var other_user = " and " + (mention_list.length - 5) + " other's."
+                                mentions_text = top_5_user + other_user;
+                            }
+                        }
+
+                        var mentions = $("<span></span>",{
+                            text: "Noticeable mentions were " + mentions_text,
+                        });
+
+                        li.append([user_name, screen_name, tweet_count, retweets_count, favorite_count, mentions]);
+                        $('.active_users').append(li);    
+                    }   
+                }
+                else{
+                    $('.driven_by').hide();
+                    $('.active_users').hide();
+                    $('.not_driven_by').show();   
+                }
+                
 
                 var mention_list = new Set();
                 for(var value of data['noticeable_user']){
@@ -98,88 +172,88 @@ $(function(){
                     $('.active_users').hide()
                 }
 
-                $('.noticeable_user_tweet_user_name_1').text(data['noticeable_user_tweet'][0]['user_name']);
-                $('.noticeable_user_tweet_screen_name_1').text("(@" + data['noticeable_user_tweet'][0]['screen_name'] + ")");
-                $('.noticeable_user_tweet_total_1').text(data['noticeable_user_tweet'][0]['tweet_content'].length);
-                $('.noticeable_user_tweet_total_retweets_1').text(data['noticeable_user_tweet'][0]['retweets_count']);
-                $('.noticeable_user_tweet_total_favorite_1').text(data['noticeable_user_tweet'][0]['favorite_count']);
+                // $('.noticeable_user_tweet_user_name_1').text(data['noticeable_user_tweet'][0]['user_name']);
+                // $('.noticeable_user_tweet_screen_name_1').text("(@" + data['noticeable_user_tweet'][0]['screen_name'] + ")");
+                // $('.noticeable_user_tweet_total_1').text(data['noticeable_user_tweet'][0]['tweet_content'].length);
+                // $('.noticeable_user_tweet_total_retweets_1').text(data['noticeable_user_tweet'][0]['retweets_count']);
+                // $('.noticeable_user_tweet_total_favorite_1').text(data['noticeable_user_tweet'][0]['favorite_count']);
 
-                mention_list = new Set();
+                // mention_list = new Set();
 
-                for(var value of data['noticeable_user_tweet'][0]['mentions']){
-                    mention_list.add(value['name']);
-                }
-                mention_list = Array.from(mention_list);
+                // for(var value of data['noticeable_user_tweet'][0]['mentions']){
+                //     mention_list.add(value['name']);
+                // }
+                // mention_list = Array.from(mention_list);
 
-                if(mention_list.length > 0){
-                    $('.noticeable_user_tweet_mentions_1').text(mention_list.join(", "));
-                }
-                else{
-                    $('.noticeable_user_tweet_mentions_1').text('None');
-                }
+                // if(mention_list.length > 0){
+                //     $('.noticeable_user_tweet_mentions_1').text(mention_list.join(", "));
+                // }
+                // else{
+                //     $('.noticeable_user_tweet_mentions_1').text('None');
+                // }
 
-                $('.noticeable_user_tweet_user_name_2').text(data['noticeable_user_tweet'][1]['user_name']);
-                $('.noticeable_user_tweet_screen_name_2').text("(@" + data['noticeable_user_tweet'][1]['screen_name'] + ")");
-                $('.noticeable_user_tweet_total_2').text(data['noticeable_user_tweet'][1]['tweet_content'].length);
-                $('.noticeable_user_tweet_total_retweets_2').text(data['noticeable_user_tweet'][1]['retweets_count']);
-                $('.noticeable_user_tweet_total_favorite_2').text(data['noticeable_user_tweet'][1]['favorite_count']);
+                // $('.noticeable_user_tweet_user_name_2').text(data['noticeable_user_tweet'][1]['user_name']);
+                // $('.noticeable_user_tweet_screen_name_2').text("(@" + data['noticeable_user_tweet'][1]['screen_name'] + ")");
+                // $('.noticeable_user_tweet_total_2').text(data['noticeable_user_tweet'][1]['tweet_content'].length);
+                // $('.noticeable_user_tweet_total_retweets_2').text(data['noticeable_user_tweet'][1]['retweets_count']);
+                // $('.noticeable_user_tweet_total_favorite_2').text(data['noticeable_user_tweet'][1]['favorite_count']);
 
-                mention_list = new Set();
+                // mention_list = new Set();
 
-                for(var value of data['noticeable_user_tweet'][1]['mentions']){
-                    mention_list.add(value['name']);
-                }
-                mention_list = Array.from(mention_list);
+                // for(var value of data['noticeable_user_tweet'][1]['mentions']){
+                //     mention_list.add(value['name']);
+                // }
+                // mention_list = Array.from(mention_list);
 
-                if(mention_list.length > 0){
-                    $('.noticeable_user_tweet_mentions_2').text(mention_list.join(", "));
-                }
-                else{
-                    $('.noticeable_user_tweet_mentions_2').text('None');
-                }
+                // if(mention_list.length > 0){
+                //     $('.noticeable_user_tweet_mentions_2').text(mention_list.join(", "));
+                // }
+                // else{
+                //     $('.noticeable_user_tweet_mentions_2').text('None');
+                // }
 
 
-                //24 hour stats
-                var data_24 = data['24_hour_stats'];
+                // //24 hour stats
+                // var data_24 = data['24_hour_stats'];
 
-                $('.stats_24_total_tweets').text(data_24['total_tweets']);
-                $('.stats_24_total_retweets').text(data_24['total_retweets']);
-                $('.stats_24_total_favorite').text(data_24['total_favorite']);
+                // $('.stats_24_total_tweets').text(data_24['total_tweets']);
+                // $('.stats_24_total_retweets').text(data_24['total_retweets']);
+                // $('.stats_24_total_favorite').text(data_24['total_favorite']);
 
-                mention_list = new Set();
+                // mention_list = new Set();
 
-                for(var value of data_24['verified_mentions']){
-                    mention_list.add(value['name']);
-                }
-                mention_list = Array.from(mention_list);
+                // for(var value of data_24['verified_mentions']){
+                //     mention_list.add(value['name']);
+                // }
+                // mention_list = Array.from(mention_list);
 
-                if(mention_list.length > 0){
-                    $('.stats_24_noticeable_mentions').text(mention_list.join(", "));
-                }
-                else{
-                    $('.stats_24_noticeable_mentions').text('None');
-                }
+                // if(mention_list.length > 0){
+                //     $('.stats_24_noticeable_mentions').text(mention_list.join(", "));
+                // }
+                // else{
+                //     $('.stats_24_noticeable_mentions').text('None');
+                // }
 
-                $('.stats_24_noticeable_retweets').text(data_24['verified_total_retweets']);
-                $('.stats_24_noticeable_favorite').text(data_24['verified_total_favorite']);
-                $('.stats_24_most_active_tweet_user_name').text(data_24['most_active_tweet']['user']['name']);
-                $('.stats_24_most_active_tweet_text').text(data_24['most_active_tweet']['text']);
-                $('.stats_24_most_active_tweet_retweets').text(data_24['most_active_tweet']['retweet_count']);
-                $('.stats_24_most_active_tweet_favorite').text(data_24['most_active_tweet']['favorite_count']);
+                // $('.stats_24_noticeable_retweets').text(data_24['verified_total_retweets']);
+                // $('.stats_24_noticeable_favorite').text(data_24['verified_total_favorite']);
+                // $('.stats_24_most_active_tweet_user_name').text(data_24['most_active_tweet']['user']['name']);
+                // $('.stats_24_most_active_tweet_text').text(data_24['most_active_tweet']['text']);
+                // $('.stats_24_most_active_tweet_retweets').text(data_24['most_active_tweet']['retweet_count']);
+                // $('.stats_24_most_active_tweet_favorite').text(data_24['most_active_tweet']['favorite_count']);
 
-                mention_list = new Set();
+                // mention_list = new Set();
 
-                for(var value of data_24['most_active_tweet']['entities']['user_mentions']){
-                    mention_list.add(value['name']);
-                }
-                mention_list = Array.from(mention_list);
+                // for(var value of data_24['most_active_tweet']['entities']['user_mentions']){
+                //     mention_list.add(value['name']);
+                // }
+                // mention_list = Array.from(mention_list);
 
-                if(mention_list.length > 0){
-                    $('.stats_24_most_active_tweet_mentions').text(mention_list.join(", "));
-                }
-                else{
-                    $('.stats_24_most_active_tweet_mentions').text('None');
-                }
+                // if(mention_list.length > 0){
+                //     $('.stats_24_most_active_tweet_mentions').text(mention_list.join(", "));
+                // }
+                // else{
+                //     $('.stats_24_most_active_tweet_mentions').text('None');
+                // }
             }
         );
     });
