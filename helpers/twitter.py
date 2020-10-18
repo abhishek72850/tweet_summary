@@ -10,6 +10,7 @@ class TwitterHelper:
         self.params = {}
         self.query = query
         self.result = []
+        self.univ_datetime = datetime.now(tz=timezone.utc)
 
         self.define_header()
         self.define_params()
@@ -25,13 +26,15 @@ class TwitterHelper:
             'q': self.query,
             'include_entities': 1,
             'result_type': 'mixed',
-            'until': datetime.today().strftime("%Y-%m-%d"),
+            # 'until': datetime.today().strftime("%Y-%m-%d"),
+            'until': (self.univ_datetime.date() - timedelta(days=1)).strftime("%Y-%m-%d"),
             'count': 100
         }
 
     def fetch_result(self, max_range=7):
         for i in range(0, max_range):
-            new_date = datetime.today() - timedelta(days=i)
+            # new_date = datetime.today() - timedelta(days=i)
+            new_date = (self.univ_datetime.date() - timedelta(days=1)) - timedelta(days=i)
             self.params['until'] = new_date.strftime("%Y-%m-%d")
             if 'max_id' in self.params.keys():
                 del self.params['max_id']

@@ -36,6 +36,20 @@ def daily_service():
 
 
 @shared_task
+def universal_service_email_analysis():
+    result_set = get_all_subscriptions()
+
+    for subscription in result_set:
+        print(subscription.user.email, subscription.topic)
+        if (subscription.subscription_status == 'ACTIVE') and (
+                get_local_datetime(subscription.user.timezone_offset, subscription.subscription_from) <= get_local_datetime(subscription.user.timezone_offset) <= get_local_datetime(subscription.user.timezone_offset, subscription.subscription_to)):
+            analysis_data = prepare_twitter_analysis(subscription.topic)
+            send_analysis(subscription, analysis_data)
+        elif get_local_datetime(subscription.user.timezone_offset, subscription.subscription_to) < get_local_datetime(subscription.user.timezone_offset) and subscription.subscription_status not in ['SUSPENDED', 'UNSUBSCRIBED', 'EXPIRED']:
+            unsubscribe(subscription.user.email, subscription.id, status='EXPIRED')
+
+
+@shared_task
 def hourly_service_email_analysis():
     """
         This function should be run in hourly interval only,
