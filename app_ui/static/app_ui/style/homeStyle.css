@@ -10,6 +10,13 @@ body{
     overflow-y:auto;
 
 }
+.logoBox{
+    background-color:rgba(29, 25, 129, 1);
+    display:block;
+    height:80px;
+    width:120px;
+    margin-left:10%;
+}
 .container{
     display:flex;
     margin-top:-80px;
@@ -20,6 +27,16 @@ body{
     margin:100px 5% 50px 5%;
     line-height:1.8;
     font-size:20px
+}
+.contentBox ul{
+    margin-top: 1em;
+}
+.contentBox li{
+    margin: 1em 0;
+}
+.contentBox>ul>li>ul{
+    margin-left: 2em;
+    text-indent: 1em;
 }
 .formWindow{
     display:flex;

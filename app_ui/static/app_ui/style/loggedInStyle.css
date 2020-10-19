@@ -10,6 +10,15 @@
     color:white;
     margin:5%;
 }
+.contentBox>ul{
+    
+}
+.contentBox>ul>li{
+    margin-bottom: 2em;
+}
+.contentBox>ul>li>p{
+    margin-bottom: 1em;
+}
 .buttonBox{
     display:flex;
     flex-direction: column;
