@@ -10,13 +10,6 @@ body{
     overflow-y:auto;
 
 }
-.logoBox{
-    background-color:rgba(29, 25, 129, 1);
-    display:block;
-    height:80px;
-    width:120px;
-    margin-left:10%;
-}
 .container{
     display:flex;
     margin-top:-80px;

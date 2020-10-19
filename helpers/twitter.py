@@ -79,7 +79,8 @@ class TwitterHelper:
         # return increase
 
     def stats_for_24_hour(self):
-        now_datetime = datetime.now(timezone.utc)
+        # now_datetime = datetime.now(timezone.utc)
+        now_datetime = self.univ_datetime.date() - timedelta(days=1)
 
         todays_tweets = []
         result_24_hour = []
