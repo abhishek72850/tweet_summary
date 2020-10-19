@@ -101,7 +101,7 @@ class TwitterHelper:
 
         for tweet in self.result:
             date_obj = datetime.strptime(tweet['created_at'], "%a %b %d %H:%M:%S %z %Y")
-            if (now_datetime - date_obj).days == 0:
+            if (now_datetime - date_obj.date()).days == 0:
                 todays_tweets.append(tweet)
                 result_24_hour.append(tweet)
                 mentions_24_hour.extend(tweet['entities']['user_mentions'])
