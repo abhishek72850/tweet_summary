@@ -100,8 +100,8 @@ def prepare_twitter_analysis(topic):
         # else:
         #     analysis_data['noticeable_user'] = 'None'
 
-        analysis_data['most_active_verified_tweet_user_name'] = data['most_active_verified_tweet']['user'].get('name', '')
-        analysis_data['most_active_verified_tweet_screen_name'] = "(@{})".format(data['most_active_verified_tweet']['user'].get('screen_name', ''))
+        analysis_data['most_active_verified_tweet_user_name'] = data['most_active_verified_tweet'].get('user', {}).get('name', '')
+        analysis_data['most_active_verified_tweet_screen_name'] = "(@{})".format(data['most_active_verified_tweet'].get('user', {}).get('screen_name', ''))
         analysis_data['most_active_verified_tweet_retweets'] = data['most_active_verified_tweet'].get('retweet_count', 0)
         analysis_data['most_active_verified_tweet_favorite'] = data['most_active_verified_tweet'].get('favorite_count', 0)
         analysis_data['most_active_verified_tweet'] = data['most_active_verified_tweet'].get('text', '')

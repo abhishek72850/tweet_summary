@@ -117,60 +117,67 @@ $(function(){
                 }
                 
 
-                var mention_list = new Set();
-                for(var value of data['noticeable_user']){
-                    mention_list.add(value[0] + "(@" + value[1][1] + ")");
-                }
+                // var mention_list = new Set();
+                // for(var value of data['noticeable_user']){
+                //     mention_list.add(value[0] + "(@" + value[1][1] + ")");
+                // }
 
-                mention_list = Array.from(mention_list);
+                // mention_list = Array.from(mention_list);
 
-                if(mention_list.length > 0){
-                    if(mention_list.length < 5){
-                        $('.noticeable_user').text(mention_list.join(", "));    
+                // if(mention_list.length > 0){
+                //     if(mention_list.length < 5){
+                //         $('.noticeable_user').text(mention_list.join(", "));    
+                //     }
+                //     else{
+                //         var top_5_user = mention_list.slice(0,5).join(", ");
+                //         var other_user = " and " + (mention_list.length - 5) + " other's."
+                //         $('.noticeable_user').text(top_5_user + other_user);
+                //     }
+                // }
+                // else{
+                //     $('.noticeable_user').text('None');
+                // }
+
+                if(data.most_active_verified_tweet.user){
+                    $('.most_active_tweet').show();
+                    $('.no_most_active_tweet').hide();
+                    $('.most_active_verified_tweet_user_name').text(data['most_active_verified_tweet']['user']['name']);
+                    $('.most_active_verified_tweet_screen_name').text("(@" + data['most_active_verified_tweet']['user']['screen_name'] + ")");
+                    $('.most_active_verified_tweet_retweets').text(data['most_active_verified_tweet']['retweet_count']);
+                    $('.most_active_verified_tweet_favorite').text(data['most_active_verified_tweet']['favorite_count']);
+                    $('.most_active_verified_tweet').html(createTextLinks_(data['most_active_verified_tweet']['text']));
+
+                    mention_list = new Set();
+
+                    for(var value of data['most_active_verified_tweet']['entities']['user_mentions']){
+                        mention_list.add(value['name']);
+                    }
+                    mention_list = Array.from(mention_list);
+
+                    if(mention_list.length > 0){
+                        $('.most_active_verified_tweet_mentions').text(mention_list.join(", "));
                     }
                     else{
-                        var top_5_user = mention_list.slice(0,5).join(", ");
-                        var other_user = " and " + (mention_list.length - 5) + " other's."
-                        $('.noticeable_user').text(top_5_user + other_user);
+                        $('.most_active_verified_tweet_mentions').text('None');
                     }
                 }
                 else{
-                    $('.noticeable_user').text('None');
+                    $('.most_active_tweet').hide();
+                    $('.no_most_active_tweet').show();
                 }
 
+                // if(data['noticeable_user_tweet'].length > 0){
+                //     if(data['noticeable_user_tweet'][0]['tweet_content'].length == 0){
+                //         $('.active_user_1').hide()
+                //     }
 
-                $('.most_active_verified_tweet_user_name').text(data['most_active_verified_tweet']['user']['name']);
-                $('.most_active_verified_tweet_screen_name').text("(@" + data['most_active_verified_tweet']['user']['screen_name'] + ")");
-                $('.most_active_verified_tweet_retweets').text(data['most_active_verified_tweet']['retweet_count']);
-                $('.most_active_verified_tweet_favorite').text(data['most_active_verified_tweet']['favorite_count']);
-                $('.most_active_verified_tweet').html(createTextLinks_(data['most_active_verified_tweet']['text']));
-
-                mention_list = new Set();
-
-                for(var value of data['most_active_verified_tweet']['entities']['user_mentions']){
-                    mention_list.add(value['name']);
-                }
-                mention_list = Array.from(mention_list);
-
-                if(mention_list.length > 0){
-                    $('.most_active_verified_tweet_mentions').text(mention_list.join(", "));
-                }
-                else{
-                    $('.most_active_verified_tweet_mentions').text('None');
-                }
-
-                if(data['noticeable_user_tweet'].length > 0){
-                    if(data['noticeable_user_tweet'][0]['tweet_content'].length == 0){
-                        $('.active_user_1').hide()
-                    }
-
-                    if(data['noticeable_user_tweet'].length == 1){
-                        $('.active_user_2').hide()
-                    }
-                }
-                else{
-                    $('.active_users').hide()
-                }
+                //     if(data['noticeable_user_tweet'].length == 1){
+                //         $('.active_user_2').hide()
+                //     }
+                // }
+                // else{
+                //     $('.active_users').hide()
+                // }
 
                 // $('.noticeable_user_tweet_user_name_1').text(data['noticeable_user_tweet'][0]['user_name']);
                 // $('.noticeable_user_tweet_screen_name_1').text("(@" + data['noticeable_user_tweet'][0]['screen_name'] + ")");

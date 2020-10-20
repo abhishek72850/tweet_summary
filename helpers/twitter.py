@@ -208,12 +208,12 @@ class TwitterHelper:
                 elif tweet['retweet_count'] > tweet_obj['retweet_count']:
                     tweet_obj = tweet
 
-        if len(tweet_obj) == 0:
-            tweet_obj = {
-                'user': {
-                    'id': 0
-                }
-            }
+        # if len(tweet_obj) == 0:
+        #     tweet_obj = {
+        #         'user': {
+        #             'id': 0
+        #         }
+        #     }
         # for tweet in self.result:
         #     if tweet['user']['verified']:
         #         tweet_obj = tweet
