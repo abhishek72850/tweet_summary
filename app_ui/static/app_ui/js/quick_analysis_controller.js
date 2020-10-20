@@ -112,8 +112,8 @@ $(function(){
                 }
                 else{
                     $('.driven_by').hide();
-                    $('.active_users').hide();
-                    $('.not_driven_by').show();   
+                    $('.not_driven_by').show();
+                    $('.active_users').empty();   
                 }
                 
 
