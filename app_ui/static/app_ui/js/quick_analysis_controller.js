@@ -5,6 +5,9 @@ $(function(){
     $('#quickAnalysisForm').on('submit',function(e){
         e.preventDefault();
 
+        $('.result').hide();
+        $('.resultHeading').hide();
+
         console.log(this.query.value);
 
         requestAjax(
