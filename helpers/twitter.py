@@ -27,14 +27,14 @@ class TwitterHelper:
             'include_entities': 1,
             'result_type': 'mixed',
             # 'until': datetime.today().strftime("%Y-%m-%d"),
-            'until': (self.univ_datetime.date() - timedelta(days=1)).strftime("%Y-%m-%d"),
+            'until': self.univ_datetime.date().strftime("%Y-%m-%d"),
             'count': 100
         }
 
     def fetch_result(self, max_range=7):
         for i in range(0, max_range):
             # new_date = datetime.today() - timedelta(days=i)
-            new_date = (self.univ_datetime.date() - timedelta(days=1)) - timedelta(days=i)
+            new_date = self.univ_datetime.date() - timedelta(days=i)
             self.params['until'] = new_date.strftime("%Y-%m-%d")
             if 'max_id' in self.params.keys():
                 del self.params['max_id']
@@ -53,26 +53,37 @@ class TwitterHelper:
                     break
 
     def increase_in_tweets(self):
-        date_count = {}
+        todays_date_str = (self.univ_datetime.date() - timedelta(days=1)).strftime("%Y-%m-%d")
+        previous_date_str = (todays_date_obj.date() - timedelta(days=1)).strftime("%Y-%m-%d")
+        # date_count = {}
+        todays_count = 0
+        previous_count = 0
         for tweet in self.result:
             date_obj = datetime.strptime(tweet['created_at'], "%a %b %d %H:%M:%S %z %Y")
             date_str = date_obj.date().strftime("%Y-%m-%d")
 
-            if date_str not in date_count.keys():
-                date_count[date_str] = 1
-            else:
-                date_count[date_str] += 1
+            if date_str == todays_date_str:
+                todays_count += 1
+            elif date_str == previous_date_str:
+                previous_count += 1
 
-        date_sort = dict(sorted(date_count.items(), key=lambda k: k[0], reverse=True))
-        count_lst = list(date_sort.values())
-        total_tweets_before_current = sum(count_lst[:-1])
+            # if date_str not in date_count.keys():
+            #     date_count[date_str] = 1
+            # else:
+            #     date_count[date_str] += 1
+
+        # date_sort = dict(sorted(date_count.items(), key=lambda k: k[0], reverse=True))
+        # count_lst = list(date_sort.values())
+        # total_tweets_before_current = sum(count_lst[:-1])
 
         # if total_tweets_before_current == 0:
         #     return count_lst[-1] * 100
-        if len(count_lst) > 1:
-            return count_lst[0] - count_lst[1]
-        else:
-            return count_lst[0]
+        # if len(count_lst) > 1:
+            # return count_lst[0] - count_lst[1]
+        # else:
+            # return count_lst[0]
+
+        return todays_count - previous_count
 
         # increase = (count_lst[-1] / sum(count_lst[:-1])) * 100
 
