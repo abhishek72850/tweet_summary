@@ -73,7 +73,7 @@ class AccountRegister(APIView):
                 user = form.save()
                 if user is not None:
                     token = generate_token(email=user.email, user_id=user.id)
-                    email_verification_url = '{}/api/account/confirm_email?verification_code={}'.format(
+                    email_verification_url = '{}/api/account/confirm_email?verification_code={}&format=json'.format(
                         get_host_origin(request), token)
                     send_email_verification_link(user, email_verification_url)
                     return Response(data={'data': user.toJSON()}, status=status.HTTP_200_OK)
@@ -163,7 +163,7 @@ class AccountSubscribeTopic(APIView):
             if isinstance(subscription, SubscriptionModel):
                 if subscription.subscription_status == 'IDLE':
                     token = generate_token(email=subscription.user.email, subscription_id=subscription.id)
-                    confirmation_url = '{}/api/account/confirm_subscription?verification_code={}'.format(
+                    confirmation_url = '{}/api/account/confirm_subscription?verification_code={}&format=json'.format(
                         get_host_origin(request), token)
                     send_subscription_verification_link(subscription, confirmation_url)
                 if status_msg == 'CREATED':
