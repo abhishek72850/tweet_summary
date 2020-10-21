@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block headDependency%}
-{% load staticfiles %}
+{% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/homeStyle.css' %}">
 {% endblock %}
 
@@ -81,6 +81,6 @@
 {% endblock %}
 
 {% block tailDependency%}
-{% load staticfiles %}
+{% load static %}
 <script type="text/javascript" src="{% static 'app_ui/js/login_controller.js' %}"></script>
 {% endblock %}

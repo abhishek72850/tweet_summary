@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block headDependency%}
-{% load staticfiles %}
+{% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'app_ui/style/subscribePageStyle.css' %}">
 {% endblock %}
 
 {% block body%}
 <div class="icons">
-    {% load staticfiles %}
+    {% load static %}
     <a href="{% url 'home' %}"> <img src="{% static 'app_ui/images/home1.png' %}" alt="logout" class="logoutIcon"></a>
     <a href="{% url 'home_logout'%}"> <img src="{% static 'app_ui/images/logout1.png' %}" alt="logout" class="logoutIcon"></a>
 </div>
@@ -35,6 +35,6 @@
 {% endblock %}
 
 {% block tailDependency%}
-{% load staticfiles %}
+{% load static %}
 <script type="text/javascript" src="{% static 'app_ui/js/subscribe_controller.js' %}"></script>
 {% endblock %}
