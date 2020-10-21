@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 import dj_database_url
 
 from django.http import HttpRequest
@@ -262,3 +263,4 @@ STATIC_URL = '/static/'
 # ]
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+django_heroku.settings(locals())
