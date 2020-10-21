@@ -1,6 +1,8 @@
 var showDialog = function(message, dialogType){
     $('#' + dialogType + 'DialogMessage').text(message);
     $('.' + dialogType + 'Dialog').show();
+
+    return $('.' + dialogType + 'Dialog>div>input')
 }
 
 var getFutureDate = function(date_str, days){

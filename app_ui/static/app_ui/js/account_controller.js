@@ -116,8 +116,10 @@ $(function(){
                 }
             },
             function(data){
-                showDialog(data, 'success');
-                window.location.reload();
+                showDialog(data, 'success').on('click', function(e){
+                    e.preventDefault();
+                    window.location.reload();
+                });
             }
         );
     });
