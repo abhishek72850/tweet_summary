@@ -1,0 +1,39 @@
+section{
+	background-color: #eee;
+	height: 100%;
+	width: 100%;
+}
+section>div{
+	padding: 1em;
+}
+.feature_card_cont{
+	display: flex;
+	align-items:start;
+	flex-wrap: wrap;
+}
+.sub_card{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1em;
+	border: 1px solid #555;
+	box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	width: 18em;
+	height: 12em;
+	transition-duration: 0.5s;
+}
+.sub_card>a{
+    text-decoration:none;
+    color:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+	border: none;
+    height: 100%;
+	width: 100%;
+	font-size: 1em;
+	background-color: #fff;
+}
+.sub_card:hover{
+	transform: scale(1.1);
+}

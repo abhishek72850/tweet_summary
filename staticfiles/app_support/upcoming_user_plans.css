@@ -1,0 +1,105 @@
+section{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 1em;
+	background-color: #eee;
+  height: calc(100% - 7em);
+	width: 100%;
+}
+.sub_sec{
+	background-color: #fff;
+	margin: 1em 0;
+	padding: 1em;
+	border: 1px solid #ccc;
+	width: 70%;
+}
+.search_form_cont{
+	display: flex;
+	justify-content: center;
+}
+#search_upcoming_user_plans_form{
+	display: flex;
+	width:80%;
+}
+#search_upcoming_user_plans_form>div{
+
+}
+#search_upcoming_user_plans_form>div:first-child{
+	width: 80%;
+}
+#search_upcoming_user_plans_form>div:last-child{
+	width: 20%;
+}
+#search_upcoming_user_plans_form>div>input{
+	height: 4em;
+	width: 100%;
+}
+#search_upcoming_user_plans_form>div>button{
+	border: 1px solid #555;
+	height: 4em;
+	width: 100%;
+}
+.upcoming_user_plans_detail_list_cont{
+    width: 90%;
+}
+.upcoming_user_plans_list{
+
+}
+.upcoming_user_plans_row_head{
+	background-color: #eee;
+}
+.upcoming_user_plans_row{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 3em;
+	border-bottom: 1px solid #ccc;
+}
+.upcoming_user_plans_row>span{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	height: 100%;
+	text-align: center;
+}
+.upcoming_user_plans_row>span>button{
+	border: 1px solid #ccc;
+	height: 2.5em;
+	width: 90%;
+	color: #fff;
+	background-color: #55f;
+}
+.upcoming_user_plans_row>span:nth-child(1){
+	border-right: 1px solid #ccc;
+	width: 5%;
+}
+.upcoming_user_plans_row>span:nth-child(2){
+	width: 30%;
+}
+.upcoming_user_plans_row>span:nth-child(3){
+	width: 15%;
+}
+.upcoming_user_plans_row>span:nth-child(4){
+	width: 15%;
+}
+.upcoming_user_plans_row>span:nth-child(5){
+	width: 15%;
+}
+.upcoming_user_plans_row>span:nth-child(6){
+	width: 15%;
+}
+.upcoming_user_plans_row>span:nth-child(7){
+	display: inline-flex;
+	flex-direction: row;
+	justify-content:space-around;
+	width: 10%;
+}
+.upcoming_user_plans_row>span:nth-child(7)>button{
+	border: 1px solid #ccc;
+	width: 40%;
+}
+.upcoming_user_plans_row>span:nth-child(7)>button:last-child{
+	background-color: #f55;
+}

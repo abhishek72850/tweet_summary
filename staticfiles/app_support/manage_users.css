@@ -1,0 +1,92 @@
+section{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 1em;
+	background-color: #eee;
+  height: calc(100% - 7em);
+	width: 100%;
+}
+.sub_sec{
+	background-color: #fff;
+	margin: 1em 0;
+	padding: 1em;
+	border: 1px solid #ccc;
+	width: 70%;
+}
+.search_form_cont{
+	display: flex;
+	justify-content: center;
+}
+#search_users_form{
+	display: flex;
+	width:80%;
+}
+#search_users_form>div{
+
+}
+#search_users_form>div:first-child{
+	width: 80%;
+}
+#search_users_form>div:last-child{
+	width: 20%;
+}
+#search_users_form>div>input{
+	height: 4em;
+	width: 100%;
+}
+#search_users_form>div>button{
+	border: 1px solid #555;
+	height: 4em;
+	width: 100%;
+}
+.user_detail_list_cont{
+    width: 90%;
+}
+.user_list{
+
+}
+.user_row_head{
+	background-color: #eee;
+}
+.user_row{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 3em;
+	border-bottom: 1px solid #ccc;
+}
+.user_row>span{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	height: 100%;
+	text-align: center;
+}
+.user_row>span>button{
+	border: 1px solid #ccc;
+	height: 2.5em;
+	width: 90%;
+	color: #fff;
+	background-color: #55f;
+}
+.user_row>span:nth-child(1){
+	border-right: 1px solid #ccc;
+	width: 10%;
+}
+.user_row>span:nth-child(2){
+	width: 30%;
+}
+.user_row>span:nth-child(3){
+	width: 20%;
+}
+.user_row>span:nth-child(4){
+	width: 10%;
+}
+.user_row>span:nth-child(5){
+	width: 20%;
+}
+.user_row>span:nth-child(6){
+	width: 10%;
+}

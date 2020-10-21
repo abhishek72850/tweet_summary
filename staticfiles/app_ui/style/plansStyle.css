@@ -1,0 +1,88 @@
+.blackBox{
+    height:auto;
+}
+.form{
+    display:flex;
+    justify-content: space-around;
+    color:white;
+    padding-top:5%;
+    flex-basis:20%;
+}
+.basic, .silver, .gold, .platinum{
+    display:flex;
+    flex-direction: column;
+    text-align:center;
+    padding:0 2.5%;
+}
+form div div input{
+    margin-bottom:80px;
+    margin-left:20px;
+}
+form div div label{
+    font-weight: bold;
+    text-decoration:underline;
+    font-size:150%;
+}
+form div div p{
+    word-spacing:2px;
+    letter-spacing: 1px;
+}
+.silver, .gold{
+    border-left: 1px solid rgba(96, 91, 232, 1);
+}
+.gold{
+    border-right: 1px solid rgba(96, 91, 232, 1);
+}
+.button{
+    text-align: center;
+    margin-top:35px;
+    margin-bottom:35px;
+}
+.button input{
+    margin-bottom: 30px;;
+}
+.button:hover{
+    cursor: pointer;
+}
+.button input{
+    width:35%;
+    color:white;
+    background-color:rgba(96, 91, 232, 1);
+    padding:5px;
+    border:none;
+    border-radius: 40px;
+}
+.icons{
+    position:absolute;
+    right:12%;
+    top:80px;
+}
+.logoutIcon, .homeIcon{
+    margin:5px;
+}
+
+/* Responsive */
+
+@media (max-width:991px){
+    .blackBox{
+        height:auto;
+        padding:10px 5% 5% 0;
+
+    }
+    .form{
+        flex-direction:column;
+        padding-top:3%;
+        margin-left:5%;
+    }
+    .silver, .gold{
+        border:none;
+    }
+    form div div input{
+        margin-bottom: 20px;
+        margin-top:70px;
+    }
+    .heading{
+        font-size:75%;
+    }
+    
+}

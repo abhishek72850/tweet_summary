@@ -1,0 +1,45 @@
+section{
+  display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #eee;
+	height: 100%;
+	width: 100%;
+}
+section>div{
+	display: flex;
+	flex-direction: column;
+	justify-content:space-evenly;
+	background-color: #fff;
+	border-radius: 2px;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+	width: 30%;
+	height: 60%;
+}
+section>div>div:first-child{
+	text-align: center;
+}
+.login_form_container{
+	display: flex;
+  justify-content: center;
+	align-items: center;
+	padding: 1em;
+}
+.login_form_container>form{
+	width: 100%;
+}
+.login_form_container>form>div{
+	margin: 1.5em 0;
+	height: 3em;
+}
+.login_form_container>form>div>input{
+	font-size: 1em;
+	padding: 0.5em;
+	height: 100%;
+	width: 100%;
+}
+.login_form_container>form>div>button{
+	font-size: 1em;
+	height: 100%;
+	width: 100%;
+}

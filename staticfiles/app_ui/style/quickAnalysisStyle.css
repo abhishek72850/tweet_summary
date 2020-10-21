@@ -1,0 +1,142 @@
+.searchBox{
+    text-align:center;
+    padding-top:15px;
+}
+.keyword{
+    background:transparent;
+    border:2px solid rgba(96, 91, 232, 1);
+    padding:15px;
+    border-radius: 40px;
+    color:white;
+    margin:5px;
+    width:30%;
+    text-align: center;
+}
+.button{
+    background-color: rgba(96, 91, 232, 1);
+    padding:15px;
+    border-radius: 40px;
+    color:white;
+    margin:5px;
+    width:30%;
+    text-align: center;
+    border:2px solid rgba(96, 91, 232, 1);
+}
+.button:hover{
+    cursor: pointer;
+}
+.icons{
+  position:absolute;
+  right:12%;
+  top:80px;
+}
+.logoutIcon, .homeIcon{
+  margin:5px;
+}
+
+/* for placeholder white color*/
+::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+   color: white;
+  }
+
+.resultHeading{
+  margin-top: 1em;
+    color:white;
+    text-align: center;
+    text-decoration:underline;
+}
+.result{
+  color:white;
+  padding:1em 0;
+}
+.analysis_summary{
+  display: flex;
+  justify-content: space-between;
+}
+.analysis_summary>div{
+  color: #999;
+}
+.analysis{
+  margin-top: 1em;
+  background-color: #222;
+  padding: 0.5em 1.5em;
+}
+.bold{
+	font-weight: bold;
+}
+.green{
+  color: #0f0;
+}
+.red{
+  color: #f00; 
+}
+li{
+	margin: .5em 0;
+}
+li>ul{
+	padding-left: 2em;
+}
+
+.blackBox{
+    height: 100%;
+    padding: 1.5em;
+}
+
+
+
+/* scrollbar styleing */
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(85, 85, 85); 
+  }
+
+
+
+
+  /* Responsive */
+@media(max-width:800px){
+  .keyword, .button{
+    width:50%;
+  }
+  .resultHeading{
+    margin-left:5%;
+  }
+  .result{
+    margin:3%;
+  }
+  .blackBox{
+    overflow-y:hidden;
+    height:auto;
+  }
+  
+  .heading{
+    font-size:80%;
+  }
+}
+ 

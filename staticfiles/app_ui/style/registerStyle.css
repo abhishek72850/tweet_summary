@@ -1,0 +1,26 @@
+
+.form{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-55%,-55%);
+    width:30%;
+}
+form input{
+    background:transparent;
+    border:2px solid rgba(96, 91, 232, 1);
+    margin:5%;
+    padding:15px;
+    border-radius: 40px;
+    color:white;
+    margin-bottom:1%;
+    outline:none;
+    width:100%;
+}
+.button{
+    text-align:center;
+    background-color: rgba(96, 91, 232, 1);
+}
+.button:hover{
+    cursor: pointer;
+}
