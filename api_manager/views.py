@@ -248,7 +248,7 @@ class ResetPassword(APIView):
 
 
 class ConfirmEmail(APIView):
-    def get(self, request, format=None):
+    def get(self, request, format='json'):
         if request_contain_keys(request.GET, ['verification_code']):
             token = request.GET['verification_code']
 
@@ -261,13 +261,13 @@ class ConfirmEmail(APIView):
                 email = payload['email']
 
                 if confirm_email_verification(email, user_id):
-                    return Response({'status': status.HTTP_200_OK, 'data': 'Email verified successfully'})
+                    return Response(status=status.HTTP_200_OK, data='Email verified successfully')
 
-        return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Link expired!!'})
+        return Response(status=status.HTTP_400_BAD_REQUEST, data='Link expired!!')
 
 
 class ConfirmSubscription(APIView):
-    def get(self, request, format=None):
+    def get(self, request, format='json'):
         if request_contain_keys(request.GET, ['verification_code']):
             token = request.GET['verification_code']
 
@@ -281,12 +281,12 @@ class ConfirmSubscription(APIView):
 
                 if len(user_set) > 0:
                     if is_topic_quota_exhausted(user_set[0]):
-                        return Response({'status': status.HTTP_403_FORBIDDEN, 'data': 'You have reached your ACTIVE subscriptions quota!!'})
+                        return Response(status=status.HTTP_403_FORBIDDEN, data='You have reached your ACTIVE subscriptions quota!!')
 
                     if confirm_subscription(email, subscription_id):
-                        return Response({'status': status.HTTP_200_OK, 'data': 'Subscription verified successfully'})
+                        return Response(status=status.HTTP_200_OK, data='Subscription verified successfully')
 
-        return Response({'status': status.HTTP_400_BAD_REQUEST, 'data': 'Link expired!!'})
+        return Response(status=status.HTTP_400_BAD_REQUEST, data='Link expired!!')
 
 
 class UnSubscribe(APIView):
@@ -301,9 +301,9 @@ class UnSubscribe(APIView):
                 email = payload['email']
 
                 if unsubscribe(email, subscription_id):
-                    return Response(status=status.HTTP_200_OK, data={'data': 'Unsubscribed successfully'})
+                    return Response(status=status.HTTP_200_OK, data='Unsubscribed successfully')
 
-        return Response(status=status.HTTP_400_BAD_REQUEST, data={'data': 'Something went wrong!!'})
+        return Response(status=status.HTTP_400_BAD_REQUEST, data='Something went wrong!!')
 
 
 class SummaryAnalysis(APIView):
