@@ -54,7 +54,7 @@ class TwitterHelper:
 
     def increase_in_tweets(self):
         todays_date_str = (self.univ_datetime.date() - timedelta(days=1)).strftime("%Y-%m-%d")
-        previous_date_str = (todays_date_obj.date() - timedelta(days=1)).strftime("%Y-%m-%d")
+        previous_date_str = (self.univ_datetime.date() - timedelta(days=2)).strftime("%Y-%m-%d")
         # date_count = {}
         todays_count = 0
         previous_count = 0
@@ -208,12 +208,12 @@ class TwitterHelper:
                 elif tweet['retweet_count'] > tweet_obj['retweet_count']:
                     tweet_obj = tweet
 
-        if len(tweet_obj) == 0:
-            tweet_obj = {
-                'user': {
-                    'id': 0
-                }
-            }
+        # if len(tweet_obj) == 0:
+        #     tweet_obj = {
+        #         'user': {
+        #             'id': 0
+        #         }
+        #     }
         # for tweet in self.result:
         #     if tweet['user']['verified']:
         #         tweet_obj = tweet
