@@ -7,10 +7,11 @@
         </div>
         <div class="contentBox" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;width: 100%;height: 85vh;background-color: #e2e2e2;border: 1px solid black;/*! display: flex; *//*! flex-direction: column; *//*! justify-content: center; *//*! align-items: center; */">
             <div class="title" style="margin: 0 auto;padding: 10px 25px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: white;/*! border: 1px solid black; */border-top: none;height: 75vh;width: 100%;box-sizing: border-box;">
-                <h3 style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Today’s Social Media Pulse of your subscribed topics:</h3>
+                <h3 style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Summarizing using {{ total_tweets }} tweets.</h3>
                 {% if success %}
                     <p class="analysisResult" style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin-top: 20px;">
                     </p>
+                    <h4 style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Today’s Social Media Pulse of your subscribed topics:</h4>
                     <ul style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                         <li style="margin: 0;padding: 0;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">There has been
                             {% if 'decrease' in increase_or_decrease %}
